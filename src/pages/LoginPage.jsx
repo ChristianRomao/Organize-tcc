@@ -1,7 +1,11 @@
+import { Box, Card, Input, Stack } from '@chakra-ui/react';
+import './LoginPage.css';
+
 const LoginPage = () => {
     return (
-        <div>
-
+        <div className='body'>
+            <Input type='email' placeholder='Digite seu Email'/>
+            <Input type='password' placeholder='Digite sua Senha'/>
         </div>
     );
 }

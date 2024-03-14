@@ -6,7 +6,7 @@ const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route
-                    path="/login"
+                    path={"/"}
                     element={<LoginPage/>}>    
                 </Route>
             </Routes>
