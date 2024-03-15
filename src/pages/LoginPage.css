@@ -1,3 +1,57 @@
-body {
-    background-color: #C6D7EE;
+:root {
+    --cor-fundo: #C6D7EE;
+}
+
+.body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--cor-fundo);
+}
+  
+.container-left {
+    width: 680px;
+    clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 100% 100%, 0% 100%);
+    background: linear-gradient(-10deg, #173154 46.28%, #004E8F 46.92%);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 120px;
+}
+
+.container-icon{
+    position: fixed;
+    margin: 140px 80px 514px 80px;
+}
+
+.box-input {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+    width: 20rem;
+}
+
+.loginBT {
+    background-color: #007CE3;
+    color: white;
+    padding: 0.4rem 4rem 0.4rem 4rem;
+    border-radius: 20px;
+    transition: 0.2s;
+}.loginBT:hover {
+    background-color: #78c2ff;
+    color: black;
+    transition: 0.2s;
+}
+
+.registerBT {
+    padding: 0.4rem 3.5rem 0.4rem 3.5rem;
+    background-color: white;
+    border-radius: 20px;
+    transition: 0.2s;
+}.registerBT:hover {
+    background-color: rgb(189, 189, 189);
+    transition: 0.2s;
 }
