@@ -71,3 +71,12 @@
     margin-right: 120px;
     margin-top: -12px;
 }
+
+.container-right {
+    background-color: #173154;
+    margin-top: 108px;
+    margin-left: 190px;
+    width: 40vw;
+    height: 76vh;
+    transform: rotate(-11deg);
+}
