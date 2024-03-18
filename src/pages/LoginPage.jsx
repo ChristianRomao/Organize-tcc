@@ -1,4 +1,3 @@
-import { color } from 'framer-motion';
 import './LoginPage.css';
 
 const LoginPage = () => {
