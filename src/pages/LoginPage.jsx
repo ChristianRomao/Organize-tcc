@@ -1,4 +1,5 @@
 import './LoginPage.css';
+import LogoBranca from '../img/organize-branco.png';
 
 const LoginPage = () => {
     return (
@@ -22,12 +23,14 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className="container-right ">
-                dadasdasd
+                <div className='sobre'>
+                    <h1 className='titulo-sobre'>Quem somos?</h1>
+                    <text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</text>
+                </div>
+                <img className='logo-branca' src={LogoBranca} alt="Logo branca da empresa"/>
             </div>
       </div>
     );
 }
 
 export default LoginPage;
-
-//npm install react-router-dom npm install classnames

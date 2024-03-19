@@ -19,6 +19,7 @@
     justify-content: center;
     align-items: center;
     padding-right: 120px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .container-icon{
@@ -79,4 +80,31 @@
     width: 40vw;
     height: 76vh;
     transform: rotate(-11deg);
+    border-radius: 20px;
+    box-shadow: 0px 0px 30px;
+}
+
+.logo-branca {
+    width: 380px;
+    margin: auto;
+    margin-top: -40px;
+    margin-left: 158px;
+    align-items: center;
+    transform: rotate(10deg); 
+}
+
+
+.sobre {
+    display: inline-block;
+    text-align: justify;
+    padding: 100px;
+    padding-top: 140px;
+    color: white;
+    margin-bottom: -120px;
+    transform: rotate(10deg);
+}
+
+.titulo-sobre {
+    text-align: center;
+    margin-bottom: 30px;
 }
