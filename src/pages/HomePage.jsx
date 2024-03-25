@@ -2,8 +2,7 @@ import './HomePage.css';
 import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faUserAlt, faUserAltSlash } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 const HomePage = () => {
 
@@ -32,7 +31,17 @@ const HomePage = () => {
                 </nav>
             </header>
             <body className='body-home'>
-                
+                <div className='grid-principal'>
+                    <div className='item-da-grid'>
+                        TESTE
+                    </div>
+                    <div className='item-da-grid'>
+                        TESTE
+                    </div>
+                    <div className='item-da-grid'>
+                        TESTE
+                    </div>
+                </div>
             </body>
         </div>
     );

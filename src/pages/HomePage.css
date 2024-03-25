@@ -2,14 +2,6 @@
     --cor-fundo: #C6D7EE;
 }
 
-.body-home {
-    width: 100%;
-    height: 93.2vh;
-    background-color: var(--cor-fundo);
-    position: fixed;
-    z-index: -1;
-}
-
 .header-home {
     background-color: #0E1826;
     box-shadow: 0px 0px 30px;
@@ -48,7 +40,7 @@
 
 .menu {
     position: absolute;
-    top: 90%;
+    top: 70%;
     right: 0;
     background-color: #0E1826;
     transform: translateY(10%) translateX(-10px);
@@ -71,4 +63,26 @@
 ul li {
     list-style: none;
     padding: 10px;
+}
+
+.body-home {
+    width: 100%;
+    height: 93.2vh;
+    background-color: var(--cor-fundo);
+    position: fixed;
+    z-index: -1;
+}
+
+.grid-principal {
+    display: flex;
+    justify-content: center;
+    margin: 60px;
+}
+
+.item-da-grid {
+    background-color: #f2f2f2;
+    padding: 320px 160px;
+    margin: 10px 80px;
+    text-align: center;
+    border-radius: 18px;
 }
