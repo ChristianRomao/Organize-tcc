@@ -1,7 +1,15 @@
 import './LoginPage.css';
 import LogoBranca from '../img/organize-branco.png';
+import { useState } from 'react';
 
 const LoginPage = () => {
+
+    const [senhaVisivel, setSenhaVisivel] = useState(false);
+    
+    const mostraSenha = () => {
+        setSenhaVisivel(!senhaVisivel)
+    }
+
     return (
         <div className="body">
             <div className="container-left">
@@ -14,7 +22,9 @@ const LoginPage = () => {
                 <div className='box-input'>
                     <text style={{color: '#D9D9D9'}}>Informe seu Login</text>
                     <input className='login' type='email' placeholder='Digite seu Email'/>
-                    <input className='login' type='password' placeholder='Digite sua Senha'/>   
+                    <div>
+                        <input className='login' type='password' placeholder='Digite sua Senha'/>
+                    </div>
                     <button className='esqueceusenha' type='button'>Esqueceu sua senha?</button>                 
                 </div>
                 <div className='container-btn'>

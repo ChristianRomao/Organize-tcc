@@ -2,14 +2,14 @@ import './HomePage.css';
 import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBookOpen, faChalkboardUser, faGraduationCap, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 const HomePage = () => {
 
-    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuVisivel, setMenuVisivel] = useState(false);
 
     const toggleMenu = () => {
-        setMenuVisible(!menuVisible);
+        setMenuVisivel(!menuVisivel);
     };
 
     return (
@@ -21,7 +21,7 @@ const HomePage = () => {
                     alt="Logo preta Organize"
                 />
                 <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faUserAlt} size='2x'/></button>
-                <nav className={menuVisible ? "menu visible" : "menu"}>
+                <nav className={menuVisivel ? "menu visible" : "menu"}>
                     <ul>
                         <li><a href="/perfil">Perfil</a></li>
                         <li><a href="/perfil">Cadastro</a></li>
@@ -33,13 +33,22 @@ const HomePage = () => {
             <body className='body-home'>
                 <div className='grid-principal'>
                     <div className='item-da-grid'>
-                        TESTE
+                        <div className='interior'>
+                            <FontAwesomeIcon icon={faGraduationCap} size='3x'/>
+                            <text>Polos</text>
+                        </div>
                     </div>
                     <div className='item-da-grid'>
-                        TESTE
+                        <div className='interior'>
+                            <FontAwesomeIcon icon={faBookOpen} size='3x'/>
+                            <text>Cursos</text>
+                        </div>
                     </div>
                     <div className='item-da-grid'>
-                        TESTE
+                        <div className='interior'>
+                            <FontAwesomeIcon icon={faChalkboardUser} size='3x'/>
+                            <text>Disciplinas</text>
+                        </div>
                     </div>
                 </div>
             </body>
