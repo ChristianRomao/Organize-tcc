@@ -23,22 +23,27 @@ const RegisterPage = () => {
         <div>
             <body className='main'>
                 <div className='area-registro'>
-                    <text>Faça seu registro em nossa plataforma.</text>
+                    <text className='titulo-principal'>Faça seu registro em <br/> nossa plataforma.</text>
                     <div>
+                        <text className='titulo-inputs'>Insira seu Email</text>
                         <input className='inputs-registro' placeholder='Seu Nome' type="text"/>
-                        <input className='inputs-registro' type="text" />
+                        <text className='titulo-inputs'>Insira seu Email</text>
+                        <input className='inputs-registro' placeholder='Seu Nome' type="text" />
+                        <text className='titulo-inputs'>Seu Nascimento</text>
                         <input className='inputs-registro' type="date" />
                         <text className='titulo-inputs'>Insira seu Email</text>
                         <div className='email-input-container'>
-                            <input className='inputs-registro' onChange={handleChange} value={email} type="email" />
+                            <input className='inputs-registro' placeholder='exemplo@email.com' onChange={handleChange} value={email} type="email" />
                             {email && (isValid ? (
                                 <FontAwesomeIcon className='edit-icon' icon={faCheck} style={{color: "#00ff15",}} />
                             ) : (
                                 <FontAwesomeIcon className='edit-icon' icon={faCircleExclamation} style={{color: "#ff0000",}} />
                             ))}
                         </div>
-                        <input className='inputs-registro' type="text" />
-                        <input className='inputs-registro' type="text" />
+                        <text className='titulo-inputs'>Insira seu Email</text>
+                        <input className='inputs-registro' placeholder='Seu Nome' type="text" />
+                        <text className='titulo-inputs'>Insira seu Email</text>
+                        <input className='inputs-registro' placeholder='Seu Nome' type="text" />
                     </div>
                 </div>
             </body>
