@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
+import CadInstituicao from "../pages/CadInstituicao";
 
 const Router = () => {
     return (
@@ -18,6 +19,10 @@ const Router = () => {
                 <Route
                     path={"/home"}
                     element={<HomePage/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-instituição"}
+                    element={<CadInstituicao/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>
