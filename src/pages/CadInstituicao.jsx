@@ -41,7 +41,7 @@ function CadInstituicao() {
   };
 
   return (
-    <div>
+    <div className='tudo'>
       <header className="header-inst">
         <img
           className='logo-branco resized-logo'
@@ -60,16 +60,16 @@ function CadInstituicao() {
       </header>
       <body className='inst-home'>
         <div className='body-body'>
-          <div className='voltaHome'>
-            <FontAwesomeIcon icon={faArrowLeft} style={{color: "#ffffff",}} />
-            <a href="/home">Perfil</a>
-          </div>
+          <button className='voltaHome'>
+            <FontAwesomeIcon icon={faArrowLeft} style={{color: "#d6e7ff", margin: "0em 1em"}} />
+            <a href="/home" style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para a tela Inicial</a>
+          </button>
           <div>
             <text className='titulo-Inst'>Cadastro de Instituição</text>
           </div> 
           <div className='area-cadastro'>
             <div className="icon-container ">
-              <FontAwesomeIcon icon={faBuildingColumns} style={{color: "#d6e7ff",}} className="large-icon"/>
+              <FontAwesomeIcon icon={faBuildingColumns} style={{color: "#d6e7ff"}} className="large-icon"/>
             </div>
             <form className='ajustes'>
               <div>

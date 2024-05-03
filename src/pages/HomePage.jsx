@@ -2,7 +2,7 @@ import './HomePage.css';
 import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBookOpen, faBoxArchive, faGraduationCap, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faCalendarDays, faMagnifyingGlass, faPenToSquare, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 const HomePage = () => {
 
@@ -34,21 +34,20 @@ const HomePage = () => {
                 <div className='grid-principal'>
                     <div className='item-da-grid'>
                         <div className='interior'>
-                            <FontAwesomeIcon icon={faGraduationCap} size='3x'/>
-                            <text>Polos</text>
+                            <FontAwesomeIcon icon={faPenToSquare} size='3x'/>
+                            <text>Cadastro</text>
                         </div>
                     </div>
                     <div className='item-da-grid'>
                         <div className='interior'>  
-                            <FontAwesomeIcon icon={faBookOpen} size='3x'/>
-                            <text>Disciplinas</text>
-                            <text>Cursos</text>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} size='3x'/>
+                            <text>Consulta</text>
                         </div>
                     </div>
                     <div className='item-da-grid'>
                         <div className='interior'>
-                            <FontAwesomeIcon icon={faBoxArchive} size='3x'/>
-                            <text>Materiais</text>
+                            <FontAwesomeIcon icon={faCalendarDays} size='3x'/>
+                            <text>Reserva</text>
                         </div>
                     </div>
                 </div>
