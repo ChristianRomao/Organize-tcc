@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import CadInstituicao from "../pages/CadInstituicao";
+import CadPolos from "../pages/CadPolos";
 
 const Router = () => {
     return (
@@ -23,6 +24,10 @@ const Router = () => {
                 <Route
                     path={"/cadastro-instituição"}
                     element={<CadInstituicao/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-polo"}
+                    element={<CadPolos/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>

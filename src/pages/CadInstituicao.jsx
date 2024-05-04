@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './CadInstituicao.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LogoBranca from '../img/organize-branco.png';
 import { faArrowLeft, faBuildingColumns, faUserAlt } from '@fortawesome/free-solid-svg-icons';
-import './CadInstituicao.css';
-
 
 function CadInstituicao() {
   const [instituicaoData, setInstituicaoData] = useState({
@@ -41,7 +40,7 @@ function CadInstituicao() {
   };
 
   return (
-    <div className='tudo'>
+    <div>
       <header className="header-inst">
         <img
           className='logo-branco resized-logo'
@@ -65,15 +64,15 @@ function CadInstituicao() {
             <a href="/home" style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para a tela Inicial</a>
           </button>
           <div>
-            <text className='titulo-Inst'>Cadastro de Instituição</text>
+            <text className='titulo-Inst'>Cadastro de Instituição.</text>
           </div> 
           <div className='area-cadastro'>
             <div className="icon-container ">
               <FontAwesomeIcon icon={faBuildingColumns} style={{color: "#d6e7ff"}} className="large-icon"/>
             </div>
-            <form className='ajustes'>
+            <form className='Ajustes'>
               <div>
-                <p className='titulo-inputs'>Razão Social:</p>
+                <p className='titulo-inputs'>Razão Social</p>
                 <input
                   className='inputs-inst'
                   type="text"
@@ -84,7 +83,7 @@ function CadInstituicao() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs'>CPF/CNPJ:</p>
+                <p className='titulo-inputs'>CPF/CNPJ</p>
                 <input
                   className='inputs-inst'
                   type="text"
@@ -95,7 +94,7 @@ function CadInstituicao() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs'>Nome Fantasia:</p>
+                <p className='titulo-inputs'>Nome Fantasia</p>
                 <input
                   className='inputs-inst'
                   type="text"
@@ -105,7 +104,7 @@ function CadInstituicao() {
                   required
                 />
               </div>
-              <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastrar</button>
+              <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastro Polos</button>
             </form>
           </div>
         </div>
