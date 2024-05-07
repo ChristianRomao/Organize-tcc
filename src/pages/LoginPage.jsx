@@ -20,7 +20,7 @@ const LoginPage = () => {
                     </svg>
                 </div>
                 <div className='box-input'>
-                    <text style={{color: '#D9D9D9'}}>Informe seu Login</text>
+                    <text style={{color: '#D9D9D9', fontWeight: 'bold'}}>Informe seu Login</text>
                     <input className='login' type='email' placeholder='Digite seu Email'/>
                     <div>
                         <input className='login' type='password' placeholder='Digite sua Senha'/>
