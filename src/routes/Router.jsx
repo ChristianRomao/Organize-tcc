@@ -11,6 +11,10 @@ const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route
+                    path={"/"}
+                    element={<LoginPage/>}>    
+                </Route>
+                <Route
                     path={"/login"}
                     element={<LoginPage/>}>    
                 </Route>
