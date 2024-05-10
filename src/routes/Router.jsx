@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import CadInstituicao from "../pages/CadInstituicao";
 import CadPolos from "../pages/CadPolos";
+import Reserva from "../pages/Reserva";
 
 const Router = () => {
     return (
@@ -28,6 +29,10 @@ const Router = () => {
                 <Route
                     path={"/cadastro-polo"}
                     element={<CadPolos/>}>    
+                </Route>
+                <Route
+                    path={"/reserva"}
+                    element={<Reserva/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>

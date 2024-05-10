@@ -50,7 +50,7 @@ function CadPolos() {
             </div>
             <form className='ajustes-polo'>
             <div>
-                <p className='titulo-inst-polo'>Instituição</p>
+                <label className='titulo-inst-polo'>Instituição</label>
                 <input
                   className='inputs-inst-polo'
                   type="text"
@@ -59,7 +59,7 @@ function CadPolos() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs-polo'>Nome do Polo</p>
+                <label className='titulo-inputs-polo'>Nome do Polo</label>
                 <input
                   className='inputs-polo'
                   type="text"
@@ -68,7 +68,7 @@ function CadPolos() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs-polo'>Endereço do Local</p>
+                <label className='titulo-inputs-polo'>Endereço do Local</label>
                 <input
                   className='inputs-polo'
                   type="text"
@@ -77,7 +77,7 @@ function CadPolos() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs-polo'>Município</p>
+                <label className='titulo-inputs-polo'>Município</label>
                 <input
                   className='inputs-polo'
                   type="text"
