@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LogoBranca from '../img/organize-branco.png';
-import { faArrowLeft, faLocationDot, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import './CadPolos.css';
+import HeaderComponents from '../components/HeaderComponents';
 
 
 function CadPolos() {
@@ -11,30 +11,9 @@ function CadPolos() {
 
   }
 
-  const [menuVisivel, setMenuVisivel] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuVisivel(!menuVisivel);
-  };
-
   return (
     <div className='tudo'>
-      <header className="header-polo">
-        <img
-          className='logo-branco resized-logo'
-          src={LogoBranca}
-          alt="Logo preta Organize"
-        />
-        <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faUserAlt} size='2x'/></button>
-        <nav className={menuVisivel ? "menu visible" : "menu"}>
-          <ul>
-            <li><a href="/perfil">Perfil</a></li>
-            <li><a href="/perfil">Cadastro</a></li>
-            <li><a href="/perfil">Perfil</a></li>
-            <li><a href="/perfil">Perfil</a></li>
-          </ul>
-        </nav>
-      </header>
+      <HeaderComponents/>
       <body className='polo-home'>
         <div className='body-body'>
           <button className='voltaHome-polo'>
