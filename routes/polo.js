@@ -11,7 +11,7 @@ const {buscarInstituicaoId} = require("../database/instituicao");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/polo", async (req,res) => {
+router.get("/polo", auth, async (req,res) => {
     const polos = await listarPolos()
     res.json({
         polos,
@@ -19,7 +19,7 @@ router.get("/polo", async (req,res) => {
     console.log('Consulta realizada na tabela Polo.')
 });
 
-router.get("/polo/:id", async (req,res) => {
+router.get("/polo/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const polo = await buscarPoloId(id)
 

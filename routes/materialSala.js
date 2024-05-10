@@ -11,7 +11,7 @@ const {buscarMaterialId} = require("../database/material");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/materialSala", async (req,res) => {
+router.get("/materialSala", auth, async (req,res) => {
     const materialSalas = await listarMaterialSalas()
     res.json({
         materialSalas,
@@ -19,7 +19,7 @@ router.get("/materialSala", async (req,res) => {
     console.log('Consulta realizada na tabela MaterialSala.')
 });
 
-router.get("/materialSala/:id", async (req,res) => {
+router.get("/materialSala/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const materialSala = await buscarMaterialSalaId(id)
 

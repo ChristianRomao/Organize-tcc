@@ -15,7 +15,7 @@ const jwt = require("jsonwebtoken");
 const {auth} = require("../middleware/auth");
 
 
-router.get("/usuario", async (req,res) => {
+router.get("/usuario", auth, async (req,res) => {
     const usuarios = await listarUsuarios()
     res.json({
         usuarios,
@@ -23,7 +23,7 @@ router.get("/usuario", async (req,res) => {
     console.log('Consulta realizada na tabela Usuario.')
 });
 
-router.get("/usuario/:id", async (req,res) => {
+router.get("/usuario/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const usuario = await buscarUsuarioId(id)
 
@@ -63,6 +63,11 @@ router.post("/registro", async (req,res) => {
         // }else{
         //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
         // }
+
+        if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
+            return res.status(400).json({ message: "Nome não pode conter números/caracteres especiais!" });
+        }
+
         const usuario = {
             cd_cpfcnpj: cpfcnpj,
             nm_usuario: req.body.nm_usuario,
@@ -125,15 +130,40 @@ router.put("/usuario/:id", auth, async (req,res) => {
         if(!usuarioExiste){
             return res.status(404).json({error:"Usuario não encontrado!"});
         }
+
+        const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
+
+        const cpfcnpj = req.body.cd_cpfcnpj
+
+        // if(cpfcnpj.length == 11){
+        //     const cpfValidado = cpf.validate(cpfcnpj);
+
+        //     if(!cpfValidado){
+        //         return res.status(404).json({error:"CPF inválido!"});
+        //     }
+        // }else if(cpfcnpj.length == 14){
+        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+
+        //     if(!cnpjValidado){
+        //         return res.status(404).json({error:"CNPJ inválido!"});
+        //     }
+        // }else{
+        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        // }
+
         
         const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();
 
+        if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
+            return res.status(400).json({ message: "Nome não pode conter números/caracteres especiais!" });
+        }
+
         const usuario = {
-            cd_cpfcnpj: req.body.cd_cpfcnpj,
+            cd_cpfcnpj: cpfcnpj,
             nm_usuario: req.body.nm_usuario,
             dt_nascimento: dt_nascimentoForm,
             ds_email: req.body.ds_email,
-            ds_senha: req.body.ds_senha,
+            ds_senha: senhaCriptografada,
             ds_funcao: req.body.ds_funcao
         }
         

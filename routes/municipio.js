@@ -5,28 +5,17 @@ const {
   gravarMunicipio,
   alterarMunicipio,
   deletarMunicipio,
-  buscarDetalhesEstado,
 } = require("../database/municipio");
 const {buscarEstadoId} = require("../database/estado");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/municipio", async (req, res) => {
+router.get("/municipio", auth, async (req, res) => {
   try {
     const municipios = await listarMunicipios();
-    const municipiosComDetalhes = await Promise.all(
-      municipios.map(async (municipio) => {
-        const detalhesEstado = await buscarDetalhesEstado(municipio.estado_cd);
-        return {
-          ...municipio,
-          DetalhesEstado: detalhesEstado,
-        };
-      })
-    );
-
     res.json({
-      Municipios: municipiosComDetalhes,
-    });
+      municipios,
+  });
     console.log("Consulta completa realizada para todos os municípios");
   } catch (error) {
     console.error("Erro ao consultar todos os municípios:" + error);
@@ -34,7 +23,7 @@ router.get("/municipio", async (req, res) => {
   }
 });
 
-router.get("/municipio/:id", async (req, res) => {
+router.get("/municipio/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
   const municipio = await buscarMunicipioId(id);
 
@@ -42,11 +31,8 @@ router.get("/municipio/:id", async (req, res) => {
     return res.status(404).json({ error: "Municipio não encontrado!" });
   }
 
-  const detalhesEstado = await buscarDetalhesEstado(municipio.estado_cd);
-
     res.json({ 
-      Municipio: municipio,
-      DetalhesEstado: detalhesEstado
+      municipio: municipio,
     });
   console.log("Consulta realizada na tabela Municipio, com o id: " + id);
 });

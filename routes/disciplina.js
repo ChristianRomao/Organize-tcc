@@ -10,7 +10,7 @@ const router = express.Router();
 const {auth} = require("../middleware/auth");
 
 
-router.get("/disciplina", async (req,res) => {
+router.get("/disciplina", auth, async (req,res) => {
     const disciplinas = await listarDisciplinas()
     res.json({
         disciplinas,
@@ -18,7 +18,7 @@ router.get("/disciplina", async (req,res) => {
     console.log('Consulta realizada na tabela Disciplina.')
 });
 
-router.get("/disciplina/:id", async (req,res) => {
+router.get("/disciplina/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const disciplina = await buscarDisciplinaId(id)
 

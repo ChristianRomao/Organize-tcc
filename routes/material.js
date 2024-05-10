@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/material", async (req,res) => {
+router.get("/material", auth, async (req,res) => {
     const materiais = await listarMateriais()
     res.json({
         materiais,
@@ -17,7 +17,7 @@ router.get("/material", async (req,res) => {
     console.log('Consulta realizada na tabela Material.')
 });
 
-router.get("/material/:id", async (req,res) => {
+router.get("/material/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const material = await buscarMaterialId(id)
 

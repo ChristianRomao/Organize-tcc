@@ -6,7 +6,7 @@ alterarEstado} = require("../database/estado");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/estado", async (req,res) => {
+router.get("/estado", auth, async (req,res) => {
     const estados = await listarEstados()
     res.json({
         estados
@@ -14,7 +14,7 @@ router.get("/estado", async (req,res) => {
     console.log('Consulta realizada na tabela Estado.')
 });
 
-router.get("/estado/:id", async (req,res) => {
+router.get("/estado/:id", auth, async (req,res) => {
     const id = req.params.id;
     const estado = await buscarEstadoId(id)
 

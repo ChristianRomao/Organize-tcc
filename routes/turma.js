@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/turma", async (req,res) => {
+router.get("/turma", auth, async (req,res) => {
     const turmas = await listarTurmas()
     res.json({
         turmas,
@@ -18,7 +18,7 @@ router.get("/turma", async (req,res) => {
     console.log('Consulta realizada na tabela Turma.')
 });
 
-router.get("/turma/:id", async (req,res) => {
+router.get("/turma/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const turma = await buscarTurmaId(id)
 

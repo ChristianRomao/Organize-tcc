@@ -10,7 +10,7 @@ const router = express.Router();
 const {auth} = require("../middleware/auth");
 
 
-router.get("/curso", async (req,res) => {
+router.get("/curso",  auth, async (req,res) => {
     const cursos = await listarCursos()
     res.json({
         cursos,
@@ -18,7 +18,7 @@ router.get("/curso", async (req,res) => {
     console.log('Consulta realizada na tabela Curso.')
 });
 
-router.get("/curso/:id", async (req,res) => {
+router.get("/curso/:id",  auth, async (req,res) => {
     const id = Number(req.params.id);
     const curso = await buscarCursoId(id)
 

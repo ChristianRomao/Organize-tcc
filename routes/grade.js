@@ -11,7 +11,7 @@ const {buscarTurmaId} = require("../database/turma");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/grade", async (req,res) => {
+router.get("/grade", auth, async (req,res) => {
     const grades = await listarGrades()
     res.json({
         grades,
@@ -19,7 +19,7 @@ router.get("/grade", async (req,res) => {
     console.log('Consulta realizada na tabela Grade.')
 });
 
-router.get("/grade/:id", async (req,res) => {
+router.get("/grade/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const grade = await buscarGradeId(id)
 
@@ -45,6 +45,10 @@ router.post("/grade", auth, async (req,res) => {
     
         if(!turmaExiste){
           return res.status(404).json({ error: "Turma não encontrada!" });
+        }
+
+        if(req.body.qt_alunos <= 0){
+            return res.status(400).json({ error: "Quantidade inválida!" });
         }
 
         const grade = {
@@ -89,6 +93,11 @@ router.put("/grade/:id", auth, async (req,res) => {
         if(!turmaExiste){
           return res.status(404).json({ error: "Turma não encontrada!" });
         }
+
+        if(req.body.qt_alunos <= 0){
+            return res.status(400).json({ error: "Quantidade inválida!" });
+        }
+
         const grade = {
             nm_professor: req.body.nm_professor,
             nr_cargahr: req.body.nr_cargahr,

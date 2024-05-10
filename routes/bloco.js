@@ -10,7 +10,7 @@ const { buscarPoloId } = require("../database/polo");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/bloco", async (req, res) => {
+router.get("/bloco", auth, async (req, res) => {
   const blocos = await listarBlocos();
   res.json({
     blocos,
@@ -18,7 +18,7 @@ router.get("/bloco", async (req, res) => {
   console.log("Consulta realizada na tabela Bloco.");
 });
 
-router.get("/bloco/:id", async (req, res) => {
+router.get("/bloco/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
   const bloco = await buscarBlocoId(id);
 

@@ -8,8 +8,10 @@ const {
 } = require("../database/instituicao");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const {cpf,cnpj} = require('brazilian-doc-validator');
 
-router.get("/instituicao", async (req, res) => {
+
+router.get("/instituicao", auth, async (req, res) => {
   const instituicoes = await listarInstituicoes();
   res.json({
     instituicoes,
@@ -17,7 +19,7 @@ router.get("/instituicao", async (req, res) => {
   console.log("Consulta realizada na tabela Instituição.");
 });
 
-router.get("/instituicao/:id", async (req, res) => {
+router.get("/instituicao/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
   const instituicao = await buscarInstituicaoId(id);
 
@@ -31,13 +33,34 @@ router.get("/instituicao/:id", async (req, res) => {
 
 router.post("/instituicao", auth, async (req, res) => {
   try {
-    const newInstituicaoJSON = JSON.stringify(req.body);
-    const newInstituicao = JSON.parse(newInstituicaoJSON);
-    const instituicaoSalva = await gravarInstituicao(newInstituicao);
+    const cpfcnpj = req.body.cd_cpfcnpj
 
-    res.json({
-      instituicao: instituicaoSalva,
-    });
+        // if(cpfcnpj.length == 11){
+        //     const cpfValidado = cpf.validate(cpfcnpj);
+
+        //     if(!cpfValidado){
+        //         return res.status(404).json({error:"CPF inválido!"});
+        //     }
+        // }else if(cpfcnpj.length == 14){
+        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+
+        //     if(!cnpjValidado){
+        //         return res.status(404).json({error:"CNPJ inválido!"});
+        //     }
+        // }else{
+        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        // }
+
+        const instituicao = {
+          cd_cpfcnpj: cpfcnpj,
+          nm_razaosoc: req.body.nm_razaosoc,
+          nm_fantasia: req.body.nm_fantasia
+      }
+      const instituicaoSalva = await gravarInstituicao(instituicao);
+
+      res.status(201).json({
+          instituicao: instituicaoSalva,
+      });
     console.log("Gravação realizada na tabela Instituição");
   } catch (error) {
     console.error("Erro ao gravar instituição:" + error);
@@ -54,9 +77,27 @@ router.put("/instituicao/:id", auth, async (req, res) => {
       return res.status(404).json({ error: "Instituição não encontrada!" });
     }
 
+    const cpfcnpj = req.body.cd_cpfcnpj
+
+    // if(cpfcnpj.length == 11){
+    //     const cpfValidado = cpf.validate(cpfcnpj);
+
+    //     if(!cpfValidado){
+    //         return res.status(404).json({error:"CPF inválido!"});
+    //     }
+    // }else if(cpfcnpj.length == 14){
+    //     const cnpjValidado = cnpj.validate(cpfcnpj);
+
+    //     if(!cnpjValidado){
+    //         return res.status(404).json({error:"CNPJ inválido!"});
+    //     }
+    // }else{
+    //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
+    // }
+
     const instituicao = {
       nm_razaosoc: req.body.nm_razaosoc,
-      cd_cpfcnpj: req.body.cd_cpfcnpj,
+      cd_cpfcnpj: cpfcnpj,
       nm_fantasia: req.body.nm_fantasia,
     };
 

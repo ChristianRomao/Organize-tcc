@@ -7,15 +7,14 @@ const {
     deletarReserva,
 } = require("../database/reserva");
 const {buscarSalaId} = require("../database/sala");
-const {buscarTurmaId} = require("../database/turma");
+const {buscarGradeId} = require("../database/grade");
 const {buscarUsuarioId} = require("../database/usuario");
 const {buscarStatusId} = require("../database/status");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 const {formatarDataISO} = require("../transformarData");
-const prisma = require("../database/prisma");
 
-router.get("/reserva", async (req,res) => {
+router.get("/reserva", auth, async (req,res) => {
     const reservas = await listarReservas()
     res.json({
         reservas,
@@ -23,7 +22,7 @@ router.get("/reserva", async (req,res) => {
     console.log('Consulta realizada na tabela Reserva.')
 });
 
-router.get("/reserva/:id", async (req,res) => {
+router.get("/reserva/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const reserva = await buscarReservaId(id)
 
@@ -46,11 +45,11 @@ router.post("/reserva", auth, async (req,res) => {
           return res.status(404).json({ error: "Sala não encontrada!" });
         }
 
-        const turma = req.body.turma;
-        const turmaExiste = await buscarTurmaId(turma.id_turma)
+        const grade = req.body.grade;
+        const gradeExiste = await buscarGradeId(grade.id_grade)
     
-        if(!turmaExiste){
-          return res.status(404).json({ error: "Turma não encontrada!" });
+        if(!gradeExiste){
+          return res.status(404).json({ error: "Grade não encontrada!" });
         }
 
         const usuario = req.body.usuario;
@@ -66,12 +65,13 @@ router.post("/reserva", auth, async (req,res) => {
         if(!statusExiste){
           return res.status(404).json({ error: "Status não encontrado!" });
         }
-        //VALIDAÇÕES
-        const grade = await prisma.grade.findMany({
-            where: {turma_id:turmaExiste.id_turma}
-        })
 
-        console.log(grade);
+        const alunosVigilancia = salaExiste.qt_capacvigilancia;
+        const alunosTurma = gradeExiste.qt_alunos;
+        //VALIDAÇÕES
+        if(alunosVigilancia < alunosTurma){
+            return res.status(406).json({ message: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+        }
         //END VALIDAÇÕES
 
         const dt_inicioForm = formatarDataISO(req.body.dt_inicio);
@@ -83,7 +83,7 @@ router.post("/reserva", auth, async (req,res) => {
             ds_observacao:  req.body.ds_observacao,
             status_cd:      status.cd_status,
             sala_id:        sala.id_sala,   
-            turma_id:       turma.id_turma,
+            grade_id:       grade.id_grade,
             usuario_id:     usuario.id_usuario,
         }
         const reservaSalva = await gravarReserva(reserva);
@@ -115,11 +115,11 @@ router.put("/reserva/:id", auth, async (req,res) => {
           return res.status(404).json({ error: "Sala não encontrada!" });
         }
 
-        const turma = req.body.turma;
-        const turmaExiste = await buscarTurmaId(turma.id_turma)
+        const grade = req.body.grade;
+        const gradeExiste = await buscarGradeId(grade.id_grade)
     
-        if(!turmaExiste){
-          return res.status(404).json({ error: "Turma não encontrada!" });
+        if(!gradeExiste){
+          return res.status(404).json({ error: "Grade não encontrada!" });
         }
 
         const usuario = req.body.usuario;
@@ -145,7 +145,7 @@ router.put("/reserva/:id", auth, async (req,res) => {
             ds_observacao:  req.body.ds_observacao,
             status_cd:      status.status_cd,
             sala_id:        sala.id_sala,   
-            turma_id:       turma.id_turma,
+            grade_id:       grade.id_grade,
             usuario_id:     usuario.id_usuario,
         }
         

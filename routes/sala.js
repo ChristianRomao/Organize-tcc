@@ -10,7 +10,7 @@ const {buscarBlocoId} = require("../database/bloco");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 
-router.get("/sala", async (req,res) => {
+router.get("/sala", auth, async (req,res) => {
     const salas = await listarSalas()
     res.json({
         salas,
@@ -18,7 +18,7 @@ router.get("/sala", async (req,res) => {
     console.log('Consulta realizada na tabela Sala.')
 });
 
-router.get("/sala/:id", async (req,res) => {
+router.get("/sala/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const sala = await buscarSalaId(id)
 
@@ -37,6 +37,10 @@ router.post("/sala", auth, async (req,res) => {
     
         if(!blocoExiste){
           return res.status(404).json({ error: "Sala não encontrada!" });
+        }
+
+        if(req.body.qt_capacvigilancia <= 0){
+            return res.status(400).json({ error: "Quantidade inválida!" });
         }
 
         const sala = {
@@ -71,6 +75,10 @@ router.put("/sala/:id", auth, async (req,res) => {
     
         if(!blocoExiste){
           return res.status(404).json({ error: "Bloco não encontrado!" });
+        }
+
+        if(req.body.qt_capacvigilancia <= 0){
+            return res.status(400).json({ error: "Quantidade inválida!" });
         }
         
         const sala = {

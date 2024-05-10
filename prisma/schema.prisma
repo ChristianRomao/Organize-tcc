@@ -105,8 +105,8 @@ model Reserva {
   usuario    Usuario @relation(fields: [usuario_id], references: [id_usuario])
   usuario_id Int
   
-  turma    Turma @relation(fields: [turma_id], references: [id_turma])
-  turma_id Int
+  grade    Grade @relation(fields: [grade_id], references: [id_grade])
+  grade_id Int
 
   status   Status @relation(fields: [status_cd], references: [cd_status])
   status_cd String
@@ -128,7 +128,6 @@ model Turma {
   id_turma Int    @id @default(autoincrement())
   ds_turma String
   grades Grade[]
-  reservas Reserva[]
 
     //RELACIONAMENTOS
   curso    Curso @relation(fields: [curso_id], references: [id_curso])
@@ -140,6 +139,7 @@ model Grade {
   nm_professor String
   nr_cargaHr   Int
   qt_alunos    Int
+  reservas Reserva[]
 
   //RELACIONAMENTOS
   turma    Turma @relation(fields: [turma_id], references: [id_turma])

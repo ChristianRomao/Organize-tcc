@@ -3,7 +3,7 @@ const prisma = require("./prisma");
 const listarReservas = () => {
   return prisma.reserva.findMany({
     include: {
-      status:true,
+      status: true,
       sala: {
         include: {
           materiaisSala: {
@@ -30,9 +30,13 @@ const listarReservas = () => {
         },
       },
       usuario: true,
-      turma: {
+      grade: {
         include: {
-          grades: true,
+          turma: {
+            include: {
+              curso:true,
+            },
+          },
         },
       },
     },
@@ -45,7 +49,7 @@ const buscarReservaId = (id) => {
       id_reserva: id,
     },
     include: {
-      status:true,
+      status: true,
       sala: {
         include: {
           materiaisSala: {
@@ -72,9 +76,13 @@ const buscarReservaId = (id) => {
         },
       },
       usuario: true,
-      turma: {
+      grade: {
         include: {
-          grades: true,
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
         },
       },
     },
@@ -89,7 +97,7 @@ const gravarReserva = (reserva) => {
       ds_observacao: reserva.ds_observacao,
       status_cd: reserva.status_cd,
       sala_id: reserva.sala_id,
-      turma_id: reserva.turma_id,
+      grade_id: reserva.grade_id,
       usuario_id: reserva.usuario_id,
     },
   });

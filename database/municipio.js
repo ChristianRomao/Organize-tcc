@@ -45,20 +45,10 @@ const deletarMunicipio = (id) => {
     })
 }
 
-const buscarDetalhesEstado = async (cdEstado) => {
-    const estado = await prisma.estado.findFirst({
-      where: {
-        cd_estado: cdEstado,
-      },
-    });
-    return estado;
-  };
-
 module.exports = {
     listarMunicipios,
     buscarMunicipioId,
     gravarMunicipio,
     alterarMunicipio,
-    deletarMunicipio,
-    buscarDetalhesEstado
+    deletarMunicipio
 }
