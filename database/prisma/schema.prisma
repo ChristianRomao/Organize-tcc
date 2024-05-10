@@ -1,0 +1,181 @@
+// This is your Prisma schema file
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Instituicao {
+  id_instituicao Int     @id @default(autoincrement())
+  nm_razaosoc    String
+  cd_cpfcnpj     String
+  nm_fantasia    String
+  polos          Polo[]
+}
+
+model Bloco {
+  id_bloco       Int         @id @default(autoincrement())
+  nm_bloco       String
+  salas Sala[]
+
+  //RELACIONAMENTOS
+  polo    Polo @relation(fields: [polo_id], references: [id_polo])
+  polo_id Int
+}
+
+model Polo {
+  id_polo     Int    @id @default(autoincrement())
+  nm_polo     String
+  ds_endereco String
+  blocos Bloco[]
+
+  //RELACIONAMENTOS
+  instituicao    Instituicao @relation(fields: [instituicao_id], references: [id_instituicao])
+  instituicao_id Int
+  
+  municipio    Municipio @relation(fields: [municipio_id], references: [id_municipio])
+  municipio_id Int
+}
+
+model Municipio {
+  id_municipio Int    @id @default(autoincrement())
+  nm_municipio String
+  polos Polo[]
+
+   //RELACIONAMENTOS
+  estado    Estado @relation(fields: [estado_cd], references: [cd_estado])
+  estado_cd String
+}
+
+model Estado {
+  cd_estado String @id
+  nm_estado String
+  municipios Municipio[]
+}
+
+model Material {
+  id_material Int    @id @default(autoincrement())
+  ds_material String
+  materiaisSala MaterialSala[]
+}
+
+model MaterialSala {
+  id_materialSala Int    @id @default(autoincrement())
+  qt_material     Int
+  ds_materialSala String? 
+
+  //RELACIONAMENTOS
+  material    Material @relation(fields: [material_id], references: [id_material])
+  material_id Int
+
+  sala    Sala @relation(fields: [sala_id], references: [id_sala])
+  sala_id Int
+}
+
+model Sala {
+  id_sala            Int    @id @default(autoincrement())
+  nm_sala            String
+  qt_capacvigilancia Int
+  materiaisSala MaterialSala[]
+  reservas  Reserva[]
+
+  //RELACIONAMENTOS
+  bloco    Bloco @relation(fields: [bloco_id], references: [id_bloco])
+  bloco_id Int
+}
+
+model Reserva {
+  id_reserva     Int      @id @default(autoincrement())
+  dt_inicio     DateTime @db.DateTime()
+  dt_fim        DateTime @db.DateTime()
+  ds_observacao String?
+
+  //RELACIONAMENTOS
+  sala    Sala @relation(fields: [sala_id], references: [id_sala])
+  sala_id Int
+
+  usuario    Usuario @relation(fields: [usuario_id], references: [id_usuario])
+  usuario_id Int
+  
+  turma    Turma @relation(fields: [turma_id], references: [id_turma])
+  turma_id Int
+
+  status   Status @relation(fields: [status_cd], references: [cd_status])
+  status_cd String
+}
+
+model Status {
+  cd_status String @id
+  ds_status String
+  reservas Reserva[]
+}
+
+model Curso {
+  id_curso Int    @id @default(autoincrement())
+  ds_curso String
+  turmas Turma[]
+}
+
+model Turma {
+  id_turma Int    @id @default(autoincrement())
+  ds_turma String
+  grades Grade[]
+  reservas Reserva[]
+
+    //RELACIONAMENTOS
+  curso    Curso @relation(fields: [curso_id], references: [id_curso])
+  curso_id Int
+}
+
+model Grade {
+  id_grade     Int    @id @default(autoincrement())
+  nm_professor String
+  nr_cargaHr   Int
+  qt_alunos    Int
+
+  //RELACIONAMENTOS
+  turma    Turma @relation(fields: [turma_id], references: [id_turma])
+  turma_id Int
+
+    //RELACIONAMENTOS
+  disciplina    Disciplina @relation(fields: [disciplina_id], references: [id_disciplina])
+  disciplina_id Int
+}
+
+model Disciplina {
+  id_disciplina Int    @id @default(autoincrement())
+  nm_disciplina String
+  grades Grade[]
+}
+
+model Usuario {
+  id_usuario    Int      @id @default(autoincrement())
+  cd_cpfcnpj    String   @unique
+  nm_usuario    String
+  dt_nascimento DateTime @db.Date()
+  ds_email      String   @unique
+  ds_senha      String
+  ds_funcao     String?
+  logs Log[]
+  reservas Reserva[]
+}
+
+model Log {
+  id_log  Int      @id @default(autoincrement())
+  dt_log  DateTime @db.Date
+  nr_ip   String
+  ds_acao String
+
+  //RELACIONAMENTOS
+  usuario    Usuario @relation(fields: [usuario_id], references: [id_usuario])
+  usuario_id Int
+}
+

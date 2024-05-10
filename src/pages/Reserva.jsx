@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LogoBranca from '../img/organize-branco.png';
-import { faArrowLeft, faLocationDot, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import './Reserva.css';
-
+import { TextField } from '@mui/material';
 
 function Reserva() {
 
@@ -56,6 +56,7 @@ function Reserva() {
               <div>
                 <input className='date-reserva' type="date" required/>
                 <input className='time-reserva' type="time" required/>
+                <TextField/>  
               </div>
               <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
             </form>

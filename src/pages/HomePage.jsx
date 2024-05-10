@@ -2,7 +2,7 @@ import './HomePage.css';
 import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxArchive, faCalendarDays, faMagnifyingGlass, faPenToSquare, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faMagnifyingGlass, faPenToSquare, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 const HomePage = () => {
 
