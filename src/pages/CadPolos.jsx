@@ -50,9 +50,9 @@ function CadPolos() {
             </div>
             <form className='ajustes-polo'>
             <div>
-                <label className='titulo-inst-polo'>Instituição</label>
+                <label className='titulo-inputs-polo'>Instituição</label>
                 <input
-                  className='inputs-inst-polo'
+                  className='inputs-polo disable'
                   type="text"
                   name="nm_razaosoc"
                   required

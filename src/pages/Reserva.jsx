@@ -56,7 +56,7 @@ function Reserva() {
               <div>
                 <input className='date-reserva' type="date" required/>
                 <input className='time-reserva' type="time" required/>
-                <TextField/>  
+                <TextField id="filled-basic" label="Filled" variant="outlined" size='small' InputProps={{style: {backgroundColor: "red"}}}/>  
               </div>
               <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
             </form>

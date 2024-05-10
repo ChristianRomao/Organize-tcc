@@ -111,8 +111,7 @@ ul li {
 
 .icon-container-polo {
     margin-top: 66px;
-    margin-right: 280px;
-    margin-left: 150px;
+    width: 50%;
     animation: slide-in 1s ease forwards;
 }
 @keyframes slide-in {
@@ -153,8 +152,10 @@ ul li {
 .inputs-polo {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 120%;
+    width: 80%;
     margin: 6px 0px;
+    display: flex;
+    text-align: center;
     border-radius: 10px;
     border-style: none;
 }
@@ -162,29 +163,33 @@ ul li {
 .inputs-inst-polo {
     background-color: #7c8ca3;
     padding: 10px 10px;
-    width: 120%;
+    width: 80%;
     margin: 6px 0px;
     border-radius: 10px;
+    text-align: center;
     border-style: none;
+}
+
+.disable {
+    background-color: #7c8ca3;
+    cursor: not-allowed;
 }
 
 .titulo-inputs-polo {
     color: #d6e7ff;
-    margin-right: 110px;
     margin-top: 10px;
     padding-left: 10px;
-    text-align: justify;
+    display: flex;
 }
 
 .titulo-inst-polo {
     color: #7c8ca3;
-    margin-right: 110px;
     margin-top: 10px;
-    padding-left: 10px;
-    text-align: justify;
+    display: flex;
 }
 
 .ajustes-polo {
+    width: 50%;
     margin-top: 80px;
     animation: slide-in 1s ease forwards;
 }
