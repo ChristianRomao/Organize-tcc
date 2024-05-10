@@ -1,10 +1,36 @@
 import './LoginPage.css';
 import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-
+    const navigate = useNavigate();
     const [senhaVisivel, setSenhaVisivel] = useState(false);
+    const [ds_email, setEmail] = useState('joaquim@gmail.com');
+    const [ds_senha, setSenha] = useState('Teste123@');
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value)
+    }
+
+    const handleSenhaChange = (event) => {
+        setSenha(event.target.value)
+    }
+    
+    const handleLogin = async () =>{
+        try{
+            const loginData = {ds_email, ds_senha }
+            
+            const response = await axios.post('http://localhost:8080/login', loginData);
+            console.log('Usuário autenticado:', response.data);
+
+
+            navigate('/home')
+        }catch(error){
+            console.error('Erro ao tentar fazer login:', error.response.data);
+        }
+    }
     
     const mostraSenha = () => {
         setSenhaVisivel(!senhaVisivel)
@@ -21,14 +47,14 @@ const LoginPage = () => {
                 </div>
                 <div className='box-input'>
                     <text style={{color: '#D9D9D9', fontWeight: 'bold'}}>Informe seu Login</text>
-                    <input className='login' type='email' placeholder='Digite seu Email'/>
+                    <input className='login' type='email' placeholder='Digite seu Email' onChange={handleEmailChange}/>
                     <div>
-                        <input className='login' type='password' placeholder='Digite sua Senha'/>
+                        <input className='login' type='password' placeholder='Digite sua Senha' onChange={handleSenhaChange}/>
                     </div>
-                    <button className='esqueceusenha' type='button'>Esqueceu sua senha?</button>                 
+                    <button className='alterarsenha' type='button'>Alterar sua senha?</button>                 
                 </div>
                 <div className='container-btn'>
-                    <button className='loginBT' type='button'>Entrar</button>
+                    <button className='loginBT' type='button' onClick={handleLogin}>Entrar</button>
                     <button className='registerBT' type='button'>Registrar</button>
                 </div>
             </div>

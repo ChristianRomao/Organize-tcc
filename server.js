@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors"); // Importe o pacote cors
 const instituicaoRoutes = require("./routes/instituicao");
 const estadoRoutes = require("./routes/estado");
 const municipioRoutes = require("./routes/municipio");
@@ -17,6 +18,14 @@ const popularTabelas = require("./popularTabelas")
 
 
 const server = express();
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Permitir apenas solicitações deste domínio
+  methods: ['GET', 'POST','PUT','DELETE'], // Permitir apenas os métodos GET e POST
+};
+
+server.use(cors(corsOptions));
+
 server.use(express.json());
 
 server.use(instituicaoRoutes.router);
