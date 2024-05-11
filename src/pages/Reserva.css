@@ -19,13 +19,11 @@
 
 .cadastro-reserva {
     background-color: #0E1826;
-    text-align: center;
-    width: 60%;
+    width: 40%;
     height: 65vh;
     margin-top: 2%;
     border-radius: 20px;
     display: flex;
-    grid-template-columns: auto 1fr;
     align-items: center;
     flex-direction: row;
     gap: 18px;
@@ -89,18 +87,16 @@
 
 .date-reserva {
     background-color: #d6e7ff;
-    padding: 10px 17px;
+    padding: 10px 10px;
     width: 60%;
-    margin: 6px 10px;
     border-radius: 6px;
     border-style: none;
 }
 
 .time-reserva {
     background-color: #d6e7ff;
-    padding: 10px 17px;
+    padding: 10px 10px;
     width: 60%;
-    margin: 6px 10px;
     border-radius: 6px;
     border-style: none;
 }
@@ -118,7 +114,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 80px;
-    margin-left: 394px;
+    margin-left: 340px;
     animation: slide-in 1s ease forwards;
 }
 @keyframes slide-in {
