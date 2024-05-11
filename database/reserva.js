@@ -120,9 +120,49 @@ const deletarReserva = (id) => {
   });
 };
 
+const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
+  return prisma.reserva.findMany({
+      where: {
+          sala_id: id_sala,
+          status_cd: "A",
+          AND: [
+              {
+                  OR: [
+                      {
+                          dt_inicio: {
+                              lte: dt_inicio,
+                          },
+                          dt_fim: {
+                              gte: dt_inicio,
+                          },
+                      },
+                      {
+                          dt_inicio: {
+                              lte: dt_fim,
+                          },
+                          dt_fim: {
+                              gte: dt_fim,
+                          },
+                      },
+                      {
+                          dt_inicio: {
+                              gte: dt_inicio,
+                          },
+                          dt_fim: {
+                              lte: dt_fim,
+                          },
+                      },
+                  ],
+              },
+          ],
+      },
+  });
+};
+
 module.exports = {
   listarReservas,
   buscarReservaId,
+  buscarReservasPeriodoSala,
   gravarReserva,
   alterarReserva,
   deletarReserva,
