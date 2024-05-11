@@ -5,6 +5,7 @@ const {
     gravarReserva,
     alterarReserva,
     deletarReserva,
+    buscarReservasPeriodoSala,
 } = require("../database/reserva");
 const {buscarSalaId} = require("../database/sala");
 const {buscarGradeId} = require("../database/grade");
@@ -65,17 +66,24 @@ router.post("/reserva", auth, async (req,res) => {
         if(!statusExiste){
           return res.status(404).json({ error: "Status não encontrado!" });
         }
-
+        
+        const dt_inicioForm = formatarDataISO(req.body.dt_inicio);
+        const dt_fimForm = formatarDataISO(req.body.dt_fim);
+        
+        //VALIDAÇÕES
         const alunosVigilancia = salaExiste.qt_capacvigilancia;
         const alunosTurma = gradeExiste.qt_alunos;
-        //VALIDAÇÕES
+
         if(alunosVigilancia < alunosTurma){
             return res.status(406).json({ message: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
         }
-        //END VALIDAÇÕES
 
-        const dt_inicioForm = formatarDataISO(req.body.dt_inicio);
-        const dt_fimForm = formatarDataISO(req.body.dt_fim);
+        const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
+        console.log(existeReserva);
+        if(existeReserva != ""){
+            return res.status(406).json({ message: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
+        }
+        //END VALIDAÇÕES
 
         const reserva = {
             dt_inicio:      dt_inicioForm,
@@ -138,6 +146,21 @@ router.put("/reserva/:id", auth, async (req,res) => {
 
         const dt_inicioForm = formatarDataISO(req.body.dt_inicio);
         const dt_fimForm = formatarDataISO(req.body.dt_fim);
+
+        //VALIDAÇÕES
+        const alunosVigilancia = salaExiste.qt_capacvigilancia;
+        const alunosTurma = gradeExiste.qt_alunos;
+
+        if(alunosVigilancia < alunosTurma){
+            return res.status(406).json({ message: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+        }
+
+        const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
+        console.log(existeReserva);
+        if(existeReserva != ""){
+            return res.status(406).json({ message: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
+        }
+        //END VALIDAÇÕES
 
         const reserva = {
             dt_inicio:      dt_inicioForm,
