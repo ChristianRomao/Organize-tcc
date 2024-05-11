@@ -69,8 +69,9 @@
 
 .alterarsenha {
     color: white;
-    margin-right: 100px;
-    margin-top: -12px;
+    background-color: #173154;
+    margin-right: 110px;
+    margin-top: -10px;
 }
 
 .container-right {
