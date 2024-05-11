@@ -170,7 +170,7 @@ model Usuario {
 
 model Log {
   id_log  Int      @id @default(autoincrement())
-  dt_log  DateTime @db.Date
+  dt_log  DateTime @db.DateTime()
   nr_ip   String
   ds_acao String
 

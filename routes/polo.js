@@ -8,15 +8,26 @@ const {
 } = require("../database/polo");
 const {buscarMunicipioId} = require("../database/municipio");
 const {buscarInstituicaoId} = require("../database/instituicao");
+const {decodeJWT} = require("./decode");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { gravarLog } = require("../database/log");
+const moment = require("moment-timezone");
+const { date } = require("zod");
 
 router.get("/polo", auth, async (req,res) => {
     const polos = await listarPolos()
     res.json({
         polos,
     });
-    console.log('Consulta realizada na tabela Polo.')
+
+    //LOG
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    const acao = ('Consulta realizada na tabela Polo.')
+    await gravarLog(userLog,ip,acao)
+    //END LOG
 });
 
 router.get("/polo/:id", auth, async (req,res) => {
@@ -28,7 +39,7 @@ router.get("/polo/:id", auth, async (req,res) => {
     }
 
     res.json({polo : polo});
-    console.log('Consulta realizada na tabela polo, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela polo, com o id: ' + id);
 });
 
 router.post("/polo", auth, async (req,res) => {
@@ -58,7 +69,7 @@ router.post("/polo", auth, async (req,res) => {
         res.json({
             polo: poloSalvo,
         });
-        console.log('Gravação realizada na tabela Polo')
+        const acao = ('Gravação realizada na tabela Polo')
     }catch (error){
         console.error('Erro ao gravar Polo:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -100,7 +111,7 @@ router.put("/polo/:id", auth, async (req,res) => {
         res.json({
             polo: poloAlterado
         })
-        console.log('Alteração realizada na tabela polo, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela polo, com o id: ' + id);
     }catch (error) {
         console.error("Erro ao alterar polo:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -118,7 +129,7 @@ router.delete("/polo/:id", auth, async (req,res) => {
         }
 
         await deletarPolo(id);
-        console.log('Deletado polo com o id: ' + id);
+        const acao = ('Deletado polo com o id: ' + id);
         return res.status(200).json({ message: "Polo deletado com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar polo:" + error);
