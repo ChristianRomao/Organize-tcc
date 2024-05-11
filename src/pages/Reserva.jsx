@@ -2,18 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './Reserva.css';
-import { DatePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import HeaderComponents from '../components/HeaderComponents';
-import { DateRangePicker } from '@mui/x-date-pickers-pro';
-
-function Label({ componentName, valueType, isProOnly }) {
-  const content = (
-    <span>
-      <strong>{componentName}</strong> for {valueType} editing
-    </span>
-  );
-}
 
 function Reserva() {
 
@@ -38,33 +28,33 @@ function Reserva() {
               <FontAwesomeIcon icon={faLocationDot} style={{color: "#d6e7ff"}} className="large-icon"/>
             </div> */}
             <form className='ajustes-reserva'>
-              <div>
-                <input className='date-reserva' type="date" required/>
-                <input className='time-reserva' type="time" required/>
-              </div>
-              <div>
-                <input className='date-reserva' type="date" required/>
-                <input className='time-reserva' type="time" required/>
-                <TextField id="filled-basic" label="Filled" variant="outlined" size='small' InputProps={{style: {backgroundColor: "red"}}}/>  
-              </div>
-              <DemoItem
-                label={
-                  <Label
-                    componentName="DateRangePicker"
-                    valueType="date range"
-                    isProOnly
-                  />
-                }
-                component="DateRangePicker"
-              >
-                <DateRangePicker
-                  localeText={{
-                    start: '',
-                    end: '',
-                  }}
+              <Grid container  justifyContent="center" spacing={1}>
+                <Grid item md={8}>
+                  <input className='date-reserva' type="date" required/>
+                </Grid>
+                <Grid item md={3}>
+                  <input className='time-reserva' type="time" required/>
+                </Grid>
+                <Grid item md={8}>
+                  <input className='date-reserva' type="date" required/>  
+                </Grid>
+                <Grid item md={3}>
+                  <input className='time-reserva' type="time" required/>
+                </Grid>
+                <Grid item md={6}>
+                <TextField
+                  helperText="Selecione o polo desejado"
+                  id="filled-basic"
+                  label="Polo"
+                  variant="outlined"
+                  InputProps={{style: {backgroundColor: "#d6e7ff"}}}
                 />
-              </DemoItem>
-              <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
+                  <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
+                </Grid>
+                {/* <div>
+                  <TextField id="" label="Filled" variant="outlined" 'size='small />  
+                </div> */}
+              </Grid>
             </form>
           </div>
         </div>
