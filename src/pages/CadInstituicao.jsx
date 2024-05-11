@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './CadInstituicao.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LogoBranca from '../img/organize-branco.png';
-import { faArrowLeft, faBuildingColumns, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
+import HeaderComponents from '../components/HeaderComponents';
 
 function CadInstituicao() {
   const [instituicaoData, setInstituicaoData] = useState({
@@ -33,30 +33,9 @@ function CadInstituicao() {
       });
   };
 
-  const [menuVisivel, setMenuVisivel] = useState(false);
-
-  const toggleMenu = () => {
-    setMenuVisivel(!menuVisivel);
-  };
-
   return (
     <div>
-      <header className="header-inst">
-        <img
-          className='logo-branco resized-logo'
-          src={LogoBranca}
-          alt="Logo preta Organize"
-        />
-        <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faUserAlt} size='2x'/></button>
-        <nav className={menuVisivel ? "menu visible" : "menu"}>
-          <ul>
-            <li><a href="/perfil">Perfil</a></li>
-            <li><a href="/perfil">Cadastro</a></li>
-            <li><a href="/perfil">Perfil</a></li>
-            <li><a href="/perfil">Perfil</a></li>
-          </ul>
-        </nav>
-      </header>
+      <HeaderComponents/>
       <body className='inst-home'>
         <div className='body-body'>
           <button className='voltaHome'>

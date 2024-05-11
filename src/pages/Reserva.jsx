@@ -2,7 +2,18 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './Reserva.css';
+import { DatePicker } from '@mui/x-date-pickers';
 import { TextField } from '@mui/material';
+import HeaderComponents from '../components/HeaderComponents';
+import { DateRangePicker } from '@mui/x-date-pickers-pro';
+
+function Label({ componentName, valueType, isProOnly }) {
+  const content = (
+    <span>
+      <strong>{componentName}</strong> for {valueType} editing
+    </span>
+  );
+}
 
 function Reserva() {
 
@@ -12,6 +23,7 @@ function Reserva() {
 
   return (
     <div className='tudo'>
+      <HeaderComponents/>
       <body className='reserva-home'>
         <div className='reserva-body'>
           <button className='voltaHome-reserva'>
@@ -35,6 +47,23 @@ function Reserva() {
                 <input className='time-reserva' type="time" required/>
                 <TextField id="filled-basic" label="Filled" variant="outlined" size='small' InputProps={{style: {backgroundColor: "red"}}}/>  
               </div>
+              <DemoItem
+                label={
+                  <Label
+                    componentName="DateRangePicker"
+                    valueType="date range"
+                    isProOnly
+                  />
+                }
+                component="DateRangePicker"
+              >
+                <DateRangePicker
+                  localeText={{
+                    start: '',
+                    end: '',
+                  }}
+                />
+              </DemoItem>
               <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
             </form>
           </div>

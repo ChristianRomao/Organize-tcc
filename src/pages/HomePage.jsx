@@ -1,10 +1,12 @@
 import './HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faMagnifyingGlass, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import HeaderComponents from '../components/HeaderComponents';
 
 const HomePage = () => {
     return (
         <div>
+            <HeaderComponents/>
             <body className='body-home'>
                 <div className='grid-principal'>
                     <div className='item-da-grid'>

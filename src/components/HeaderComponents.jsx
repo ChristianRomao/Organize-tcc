@@ -23,9 +23,6 @@ const HeaderComponents = () => {
             <nav className={menuVisivel ? "menu visible" : "menu"}>
                 <ul>
                     <li><a href="/perfil">Perfil</a></li>
-                    <li><a href="/cadastro-instituição">Cadastro</a></li>
-                    <li><a href="/perfil">Perfil</a></li>
-                    <li><a href="/perfil">Perfil</a></li>
                 </ul>
             </nav>
         </header>
