@@ -10,13 +10,19 @@ const {buscarSalaId} = require("../database/sala");
 const {buscarMaterialId} = require("../database/material");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/materialSala", auth, async (req,res) => {
     const materialSalas = await listarMaterialSalas()
     res.json({
         materialSalas,
     });
-    console.log('Consulta realizada na tabela MaterialSala.')
+    const acao = ('Consulta realizada na tabela MaterialSala.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/materialSala/:id", auth, async (req,res) => {
@@ -28,7 +34,11 @@ router.get("/materialSala/:id", auth, async (req,res) => {
     }
 
     res.json({materialSala : materialSala});
-    console.log('Consulta realizada na tabela MaterialSala, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela MaterialSala, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 /*router.post("/materialSala", async (req,res) => {
@@ -58,7 +68,11 @@ router.get("/materialSala/:id", auth, async (req,res) => {
         res.json({
             materialSala: materialSalaSalvo,
         });
-        console.log('Gravação realizada na tabela MaterialSala')
+        const acao = ('Gravação realizada na tabela MaterialSala');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error){
         console.error('Erro ao gravar MaterialSala:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -78,7 +92,7 @@ router.post("/materialSala", auth, async (req, res) => {
 
         const materialSalasSalvos = await Promise.all(
             materiais.map(async (item) => {
-                console.log(item)
+                const acao = (item)
                 const materialExiste = await buscarMaterialId(item.material.id_material);
 
                 if (!materialExiste) {
@@ -99,7 +113,11 @@ router.post("/materialSala", auth, async (req, res) => {
         res.json({
             materialSalas: materialSalasSalvos,
         });
-        console.log('Gravação realizada na tabela MaterialSala');
+        const acao = ('Gravação realizada na tabela MaterialSala');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     } catch (error) {
         console.error('Erro ao gravar MaterialSala:' + error);
         res.status(500).json({ message: "Server Error" });
@@ -141,7 +159,11 @@ router.put("/materialSala/:id", auth, async (req,res) => {
         res.json({
             materialSala: materialSalaAlterado
         })
-        console.log('Alteração realizada na tabela MaterialSala, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela MaterialSala, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar MaterialSala:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -158,7 +180,11 @@ router.delete("/materialSala/:id", auth, async (req,res) => {
         }
 
         await deletarMaterialSala(id);
-        console.log('Deletado MaterialSala com o id: ' + id);
+        const acao = ('Deletado MaterialSala com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
         return res.status(200).json({ message: "MaterialSala deletado com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar MaterialSala:" + error);

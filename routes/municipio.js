@@ -9,6 +9,8 @@ const {
 const {buscarEstadoId} = require("../database/estado");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/municipio", auth, async (req, res) => {
   try {
@@ -16,7 +18,11 @@ router.get("/municipio", auth, async (req, res) => {
     res.json({
       municipios,
   });
-    console.log("Consulta completa realizada para todos os municípios");
+    const acao = ("Consulta completa realizada para todos os municípios");
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
   } catch (error) {
     console.error("Erro ao consultar todos os municípios:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -34,7 +40,11 @@ router.get("/municipio/:id", auth, async (req, res) => {
     res.json({ 
       municipio: municipio,
     });
-  console.log("Consulta realizada na tabela Municipio, com o id: " + id);
+  const acao = ("Consulta realizada na tabela Municipio, com o id: " + id);
+  const decode = await decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
 });
 
 router.post("/municipio", auth, async (req, res) => {
@@ -56,7 +66,11 @@ router.post("/municipio", auth, async (req, res) => {
     res.json({
       municipio: municipioSalvo,
     });
-    console.log("Gravação realizada na tabela Municipio");
+    const acao = ("Gravação realizada na tabela Municipio");
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
   } catch (error) {
     console.error("Erro ao gravar municipio:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -80,7 +94,11 @@ router.put("/municipio/:id", auth, async (req, res) => {
     res.json({
       municipio: municipioAlterado,
     });
-    console.log("Alteração realizada na tabela Municipio, com o id: " + id);
+    const acao = ("Alteração realizada na tabela Municipio, com o id: " + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
   } catch (error) {
     console.error("Erro ao alterar municipio:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -97,7 +115,11 @@ router.delete("/municipio/:id", auth, async (req, res) => {
     }
 
     await deletarMunicipio(id);
-    console.log("Deletado municipio com o id: " + id);
+    const acao = ("Deletado municipio com o id: " + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
     return res.status(200).json({ message: "Municipio deletado com sucesso!" });
   } catch (error) {
     console.error("Erro ao deletar municipio:" + error);

@@ -14,27 +14,35 @@ const {buscarStatusId} = require("../database/status");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 const {formatarDataISO} = require("../transformarData");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/reserva", auth, async (req,res) => {
     const reservas = await listarReservas()
     res.json({
         reservas,
     });
-    console.log('Consulta realizada na tabela Reserva.')
+    const acao = ('Consulta realizada na tabela Reserva.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/reserva/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     const reserva = await buscarReservaId(id)
 
-    console.log(reserva)
-
     if(!reserva){
         return res.status(404).json({error:"Reserva não encontrada!"});
     }
 
     res.json({reserva : reserva});
-    console.log('Consulta realizada na tabela reserva, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela reserva, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.post("/reserva", auth, async (req,res) => {
@@ -79,7 +87,6 @@ router.post("/reserva", auth, async (req,res) => {
         }
 
         const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
-        console.log(existeReserva);
         if(existeReserva != ""){
             return res.status(406).json({ message: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
         }
@@ -99,7 +106,11 @@ router.post("/reserva", auth, async (req,res) => {
         res.json({
             reserva: reservaSalva,
         });
-        console.log('Gravação realizada na tabela Reserva')
+        const acao = ('Gravação realizada na tabela Reserva');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error){
         console.error('Erro ao gravar Reserva:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -156,7 +167,6 @@ router.put("/reserva/:id", auth, async (req,res) => {
         }
 
         const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
-        console.log(existeReserva);
         if(existeReserva != ""){
             return res.status(406).json({ message: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
         }
@@ -176,7 +186,11 @@ router.put("/reserva/:id", auth, async (req,res) => {
         res.json({
             reserva: reservaAlterada
         })
-        console.log('Alteração realizada na tabela reserva, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela reserva, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar reserva:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -193,7 +207,11 @@ router.delete("/reserva/:id", auth, async (req,res) => {
         }
         
         await deletarReserva(id);
-        console.log('Deletada reserva com o id: ' + id);
+        const acao = ('Deletada reserva com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
         return res.status(200).json({ message: "Reserva deletada com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar sala:" + error);

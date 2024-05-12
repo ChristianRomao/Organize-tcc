@@ -8,6 +8,8 @@ const {
 } = require("../database/disciplina");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 
 router.get("/disciplina", auth, async (req,res) => {
@@ -15,7 +17,11 @@ router.get("/disciplina", auth, async (req,res) => {
     res.json({
         disciplinas,
     });
-    console.log('Consulta realizada na tabela Disciplina.')
+    const acao = ('Consulta realizada na tabela Disciplina.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
 });
 
 router.get("/disciplina/:id", auth, async (req,res) => {
@@ -27,7 +33,11 @@ router.get("/disciplina/:id", auth, async (req,res) => {
     }
 
     res.json({disciplina : disciplina});
-    console.log('Consulta realizada na tabela disciplina, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela disciplina, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
 });
 
 router.post("/disciplina", auth, async (req,res) => {
@@ -39,7 +49,11 @@ router.post("/disciplina", auth, async (req,res) => {
         res.json({
             disciplina: disciplinaSalva
         })
-        console.log('Gravação realizada na tabela Disciplina')
+        const acao = ('Gravação realizada na tabela Disciplina');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
     }catch (error){
         console.error('Erro ao gravar Disciplina:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -64,7 +78,11 @@ router.put("/disciplina/:id", auth, async (req,res) => {
         res.json({
             disciplina: disciplinaAlterada
         })
-        console.log('Alteração realizada na tabela Disciplina, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela Disciplina, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
     }catch (error) {
         console.error("Erro ao alterar disciplina:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -82,7 +100,11 @@ router.delete("/disciplina/:id", auth, async (req,res) => {
         }
 
         await deletarDisciplina(id);
-        console.log('Deletada disciplina com o id: ' + id);
+        const acao = ('Deletada disciplina com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
         return res.status(200).json({ message: "Disciplina deletada com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar disciplina:" + error);

@@ -13,6 +13,8 @@ const {cpf,cnpj} = require('brazilian-doc-validator');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 
 router.get("/usuario", auth, async (req,res) => {
@@ -20,7 +22,11 @@ router.get("/usuario", auth, async (req,res) => {
     res.json({
         usuarios,
     });
-    console.log('Consulta realizada na tabela Usuario.')
+    const acao = ('Consulta realizada na tabela Usuario.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/usuario/:id", auth, async (req,res) => {
@@ -32,7 +38,11 @@ router.get("/usuario/:id", auth, async (req,res) => {
     }
 
     res.json({usuario : usuario});
-    console.log('Consulta realizada na tabela usuario, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela usuario, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.post("/registro", async (req,res) => {
@@ -81,7 +91,11 @@ router.post("/registro", async (req,res) => {
         res.status(201).json({
             usuario: usuarioSalvo,
         });
-        console.log('Gravação realizada na tabela Usuario')
+        const acao = ('Gravação realizada na tabela Usuario');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar curso:", error);
         if (error instanceof PrismaClientKnownRequestError) {
@@ -114,7 +128,12 @@ router.post("/login", async (req,res) => {
         res.json({
             sucess: true,
             token,
-        })
+        });
+
+        const acao = ('Login realizado com o e-mail: '+email);
+        const userLog = usuario.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao deletar usuario:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -171,7 +190,11 @@ router.put("/usuario/:id", auth, async (req,res) => {
         res.json({
             usuario: usuarioAlterado
         })
-        console.log('Alteração realizada na tabela Usuario, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela Usuario, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar usuário:", error);
         if (error instanceof PrismaClientKnownRequestError) {
@@ -195,7 +218,11 @@ router.delete("/usuario/:id", auth, async (req,res) => {
         }
 
         await deletarUsuario(id);
-        console.log('Deletado usuario com o id: ' + id);
+        const acao = ('Deletado usuario com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
         return res.status(200).json({ message: "Usuario deletado com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar usuario:" + error);

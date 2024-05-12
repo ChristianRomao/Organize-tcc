@@ -9,13 +9,19 @@ const {
 const { buscarPoloId } = require("../database/polo");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/bloco", auth, async (req, res) => {
   const blocos = await listarBlocos();
   res.json({
     blocos,
   });
-  console.log("Consulta realizada na tabela Bloco.");
+  const acao = ("Consulta realizada na tabela Bloco.");
+  const decode = await decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao)
 });
 
 router.get("/bloco/:id", auth, async (req, res) => {
@@ -27,7 +33,12 @@ router.get("/bloco/:id", auth, async (req, res) => {
   }
 
   res.json({ bloco: bloco });
-  console.log("Consulta realizada na tabela bloco, com o id: " + id);
+
+  const acao = ("Consulta realizada na tabela bloco, com o id: " + id);
+  const decode = await decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao)
 });
 
 router.post("/bloco", auth, async (req, res) => {
@@ -48,7 +59,11 @@ router.post("/bloco", auth, async (req, res) => {
     res.json({
       bloco: blocoSalvo,
     });
-    console.log("Gravação realizada na tabela Bloco");
+    const acao = ("Gravação realizada na tabela Bloco");
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
   } catch (error) {
     console.error("Erro ao gravar Bloco:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -80,7 +95,11 @@ router.put("/bloco/:id", auth, async (req, res) => {
     res.json({
       bloco: blocoAlterado,
     });
-    console.log("Alteração realizada na tabela bloco, com o id: " + id);
+    const acao = ("Alteração realizada na tabela bloco, com o id: " + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
   } catch (error) {
     console.error("Erro ao alterar bloco:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -97,7 +116,11 @@ router.delete("/bloco/:id", auth, async (req, res) => {
     }
 
     await deletarBloco(id);
-    console.log("Deletado bloco com o id: " + id);
+    const acao = ("Deletado bloco com o id: " + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
     return res.status(200).json({ message: "Bloco deletado com sucesso!" });
   } catch (error) {
     console.error("Erro ao deletar bloco:" + error);

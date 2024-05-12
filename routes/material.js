@@ -8,13 +8,19 @@ const {
 } = require("../database/material");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/material", auth, async (req,res) => {
     const materiais = await listarMateriais()
     res.json({
         materiais,
     });
-    console.log('Consulta realizada na tabela Material.')
+    const acao = ('Consulta realizada na tabela Material.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/material/:id", auth, async (req,res) => {
@@ -26,7 +32,11 @@ router.get("/material/:id", auth, async (req,res) => {
     }
 
     res.json({material : material});
-    console.log('Consulta realizada na tabela Material, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela Material, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.post("/material", auth, async (req,res) => {
@@ -38,7 +48,11 @@ router.post("/material", auth, async (req,res) => {
         res.json({
             material: materialSalvo
         })
-        console.log('Gravação realizada na tabela Material')
+        const acao = ('Gravação realizada na tabela Material');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error){
         console.error('Erro ao gravar material:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -63,7 +77,11 @@ router.put("/material/:id", auth, async (req,res) => {
         res.json({
             material: materialAlterado
         })
-        console.log('Alteração realizada na tabela Material, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela Material, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar material:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -81,7 +99,11 @@ router.delete("/material/:id", auth, async (req,res) => {
         }
         
         await deletarMaterial(id);
-        console.log('Deletado material com o id: ' + id);
+        const acao = ('Deletado material com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
         return res.status(200).json({ message: "Material deletado com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar material:" + error);

@@ -10,13 +10,19 @@ const {buscarDisciplinaId} = require("../database/disciplina");
 const {buscarTurmaId} = require("../database/turma");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/grade", auth, async (req,res) => {
     const grades = await listarGrades()
     res.json({
         grades,
     });
-    console.log('Consulta realizada na tabela Grade.')
+    const acao = ('Consulta realizada na tabela Grade.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/grade/:id", auth, async (req,res) => {
@@ -28,7 +34,11 @@ router.get("/grade/:id", auth, async (req,res) => {
     }
 
     res.json({grade : grade});
-    console.log('Consulta realizada na tabela grade, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela grade, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.post("/grade", auth, async (req,res) => {
@@ -63,7 +73,11 @@ router.post("/grade", auth, async (req,res) => {
         res.json({
             grade: gradeSalva,
         });
-        console.log('Gravação realizada na tabela Grade')
+        const acao = ('Gravação realizada na tabela Grade');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error){
         console.error('Erro ao gravar Grade:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -110,7 +124,11 @@ router.put("/grade/:id", auth, async (req,res) => {
         res.json({
             polo: gradeAlterada
         })
-        console.log('Alteração realizada na tabela grade, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela grade, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar grade:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -128,7 +146,11 @@ router.delete("/grade/:id", auth, async (req,res) => {
         }
 
         await deletarGrade(id);
-        console.log('Deletada grade com o id: ' + id);
+        const acao = ('Deletada grade com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
         return res.status(200).json({ message: "Grade deletada com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar grade:" + error);

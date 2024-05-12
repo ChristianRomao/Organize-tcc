@@ -8,6 +8,8 @@ const {
 } = require("../database/curso");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 
 router.get("/curso",  auth, async (req,res) => {
@@ -15,7 +17,11 @@ router.get("/curso",  auth, async (req,res) => {
     res.json({
         cursos,
     });
-    console.log('Consulta realizada na tabela Curso.')
+    const acao = ('Consulta realizada na tabela Curso.')
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
 });
 
 router.get("/curso/:id",  auth, async (req,res) => {
@@ -27,7 +33,11 @@ router.get("/curso/:id",  auth, async (req,res) => {
     }
 
     res.json({curso : curso});
-    console.log('Consulta realizada na tabela curso, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela curso, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao)
 });
 
 router.post("/curso", auth, async (req,res) => {
@@ -39,7 +49,11 @@ router.post("/curso", auth, async (req,res) => {
         res.json({
             curso: cursoSalvo
         })
-        console.log('Gravação realizada na tabela Curso')
+        const acao = ('Gravação realizada na tabela Curso');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
     }catch (error){
         console.error('Erro ao gravar Curso:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -64,7 +78,11 @@ router.put("/curso/:id", auth, async (req,res) => {
         res.json({
             curso: cursoAlterado
         })
-        console.log('Alteração realizada na tabela Curso, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela Curso, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
     }catch (error) {
         console.error("Erro ao alterar curso:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -82,7 +100,11 @@ router.delete("/curso/:id", auth, async (req,res) => {
         }
 
         await deletarCurso(id);
-        console.log('Deletado curso com o id: ' + id);
+        const acao = ('Deletado curso com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao)
         return res.status(200).json({ message: "Curso deletado com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar curso:" + error);

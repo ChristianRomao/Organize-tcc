@@ -9,13 +9,19 @@ const {
 const {buscarBlocoId} = require("../database/bloco");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/sala", auth, async (req,res) => {
     const salas = await listarSalas()
     res.json({
         salas,
     });
-    console.log('Consulta realizada na tabela Sala.')
+    const acao = ('Consulta realizada na tabela Sala.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/sala/:id", auth, async (req,res) => {
@@ -27,7 +33,11 @@ router.get("/sala/:id", auth, async (req,res) => {
     }
 
     res.json({sala : sala});
-    console.log('Consulta realizada na tabela sala, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela sala, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.post("/sala", auth, async (req,res) => {
@@ -53,7 +63,11 @@ router.post("/sala", auth, async (req,res) => {
         res.json({
             sala: salaSalva,
         });
-        console.log('Gravação realizada na tabela Sala')
+        const acao = ('Gravação realizada na tabela Sala');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error){
         console.error('Erro ao gravar Sala:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -91,7 +105,11 @@ router.put("/sala/:id", auth, async (req,res) => {
         res.json({
             sala: salaAlterada
         })
-        console.log('Alteração realizada na tabela sala, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela sala, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar sala:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -108,7 +126,11 @@ router.delete("/sala/:id", auth, async (req,res) => {
         }
 
         await deletarSala(id);
-        console.log('Deletada sala com o id: ' + id);
+        const acao = ('Deletada sala com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
         return res.status(200).json({ message: "Sala deletada com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar sala:" + error);

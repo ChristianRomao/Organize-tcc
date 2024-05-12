@@ -9,6 +9,8 @@ const {
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 const {cpf,cnpj} = require('brazilian-doc-validator');
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 
 router.get("/instituicao", auth, async (req, res) => {
@@ -16,7 +18,11 @@ router.get("/instituicao", auth, async (req, res) => {
   res.json({
     instituicoes,
   });
-  console.log("Consulta realizada na tabela Instituição.");
+  const acao = ("Consulta realizada na tabela Instituição.");
+  const decode = await decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
 });
 
 router.get("/instituicao/:id", auth, async (req, res) => {
@@ -28,7 +34,11 @@ router.get("/instituicao/:id", auth, async (req, res) => {
   }
 
   res.json({ instituicao: instituicao });
-  console.log("Consulta realizada na tabela Instituição, com o id: " + id);
+  const acao = ("Consulta realizada na tabela Instituição, com o id: " + id);
+  const decode = await decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
 });
 
 router.post("/instituicao", auth, async (req, res) => {
@@ -61,7 +71,11 @@ router.post("/instituicao", auth, async (req, res) => {
       res.status(201).json({
           instituicao: instituicaoSalva,
       });
-    console.log("Gravação realizada na tabela Instituição");
+    const acao = ("Gravação realizada na tabela Instituição");
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
   } catch (error) {
     console.error("Erro ao gravar instituição:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -105,7 +119,11 @@ router.put("/instituicao/:id", auth, async (req, res) => {
     res.json({
       instituicao: instituicaoAlterada,
     });
-    console.log("Alteração realizada na tabela Instituição, com o id: " + id);
+    const acao = ("Alteração realizada na tabela Instituição, com o id: " + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
   } catch (error) {
     console.error("Erro ao alterar instituição:" + error);
     res.status(500).json({ message: "Server Error" });
@@ -122,7 +140,11 @@ router.delete("/instituicao/:id", auth, async (req, res) => {
     }
 
     await deletarInstituicao(id);
-    console.log("Deletada instituição com o id: " + id);
+    const acao = ("Deletada instituição com o id: " + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
     return res
       .status(200)
       .json({ message: "Instituição deletada com sucesso!" });

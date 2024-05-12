@@ -9,13 +9,19 @@ const {
 } = require("../database/turma");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
+const { decodeJWT } = require("./decode");
+const { gravarLog } = require("../database/log");
 
 router.get("/turma", auth, async (req,res) => {
     const turmas = await listarTurmas()
     res.json({
         turmas,
     });
-    console.log('Consulta realizada na tabela Turma.')
+    const acao = ('Consulta realizada na tabela Turma.');
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.get("/turma/:id", auth, async (req,res) => {
@@ -27,7 +33,11 @@ router.get("/turma/:id", auth, async (req,res) => {
     }
 
     res.json({turma : turma});
-    console.log('Consulta realizada na tabela turma, com o id: ' + id)
+    const acao = ('Consulta realizada na tabela turma, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
 });
 
 router.post("/turma", auth, async (req,res) => {
@@ -48,7 +58,11 @@ router.post("/turma", auth, async (req,res) => {
         res.json({
             turma: turmaSalva,
         });
-        console.log('Gravação realizada na tabela Turma')
+        const acao = ('Gravação realizada na tabela Turma');
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error){
         console.error('Erro ao gravar Turma:'+ error);
         res.status(500).json({message:"Server Error"});
@@ -80,7 +94,11 @@ router.put("/turma/:id", auth, async (req,res) => {
         res.json({
             turma: turmaAlterado
         })
-        console.log('Alteração realizada na tabela turma, com o id: ' + id);
+        const acao = ('Alteração realizada na tabela turma, com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
     }catch (error) {
         console.error("Erro ao alterar turma:" + error);
         res.status(500).json({ message: "Server Error" });
@@ -97,7 +115,11 @@ router.delete("/turma/:id", auth, async (req,res) => {
         }
 
         await deletarTurma(id);
-        console.log('Deletada turma com o id: ' + id);
+        const acao = ('Deletada turma com o id: ' + id);
+        const decode = await decodeJWT(req.headers.authorization);
+        const userLog = decode.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
         return res.status(200).json({ message: "Turma deletada com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar turma:" + error);
