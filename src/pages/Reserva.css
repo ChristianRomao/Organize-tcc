@@ -25,8 +25,6 @@
     border-radius: 20px;
     display: flex;
     align-items: center;
-    flex-direction: row;
-    gap: 18px;
     box-shadow: 0px 0px 20px;
 }
 
@@ -86,35 +84,26 @@
 }
 
 .date-reserva {
+    margin: 2px;
     background-color: #d6e7ff;
-    padding: 10px 10px;
-    width: 60%;
+    padding: 12px 10px;
     border-radius: 6px;
     border-style: none;
 }
 
 .time-reserva {
+    margin: 2px;
+    width: 100px;
     background-color: #d6e7ff;
-    padding: 10px 10px;
-    width: 60%;
+    padding: 10.6px 16px;
     border-radius: 6px;
     border-style: none;
 }
 
-.titulo-inputs-reserva {
-    color: #d6e7ff;
-    margin-right: 110px;
-    margin-top: 10px;
-    padding-left: 10px;
-    text-align: justify;
-}
-
 .ajustes-reserva {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-top: 80px;
-    margin-left: 340px;
+    margin-top: 0px;
+    margin-left: 250px;
     animation: slide-in 1s ease forwards;
 }
 @keyframes slide-in {
@@ -128,11 +117,22 @@
     }
 }
 
-.ajustes-reserva > div {
+.titulo-inputs-reserva {
+    color: #ffffff;
+    margin-top: 10px;
+    padding-left: 20px;
+    text-align: justify;
+}
+
+.inputs-reserva {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.input-individual {
+    margin: 10px;
     display: flex;
-    justify-content: space-between;
-    width: 80%; /* Ajuste conforme necessário */
-    margin-bottom: 10px; /* Espaçamento entre as linhas */
+    flex-direction: column;
   }
 
 .botao-reserva {
@@ -142,7 +142,6 @@
     border-radius: 8px;
     width: 150px;
     height: 40px;
-    margin-left: 40px;
     margin-top: 30px;
     transition: 0.2s;
     font-weight: bolder;

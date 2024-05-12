@@ -28,33 +28,18 @@ function Reserva() {
               <FontAwesomeIcon icon={faLocationDot} style={{color: "#d6e7ff"}} className="large-icon"/>
             </div> */}
             <form className='ajustes-reserva'>
-              <Grid container  justifyContent="center" spacing={1}>
-                <Grid item md={8}>
+            <label className='titulo-inputs-reserva'>Insira o dia e a hora:</label>
+              <div className='inputs-reserva'>
+                <div className='input-individual'>
                   <input className='date-reserva' type="date" required/>
-                </Grid>
-                <Grid item md={3}>
+                  <input className='date-reserva' type="date" required/> 
+                </div>
+                <div className='input-individual'>
                   <input className='time-reserva' type="time" required/>
-                </Grid>
-                <Grid item md={8}>
-                  <input className='date-reserva' type="date" required/>  
-                </Grid>
-                <Grid item md={3}>
                   <input className='time-reserva' type="time" required/>
-                </Grid>
-                <Grid item md={6}>
-                <TextField
-                  helperText="Selecione o polo desejado"
-                  id="filled-basic"
-                  label="Polo"
-                  variant="outlined"
-                  InputProps={{style: {backgroundColor: "#d6e7ff"}}}
-                />
-                  <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
-                </Grid>
-                {/* <div>
-                  <TextField id="" label="Filled" variant="outlined" 'size='small />  
-                </div> */}
-              </Grid>
+                </div>
+              </div>
+              <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
             </form>
           </div>
         </div>
