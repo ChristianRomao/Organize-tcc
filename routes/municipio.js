@@ -12,6 +12,8 @@ const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
+
 router.get("/municipio", auth, async (req, res) => {
   try {
     const municipios = await listarMunicipios();
@@ -31,6 +33,10 @@ router.get("/municipio", auth, async (req, res) => {
 
 router.get("/municipio/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
+  if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+  if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+  }
   const municipio = await buscarMunicipioId(id);
 
   if (!municipio) {
@@ -80,6 +86,10 @@ router.post("/municipio", auth, async (req, res) => {
 router.put("/municipio/:id", auth, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+        return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const municipioExiste = await buscarMunicipioId(id);
 
     if (!municipioExiste) {
@@ -108,6 +118,10 @@ router.put("/municipio/:id", auth, async (req, res) => {
 router.delete("/municipio/:id", auth, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+        return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const municipioExiste = await buscarMunicipioId(id);
 
     if (!municipioExiste) {

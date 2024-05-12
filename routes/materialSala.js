@@ -13,6 +13,8 @@ const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
+
 router.get("/materialSala", auth, async (req,res) => {
     const materialSalas = await listarMaterialSalas()
     res.json({
@@ -27,6 +29,10 @@ router.get("/materialSala", auth, async (req,res) => {
 
 router.get("/materialSala/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const materialSala = await buscarMaterialSalaId(id)
 
     if(!materialSala){
@@ -128,6 +134,10 @@ router.post("/materialSala", auth, async (req, res) => {
 router.put("/materialSala/:id", auth, async (req,res) => {
     try{
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const materialSalaExiste = await buscarMaterialSalaId(id);
         
         if(!materialSalaExiste){
@@ -173,6 +183,10 @@ router.put("/materialSala/:id", auth, async (req,res) => {
 router.delete("/materialSala/:id", auth, async (req,res) => {
     try{
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const materialSalaExiste = await buscarMaterialSalaId(id);
         
         if(!materialSalaExiste){

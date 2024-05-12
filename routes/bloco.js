@@ -12,6 +12,8 @@ const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
+
 router.get("/bloco", auth, async (req, res) => {
   const blocos = await listarBlocos();
   res.json({
@@ -26,6 +28,10 @@ router.get("/bloco", auth, async (req, res) => {
 
 router.get("/bloco/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
+  if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+  if (!numeroRegex.test(id)) {
+    return res.status(400).json({ error: 'Id deve conter apenas números.' });
+  }
   const bloco = await buscarBlocoId(id);
 
   if (!bloco) {
@@ -73,6 +79,10 @@ router.post("/bloco", auth, async (req, res) => {
 router.put("/bloco/:id", auth, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const blocoExiste = await buscarBlocoId(id);
 
     if (!blocoExiste) {
@@ -109,6 +119,10 @@ router.put("/bloco/:id", auth, async (req, res) => {
 router.delete("/bloco/:id", auth, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const blocoExiste = await buscarBlocoId(id);
 
     if (!blocoExiste) {

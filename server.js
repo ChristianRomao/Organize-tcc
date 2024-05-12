@@ -14,7 +14,8 @@ const salaRoutes = require("./routes/sala");
 const materialSalaRoutes = require("./routes/materialSala");
 const usuarioRoutes = require("./routes/usuario");
 const reservaRoutes = require("./routes/reserva");
-const popularTabelas = require("./popularTabelas")
+const logRoutes = require("./routes/log");
+const popularTabelas = require("./popularTabelas");
 
 
 const server = express();
@@ -42,6 +43,7 @@ server.use(salaRoutes.router);
 server.use(materialSalaRoutes.router);
 server.use(usuarioRoutes.router);
 server.use(reservaRoutes.router);
+server.use(logRoutes.router);
 
 popularTabelas();
 

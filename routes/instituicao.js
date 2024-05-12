@@ -12,6 +12,7 @@ const {cpf,cnpj} = require('brazilian-doc-validator');
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
 
 router.get("/instituicao", auth, async (req, res) => {
   const instituicoes = await listarInstituicoes();
@@ -27,6 +28,10 @@ router.get("/instituicao", auth, async (req, res) => {
 
 router.get("/instituicao/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
+  if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+  if (!numeroRegex.test(id)) {
+    return res.status(400).json({ error: 'Id deve conter apenas números.' });
+  }
   const instituicao = await buscarInstituicaoId(id);
 
   if (!instituicao) {
@@ -85,6 +90,10 @@ router.post("/instituicao", auth, async (req, res) => {
 router.put("/instituicao/:id", auth, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const instituicaoExiste = await buscarInstituicaoId(id);
 
     if (!instituicaoExiste) {
@@ -133,6 +142,10 @@ router.put("/instituicao/:id", auth, async (req, res) => {
 router.delete("/instituicao/:id", auth, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const instituicaoExiste = await buscarInstituicaoId(id);
 
     if (!instituicaoExiste) {

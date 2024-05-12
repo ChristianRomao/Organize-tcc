@@ -13,6 +13,8 @@ const router = express.Router();
 const {auth} = require("../middleware/auth");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
+
 router.get("/polo", auth, async (req,res) => {
     const polos = await listarPolos()
     res.json({
@@ -30,6 +32,10 @@ router.get("/polo", auth, async (req,res) => {
 
 router.get("/polo/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+        return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const polo = await buscarPoloId(id)
 
     if(!polo){
@@ -88,6 +94,10 @@ router.put("/polo/:id", auth, async (req,res) => {
     try{
 
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const poloExiste = await buscarPoloId(id);
         
         if(!poloExiste){
@@ -134,6 +144,10 @@ router.delete("/polo/:id", auth, async (req,res) => {
     try{
         
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const poloExiste = await buscarPoloId(id);
         
         if(!poloExiste){

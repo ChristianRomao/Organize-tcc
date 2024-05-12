@@ -13,6 +13,8 @@ const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
+
 router.get("/grade", auth, async (req,res) => {
     const grades = await listarGrades()
     res.json({
@@ -27,6 +29,10 @@ router.get("/grade", auth, async (req,res) => {
 
 router.get("/grade/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const grade = await buscarGradeId(id)
 
     if(!grade){
@@ -88,6 +94,10 @@ router.put("/grade/:id", auth, async (req,res) => {
     try{
 
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+          return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const gradeExiste = await buscarGradeId(id);
         
         if(!gradeExiste){
@@ -139,6 +149,10 @@ router.delete("/grade/:id", auth, async (req,res) => {
     try{
         
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+          return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const gradeExiste = await buscarGradeId(id);
         
         if(!gradeExiste){

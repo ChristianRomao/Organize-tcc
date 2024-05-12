@@ -11,6 +11,7 @@ const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
 
 router.get("/disciplina", auth, async (req,res) => {
     const disciplinas = await listarDisciplinas()
@@ -26,6 +27,10 @@ router.get("/disciplina", auth, async (req,res) => {
 
 router.get("/disciplina/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const disciplina = await buscarDisciplinaId(id)
 
     if(!disciplina){
@@ -64,6 +69,10 @@ router.put("/disciplina/:id", auth, async (req,res) => {
     try{
 
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const disciplinaExiste = await buscarDisciplinaId(id);
         
         if(!disciplinaExiste){
@@ -91,8 +100,11 @@ router.put("/disciplina/:id", auth, async (req,res) => {
 
 router.delete("/disciplina/:id", auth, async (req,res) => {
     try{
-        
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const disciplinaExiste = await buscarDisciplinaId(id);
             
         if(!disciplinaExiste){

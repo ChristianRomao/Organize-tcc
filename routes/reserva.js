@@ -17,6 +17,8 @@ const {formatarDataISO} = require("../transformarData");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const numeroRegex = /^[0-9]+$/;
+
 router.get("/reserva", auth, async (req,res) => {
     const reservas = await listarReservas()
     res.json({
@@ -31,6 +33,10 @@ router.get("/reserva", auth, async (req,res) => {
 
 router.get("/reserva/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+        return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
     const reserva = await buscarReservaId(id)
 
     if(!reserva){
@@ -121,6 +127,10 @@ router.put("/reserva/:id", auth, async (req,res) => {
     try{
 
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const reservaExiste = await buscarReservaId(id);
         
         if(!reservaExiste){
@@ -200,6 +210,10 @@ router.put("/reserva/:id", auth, async (req,res) => {
 router.delete("/reserva/:id", auth, async (req,res) => {
     try{
         const id = Number(req.params.id);
+        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+        if (!numeroRegex.test(id)) {
+            return res.status(400).json({ error: 'Id deve conter apenas números.' });
+        }
         const reservaExiste = await buscarReservaId(id);
         
         if(!reservaExiste){

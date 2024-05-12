@@ -8,6 +8,8 @@ const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const letrasRegex = /^[A-Za-z]+$/;
+
 router.get("/estado", auth, async (req,res) => {
     const estados = await listarEstados()
     res.json({
@@ -22,6 +24,9 @@ router.get("/estado", auth, async (req,res) => {
 
 router.get("/estado/:id", auth, async (req,res) => {
     const id = req.params.id;
+    if (!letrasRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas letras.' });
+    }
     const estado = await buscarEstadoId(id)
 
     if(!estado){
@@ -58,7 +63,10 @@ router.post("/estado", auth, async (req,res) => {
 
 router.put("/estado/:id", auth, async (req,res) => {
     const id = req.params.id;
-    const estadoExiste = await buscarEstadoId(id);
+    if (!letrasRegex.test(id)) {
+        return res.status(400).json({ error: 'Id deve conter apenas letras.' });
+    }
+    const estadoExiste = await buscarEstadoId(id.toUpperCase);
 
     if(!estadoExiste){
         return res.status(404).json({error:"Estado não encontrado!"});

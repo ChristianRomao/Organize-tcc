@@ -1,13 +1,20 @@
 const prisma = require("./prisma");
 
 const listarLogs = () => {
-  return prisma.log.findMany({});
+  return prisma.log.findMany({
+    include:{
+      usuario:true,
+    }
+  });
 };
 
 const buscarLogId = (id) => {
   return prisma.log.findFirst({
     where: {
       id_log: id,
+    },
+    include:{
+      usuario:true,
     }
   });
 };
