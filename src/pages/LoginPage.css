@@ -27,6 +27,13 @@
     margin: 140px 80px 514px 80px;
 }
 
+.error-login{
+    margin: -10px;
+    font-size: 15px;
+    color: #f00;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .box-input {
     display: flex;
     flex-direction: column;
@@ -38,9 +45,24 @@
 .login {
     background-color: #ffffff;
     padding: 10px;
-    padding-right: 70px;
+    /* padding-right: 70px; */
+    width: 245px;
     border-radius: 10px;
     border-style: none;
+}
+
+.input-invalido {
+    color: #f00;
+    background-color: rgba(255, 0, 0, 0.342);
+    border-width: 10px;
+    border-color: red;
+    padding: 10px;
+    /* padding-right: 70px; */
+    width: 245px;
+    border-radius: 10px;
+}
+.input-invalido::placeholder {
+    color: #f00;
 }
 
 .loginBT {

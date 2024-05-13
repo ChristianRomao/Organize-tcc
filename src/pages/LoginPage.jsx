@@ -7,29 +7,46 @@ import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
     const navigate = useNavigate();
     const [senhaVisivel, setSenhaVisivel] = useState(false);
-    const [ds_email, setEmail] = useState('joaquim@gmail.com');
-    const [ds_senha, setSenha] = useState('Teste123@');
+    const [ds_email, setEmail] = useState('');
+    const [ds_senha, setSenha] = useState('');
+    const [emailInvalido, setEmailInvalido] = useState(false);
+    const [senhaInvalida, setSenhaInvalida] = useState(false);
+    const [erro, setErro] = useState('');
 
     const handleEmailChange = (event) => {
-        setEmail(event.target.value)
+        const email = event.target.value
+        setEmail(email);
+        setEmailInvalido(email.trim() === '');
+        setErro('');
     }
 
     const handleSenhaChange = (event) => {
-        setSenha(event.target.value)
+        const senha = event.target.value
+        setSenha(senha)
+        setSenhaInvalida(senha.trim() === '');
+        setErro('');
     }
     
     const handleLogin = async () =>{
         try{
-            const loginData = {ds_email, ds_senha }
-            
-            const response = await axios.post('http://localhost:8080/login', loginData);
-            console.log('Usuário autenticado:', response.data);
+            if(!ds_email || !ds_senha){
+                setEmailInvalido(ds_email.trim() === '');
+                setSenhaInvalida(ds_senha.trim() === '');
+            }
+                const loginData = {ds_email, ds_senha }
+                const response = await axios.post('http://localhost:8080/login', loginData);
+                console.log('Usuário autenticado:', response.data);
 
 
-            navigate('/home')
+                navigate('/home')
         }catch(error){
-            console.error('Erro ao tentar fazer login:', error.response.data);
+            setErro(error.response.data);
         }
+    }
+
+    const handleRegistro = async () =>{
+        navigate('/registro')
+        
     }
     
     const mostraSenha = () => {
@@ -47,15 +64,16 @@ const LoginPage = () => {
                 </div>
                 <div className='box-input'>
                     <text style={{color: '#D9D9D9', fontWeight: 'bold'}}>Informe seu Login</text>
-                    <input className='login' type='email' placeholder='Digite seu Email' onChange={handleEmailChange}/>
+                    {!senhaInvalida && !emailInvalido && (<span className='error-login' type='erro'>{erro ? erro : ''}</span>)}
+                    <input className={`login ${emailInvalido ? 'input-invalido' : ''}`} type='email' placeholder={emailInvalido ? 'Email deve ser preenchido' : 'Digite seu Email'} onChange={handleEmailChange}/>
                     <div>
-                        <input className='login' type='password' placeholder='Digite sua Senha' onChange={handleSenhaChange}/>
+                        <input className={`login ${senhaInvalida ? 'input-invalido' : ''}`} type='password' placeholder={senhaInvalida ? 'Senha deve ser preenchida' : 'Digite sua Senha'} onChange={handleSenhaChange}/>
                     </div>
                     <button className='alterarsenha' type='button'>Alterar sua senha?</button>                 
                 </div>
                 <div className='container-btn'>
                     <button className='loginBT' type='button' onClick={handleLogin}>Entrar</button>
-                    <button className='registerBT' type='button'>Registrar</button>
+                    <button className='registerBT' type='button' onClick={handleRegistro}>Registrar</button>
                 </div>
             </div>
             <div className="container-right ">
