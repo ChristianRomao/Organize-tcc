@@ -4,7 +4,7 @@ const {
     buscarReservaId,
     gravarReserva,
     alterarReserva,
-    deletarReserva,
+    // deletarReserva,
     buscarReservasPeriodoSala,
 } = require("../database/reserva");
 const {buscarSalaId} = require("../database/sala");
@@ -207,31 +207,31 @@ router.put("/reserva/:id", auth, async (req,res) => {
     }
     })
 
-router.delete("/reserva/:id", auth, async (req,res) => {
-    try{
-        const id = Number(req.params.id);
-        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
-        if (!numeroRegex.test(id)) {
-            return res.status(400).json({ error: 'Id deve conter apenas números.' });
-        }
-        const reservaExiste = await buscarReservaId(id);
+// router.delete("/reserva/:id", auth, async (req,res) => {
+//     try{
+//         const id = Number(req.params.id);
+//         if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+//         if (!numeroRegex.test(id)) {
+//             return res.status(400).json({ error: 'Id deve conter apenas números.' });
+//         }
+//         const reservaExiste = await buscarReservaId(id);
         
-        if(!reservaExiste){
-            return res.status(404).json({error:"Reserva não encontrada!"});
-        }
+//         if(!reservaExiste){
+//             return res.status(404).json({error:"Reserva não encontrada!"});
+//         }
         
-        await deletarReserva(id);
-        const acao = ('Deletada reserva com o id: ' + id);
-        const decode = await decodeJWT(req.headers.authorization);
-        const userLog = decode.id_usuario;
-        const ip = req.ip;
-        await gravarLog(userLog,ip,acao);
-        return res.status(200).json({ message: "Reserva deletada com sucesso!" });
-    }catch (error) {
-        console.error("Erro ao deletar sala:" + error);
-        res.status(500).json({ message: "Server Error" });
-    }
-})
+//         await deletarReserva(id);
+//         const acao = ('Deletada reserva com o id: ' + id);
+//         const decode = await decodeJWT(req.headers.authorization);
+//         const userLog = decode.id_usuario;
+//         const ip = req.ip;
+//         await gravarLog(userLog,ip,acao);
+//         return res.status(200).json({ message: "Reserva deletada com sucesso!" });
+//     }catch (error) {
+//         console.error("Erro ao deletar sala:" + error);
+//         res.status(500).json({ message: "Server Error" });
+//     }
+// })
 
 module.exports = {
     router
