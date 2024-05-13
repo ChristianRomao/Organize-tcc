@@ -85,25 +85,26 @@
 
 .date-reserva {
     margin: 2px;
+    margin-left: 20px;
     background-color: #d6e7ff;
-    padding: 12px 10px;
+    padding: 12px 16px;
     border-radius: 6px;
     border-style: none;
 }
-
 .time-reserva {
     margin: 2px;
+    margin-left: -36px;
     width: 100px;
     background-color: #d6e7ff;
-    padding: 10.6px 16px;
+    padding: 11.5px 16px;
     border-radius: 6px;
     border-style: none;
 }
 
 .ajustes-reserva {
     align-items: center;
-    margin-top: 0px;
-    margin-left: 250px;
+    margin-top: 100px;
+    margin-left: 198px;
     animation: slide-in 1s ease forwards;
 }
 @keyframes slide-in {
@@ -119,9 +120,25 @@
 
 .titulo-inputs-reserva {
     color: #ffffff;
-    margin-top: 10px;
-    padding-left: 20px;
+    margin-top: 12px;
+    padding-left:62px;
     text-align: justify;
+}
+
+.titulo-selects-reserva {
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    text-align: justify;
+}
+
+.selects-reserva {
+    margin: 2px;
+    background-color: #d6e7ff;
+    padding: 12px 10px;
+    border-radius: 6px;
+    border-style: none;
 }
 
 .inputs-reserva {
@@ -131,18 +148,26 @@
 
 .input-individual {
     margin: 10px;
+    margin-left: 36px;
     display: flex;
     flex-direction: column;
-  }
+}
+
+.select-individual {
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+}
 
 .botao-reserva {
     font-size: large;
     background-color: #2A78E4;
     color: #d6e7ff;
     border-radius: 8px;
-    width: 150px;
+    width: 140px;
     height: 40px;
     margin-top: 30px;
+    margin-left: 124px;
     transition: 0.2s;
     font-weight: bolder;
 }
