@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './CadInstituicao.css';
+import '../css/CadInstituicao.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 import HeaderComponents from '../components/HeaderComponents';
@@ -51,7 +51,7 @@ function CadInstituicao() {
             </div>
             <form className='Ajustes'>
               <div>
-                <p className='titulo-inputs'>Razão Social</p>
+                <label className='titulo-inputs'>Razão Social</label>
                 <input
                   className='inputs-inst'
                   type="text"
@@ -62,7 +62,7 @@ function CadInstituicao() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs'>CPF/CNPJ</p>
+                <label className='titulo-inputs'>CPF/CNPJ</label>
                 <input
                   className='inputs-inst'
                   type="text"
@@ -73,7 +73,7 @@ function CadInstituicao() {
                 />
               </div>
               <div>
-                <p className='titulo-inputs'>Nome Fantasia</p>
+                <label className='titulo-inputs'>Nome Fantasia</label>
                 <input
                   className='inputs-inst'
                   type="text"
