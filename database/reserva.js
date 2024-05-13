@@ -112,13 +112,13 @@ const alterarReserva = (id, reserva) => {
   });
 };
 
-const deletarReserva = (id) => {
-  return prisma.reserva.delete({
-    where: {
-      id_reserva: id,
-    },
-  });
-};
+// const deletarReserva = (id) => {
+//   return prisma.reserva.delete({
+//     where: {
+//       id_reserva: id,
+//     },
+//   });
+// };
 
 const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
   return prisma.reserva.findMany({
@@ -165,5 +165,5 @@ module.exports = {
   buscarReservasPeriodoSala,
   gravarReserva,
   alterarReserva,
-  deletarReserva,
+  //deletarReserva,
 };
