@@ -42,10 +42,22 @@
     margin-top: 240px;
 }
 
+.input-container {
+    position: relative;
+}
+  
+.icon-eye {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+  
+
 .login {
     background-color: #ffffff;
     padding: 10px;
-    /* padding-right: 70px; */
     width: 245px;
     border-radius: 10px;
     border-style: none;
@@ -57,7 +69,6 @@
     border-width: 10px;
     border-color: red;
     padding: 10px;
-    /* padding-right: 70px; */
     width: 245px;
     border-radius: 10px;
 }
@@ -92,8 +103,14 @@
 .alterarsenha {
     color: white;
     background-color: #173154;
-    margin-right: 110px;
+    margin-right: 150px;
     margin-top: -10px;
+    transition: 0.2s;
+}
+
+.alterarsenha:hover {
+    color: #8da8d6;
+    transition: 0.2s;
 }
 
 .container-right {
