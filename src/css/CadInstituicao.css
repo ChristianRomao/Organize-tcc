@@ -90,18 +90,19 @@
 .inputs-inst {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 120%;
+    width: 80%;
     margin: 6px 0px;
+    display: flex;
+    text-align: center;
     border-radius: 10px;
     border-style: none;
 }
 
 .titulo-inputs {
     color: #d6e7ff;
-    margin-right: 110px;
     margin-top: 10px;
     padding-left: 10px;
-    text-align: justify;
+    display: flex;
 }
 
 .Ajustes {
