@@ -75,6 +75,12 @@ function Reserva() {
               <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
             </form>
           </div>
+          <div className='descricao-reserva'>
+              <text className='titulo-descricao'>Detalhes da Reserva</text>
+              <div>
+                {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
+              </div>
+          </div>
         </div>
       </body>
     </div>
