@@ -1,4 +1,4 @@
-import './LoginPage.css';
+import '../css/LoginPage.css';
 import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
 import axios from 'axios';

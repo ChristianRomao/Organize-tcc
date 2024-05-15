@@ -1,4 +1,4 @@
-import './HomePage.css';
+import '../css/HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faMagnifyingGlass, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import HeaderComponents from '../components/HeaderComponents';

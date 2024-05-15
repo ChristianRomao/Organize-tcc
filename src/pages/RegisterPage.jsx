@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './RegisterPage.css';
+import '../css/RegisterPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 

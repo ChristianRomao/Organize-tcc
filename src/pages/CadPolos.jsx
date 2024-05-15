@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import './CadPolos.css';
+import '../css/CadPolos.css';
 import HeaderComponents from '../components/HeaderComponents';
 
 

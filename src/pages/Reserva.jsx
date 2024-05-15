@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import './Reserva.css';
+import '../css/Reserva.css';
 import HeaderComponents from '../components/HeaderComponents';
 
 function Reserva() {
