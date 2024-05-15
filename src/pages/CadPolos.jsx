@@ -12,7 +12,7 @@ function CadPolos() {
   }
 
   return (
-    <div className='tudo'>
+    <div>
       <HeaderComponents/>
       <body className='polo-home'>
         <div className='body-body'>
