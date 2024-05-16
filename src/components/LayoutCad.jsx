@@ -8,7 +8,7 @@ const LayoutCad = ({children, icon, title}) => {
         <div>
             <HeaderComponents/>
             <body className='home'>
-                <div className='body'>
+                <div className='body-layout'>
                     <button className='voltaHome'>
                         <FontAwesomeIcon icon={faArrowLeft} style={{color: "#d6e7ff", margin: "0em 1em"}} />
                         <a href="/home" style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para a tela Inicial</a>

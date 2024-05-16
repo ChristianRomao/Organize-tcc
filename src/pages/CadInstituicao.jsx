@@ -36,7 +36,7 @@ function CadInstituicao() {
     <LayoutCad title='Cadastro de Instituição.' icon={faBuildingColumns}>
       <form className='Ajustes'>
         <div>
-          <label className='titulo-inputs'>Razão Social</label>
+          <label className='titulo-inputs-inst'>Razão Social</label>
           <input
             className='inputs-inst'
             type="text"
@@ -47,7 +47,7 @@ function CadInstituicao() {
           />
         </div>
         <div>
-          <label className='titulo-inputs'>CPF/CNPJ</label>
+          <label className='titulo-inputs-inst'>CPF/CNPJ</label>
           <input
             className='inputs-inst'
             type="text"
@@ -58,7 +58,7 @@ function CadInstituicao() {
           />
         </div>
         <div>
-          <label className='titulo-inputs'>Nome Fantasia</label>
+          <label className='titulo-inputs-inst'>Nome Fantasia</label>
           <input
             className='inputs-inst'
             type="text"

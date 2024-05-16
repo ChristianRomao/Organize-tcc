@@ -1,4 +1,4 @@
-.inputs-inst {
+.inputs-bloco {
     background-color: #d6e7ff;
     padding: 10px 10px;
     width: 80%;
@@ -9,7 +9,7 @@
     border-style: none;
 }
 
-.titulo-inputs-inst {
+.titulo-inputs {
     color: #d6e7ff;
     margin-top: 10px;
     padding-left: 10px;
@@ -17,7 +17,6 @@
 }
 
 .Ajustes {
-    width: 50%;
     margin-top: 80px;
     animation: slide-in 1s ease forwards;
 }
@@ -40,7 +39,7 @@
     width: 150px;
     height: 40px;
     margin-top: 30px;
-    margin-right: 100px;
+    margin-right: 140px;
     transition: 0.2s;
     font-weight: bolder;
 }

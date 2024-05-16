@@ -5,6 +5,7 @@ import RegisterPage from "../pages/RegisterPage";
 import CadInstituicao from "../pages/CadInstituicao";
 import CadPolos from "../pages/CadPolos";
 import Reserva from "../pages/Reserva";
+import CadBlocos from "../pages/CadBlocos";
 
 const Router = () => {
     return (
@@ -33,6 +34,10 @@ const Router = () => {
                 <Route
                     path={"/cadastro-polo"}
                     element={<CadPolos/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-bloco"}
+                    element={<CadBlocos/>}>    
                 </Route>
                 <Route
                     path={"/reserva"}

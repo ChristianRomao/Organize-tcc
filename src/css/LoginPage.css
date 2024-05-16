@@ -59,6 +59,7 @@
     background-color: #ffffff;
     padding: 10px;
     width: 245px;
+    height: 44px;
     border-radius: 10px;
     border-style: none;
 }
@@ -122,6 +123,7 @@
     transform: rotate(-11deg);
     border-radius: 20px;
     box-shadow: 0px 0px 30px;
+    flex-direction: row;
 }
 
 .logo-branca {
