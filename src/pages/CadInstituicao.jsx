@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/CadInstituicao.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
-import HeaderComponents from '../components/HeaderComponents';
+import {  faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
+import LayoutCad from '../components/LayoutCad';
 
 function CadInstituicao() {
   const [instituicaoData, setInstituicaoData] = useState({
@@ -34,61 +33,44 @@ function CadInstituicao() {
   };
 
   return (
-    <div>
-      <HeaderComponents/>
-      <body className='inst-home'>
-        <div className='body-body'>
-          <button className='voltaHome'>
-            <FontAwesomeIcon icon={faArrowLeft} style={{color: "#d6e7ff", margin: "0em 1em"}} />
-            <a href="/home" style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para a tela Inicial</a>
-          </button>
-          <div>
-            <text className='titulo-Inst'>Cadastro de Instituição.</text>
-          </div> 
-          <div className='area-cadastro'>
-            <div className="icon-container ">
-              <FontAwesomeIcon icon={faBuildingColumns} style={{color: "#d6e7ff"}} className="large-icon"/>
-            </div>
-            <form className='Ajustes'>
-              <div>
-                <label className='titulo-inputs'>Razão Social</label>
-                <input
-                  className='inputs-inst'
-                  type="text"
-                  name="nm_razaosoc"
-                  value={instituicaoData.nm_razaosoc}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <label className='titulo-inputs'>CPF/CNPJ</label>
-                <input
-                  className='inputs-inst'
-                  type="text"
-                  name="cd_cpfcnpj"
-                  value={instituicaoData.cd_cpfcnpj}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <label className='titulo-inputs'>Nome Fantasia</label>
-                <input
-                  className='inputs-inst'
-                  type="text"
-                  name="nm_fantasia"
-                  value={instituicaoData.nm_fantasia}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastro Polos</button>
-            </form>
-          </div>
+    <LayoutCad title='Cadastro de Instituição.' icon={faBuildingColumns}>
+      <form className='Ajustes'>
+        <div>
+          <label className='titulo-inputs'>Razão Social</label>
+          <input
+            className='inputs-inst'
+            type="text"
+            name="nm_razaosoc"
+            value={instituicaoData.nm_razaosoc}
+            onChange={handleChange}
+            required
+          />
         </div>
-      </body>
-    </div>
+        <div>
+          <label className='titulo-inputs'>CPF/CNPJ</label>
+          <input
+            className='inputs-inst'
+            type="text"
+            name="cd_cpfcnpj"
+            value={instituicaoData.cd_cpfcnpj}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label className='titulo-inputs'>Nome Fantasia</label>
+          <input
+            className='inputs-inst'
+            type="text"
+            name="nm_fantasia"
+            value={instituicaoData.nm_fantasia}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastro Polos</button>
+      </form>
+    </LayoutCad>
   );
 }
 
