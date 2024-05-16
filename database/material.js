@@ -15,7 +15,8 @@ const buscarMaterialId = (id) =>{
 const gravarMaterial = (material) => {
     return prisma.material.create({
         data:{
-            ds_material: material.ds_material
+            ds_material: material.ds_material,
+            qt_material: material.qt_material
         }
     })
 }
@@ -25,7 +26,10 @@ const alterarMaterial = (id, material) => {
         where:{
             id_material: id
         },
-        data: material
+        data:{
+            ds_material: material.ds_material,
+            qt_material: material.qt_material
+        }
     })
 }
 

@@ -64,12 +64,13 @@ model Estado {
 model Material {
   id_material Int    @id @default(autoincrement())
   ds_material String
+  qt_material Int
   materiaisSala MaterialSala[]
 }
 
 model MaterialSala {
   id_materialSala Int    @id @default(autoincrement())
-  qt_material     Int
+  qt_materialSala Int
   ds_materialSala String? 
 
   //RELACIONAMENTOS

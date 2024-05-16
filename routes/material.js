@@ -78,9 +78,12 @@ router.put("/material/:id", auth, async (req,res) => {
         if(!materialExiste){
             return res.status(404).json({error:"Material não encontrado!"});
         }
-        
+
+        const movtoMaterial = materialExiste.qt_material + req.body.qt_material;
+
         const material = {
-            ds_material: req.body.ds_material
+            ds_material: req.body.ds_material,
+            qt_material: movtoMaterial
         }
         
         const materialAlterado = await alterarMaterial(id, material);
