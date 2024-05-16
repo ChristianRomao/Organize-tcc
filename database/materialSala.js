@@ -24,7 +24,7 @@ const buscarMaterialSalaId = (id) =>{
 const gravarMaterialSala = (materialSala) => {
     return prisma.materialSala.create({
         data:{
-            qt_material: materialSala.qt_material,
+            qt_materialSala: materialSala.qt_materialSala,
             ds_materialSala: materialSala.ds_materialSala,
             material_id: materialSala.material_id,
             sala_id: materialSala.sala_id

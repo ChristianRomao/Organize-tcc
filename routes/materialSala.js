@@ -7,7 +7,7 @@ const {
     deletarMaterialSala
 } = require("../database/materialSala");
 const {buscarSalaId} = require("../database/sala");
-const {buscarMaterialId} = require("../database/material");
+const {buscarMaterialId, alterarMaterial} = require("../database/material");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
 const { decodeJWT } = require("./decode");
@@ -21,7 +21,7 @@ router.get("/materialSala", auth, async (req,res) => {
         materialSalas,
     });
     const acao = ('Consulta realizada na tabela MaterialSala.');
-    const decode = await decodeJWT(req.headers.authorization);
+    const decode =  decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;
     await gravarLog(userLog,ip,acao);
@@ -41,49 +41,11 @@ router.get("/materialSala/:id", auth, async (req,res) => {
 
     res.json({materialSala : materialSala});
     const acao = ('Consulta realizada na tabela MaterialSala, com o id: ' + id);
-    const decode = await decodeJWT(req.headers.authorization);
+    const decode = decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;
     await gravarLog(userLog,ip,acao);
 });
-
-/*router.post("/materialSala", async (req,res) => {
-    try{
-        const sala = req.body.sala;
-        const salaExiste = await buscarSalaId(sala.id_sala)
-    
-        if(!salaExiste){
-          return res.status(404).json({ error: "Sala não encontrada!" });
-        }
-
-        const material = req.body.material;
-        const materialExiste = await buscarMaterialId(material.id_material)
-    
-        if(!materialExiste){
-          return res.status(404).json({ error: "Material não encontrado!" });
-        }
-        
-        const materialSala = {
-            qt_material: req.body.qt_material,
-            ds_materialSala: req.body.ds_materialSala,
-            sala_id: sala.id_sala,
-            material_id: material.id_material
-        }
-        const materialSalaSalvo = await gravarMaterialSala(materialSala);
-
-        res.json({
-            materialSala: materialSalaSalvo,
-        });
-        const acao = ('Gravação realizada na tabela MaterialSala');
-        const decode = await decodeJWT(req.headers.authorization);
-        const userLog = decode.id_usuario;
-        const ip = req.ip;
-        await gravarLog(userLog,ip,acao);
-    }catch (error){
-        console.error('Erro ao gravar MaterialSala:'+ error);
-        res.status(500).json({message:"Server Error"});
-    }
-})*/
 
 router.post("/materialSala", auth, async (req, res) => {
     try {
@@ -98,20 +60,29 @@ router.post("/materialSala", auth, async (req, res) => {
 
         const materialSalasSalvos = await Promise.all(
             materiais.map(async (item) => {
-                const acao = (item)
                 const materialExiste = await buscarMaterialId(item.material.id_material);
 
                 if (!materialExiste) {
                     return res.status(404).json({error:`Material com id ${item.material.id_material} não encontrado!`});
                 }
 
+                const materialEstoque = materialExiste.qt_material - item.qt_materialSala;
+            
+                if(materialEstoque < 0){
+                    return res.status(400).json({error:`Quantidade de material insuficiente ${materialExiste.qt_material}`});
+                }
                 const materialSala = {
-                    qt_material: item.qt_material,
-                    ds_materialSala: item.ds_materialSala, // Você pode ajustar isso conforme necessário
+                    qt_materialSala: item.qt_materialSala,
+                    ds_materialSala: item.ds_materialSala, 
                     sala_id: sala.id_sala,
                     material_id: materialExiste.id_material
                 };
 
+                const material = {
+                    qt_material: materialEstoque
+                }
+                
+                await alterarMaterial(materialExiste.id_material,material);
                 return gravarMaterialSala(materialSala);
             })
         );
