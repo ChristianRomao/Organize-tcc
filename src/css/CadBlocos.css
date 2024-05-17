@@ -1,15 +1,26 @@
-.inputs-bloco {
+.select-bloco {
     background-color: #d6e7ff;
     padding: 10px 10px;
     width: 80%;
     margin: 6px 0px;
     display: flex;
-    text-align: center;
     border-radius: 10px;
     border-style: none;
+    font-weight: bolder;
 }
 
-.titulo-inputs {
+.input-bloco {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 90%;
+    margin: 6px 0px;
+    display: flex;
+    border-radius: 10px;
+    border-style: none;
+    font-weight: bolder;
+}
+
+.titulo-inputs-bloco {
     color: #d6e7ff;
     margin-top: 10px;
     padding-left: 10px;
@@ -31,6 +42,11 @@
     }
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .botao {
     font-size: large;
     background-color: #2A78E4;
@@ -47,4 +63,21 @@
     transition: 0.2s;
     background-color: #002d6b;
     color: #d6e7ff;
+}
+
+.adiciona-polo {
+    font-size: large;
+    background-color: #007226;
+    color: #d6e7ff;
+    border-radius: 8px;
+    width: 100px;
+    height: 30px;
+    margin-top: 10px;
+    transition: 0.2s;
+    font-weight: bolder;
+}
+.adiciona-polo:hover {
+    transition: 0.2s;
+    background-color: #09ff5b;
+    color: #00581d;
 }
