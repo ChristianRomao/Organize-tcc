@@ -17,15 +17,27 @@ const LoginPage = () => {
         const email = event.target.value
         setEmail(email);
         setEmailInvalido(email.trim() === '');
-        setSenhaVisivel(false)
-        setErro('');
+        setSenhaVisivel(false);
+
+        const emailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if(!emailValid.test(email)) {
+            setErro('Formato de e-mail inválido!');
+        }else{
+            setErro('');
+        }
     }
 
     const handleSenhaChange = (event) => {
         const senha = event.target.value
-        setSenha(senha)
+        setSenha(senha);
         setSenhaInvalida(senha.trim() === '');
-        setErro('');
+
+        if(senha.length < 8){
+            setErro('Insira no mínimo 8 caracteres');
+        }else{
+            setErro('');
+        }
     }
     
     const handleLogin = async () =>{
@@ -34,13 +46,16 @@ const LoginPage = () => {
                 setEmailInvalido(ds_email.trim() === '');
                 setSenhaInvalida(ds_senha.trim() === '');
             }   
+            if(!erro){
+
+                
                 setSenhaVisivel(false)
                 const loginData = {ds_email, ds_senha }
                 const response = await axios.post('http://localhost:8080/login', loginData);
-                console.log('Usuário autenticado:', response.data);
-
-
+                console.log('Usuário autenticado:', response.data.token);
+                
                 navigate('/home')
+            }
         }catch(error){
             setErro(error.response.data);
         }
@@ -66,7 +81,10 @@ const LoginPage = () => {
                 </div>
                 <div className='box-input'>
                     <text style={{color: '#D9D9D9', fontWeight: 'bold'}}>Informe seu Login</text>
-                    {!senhaInvalida && !emailInvalido && (<span className='error-login' type='erro'>{erro ? erro : ''}</span>)}
+                    {console.log(erro)}
+                    {console.log('Senha '+senhaInvalida)}
+                    {console.log('Email '+emailInvalido)}
+                    {!(senhaInvalida && emailInvalido) && (<span className='error-login' type='erro'>{erro ? erro : ''}</span>)}
                     <input className={`login ${emailInvalido ? 'input-invalido' : ''}`} type='email' placeholder={emailInvalido ? 'Email deve ser preenchido' : 'Digite seu Email'} onChange={handleEmailChange}/>
                     <div className='input-container'>
                         <input className={`login ${senhaInvalida ? 'input-invalido' : ''}`} type={senhaVisivel ? 'text' : 'password'} placeholder={senhaInvalida ? 'Senha deve ser preenchida' : 'Digite sua Senha'} onChange={handleSenhaChange} />
