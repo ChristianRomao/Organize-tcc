@@ -82,9 +82,10 @@
     color: white;
     margin-top: 60px;
     margin-right: 20px;
-    padding: 0.4rem 3rem 0.4rem 3rem;
+    padding: 0.8rem 3rem 0.8rem 3rem;
     border-radius: 20px;
     transition: 0.2s;
+    cursor: pointer;
 }.loginBT:hover {
     background-color: #78c2ff;
     color: black;
@@ -92,10 +93,11 @@
 }
 
 .registerBT {
-    padding: 0.4rem 2.5rem 0.4rem 2.5rem;
+    padding: 0.8rem 2.5rem 0.8rem 2.5rem;
     background-color: white;
     border-radius: 20px;
     transition: 0.2s;
+    cursor: pointer;
 }.registerBT:hover {
     background-color: rgb(189, 189, 189);
     transition: 0.2s;

@@ -17,18 +17,24 @@
 }
 
 .item-da-grid {
-    background-color: #19293f;
-    padding: 340px 170px;
-    margin: 10px 64px;
+    background-color: #00183a;
+    padding: 320px 90px;
+    margin: 2px 64px;
     text-align: center;
     border-radius: 18px;
     box-shadow: 0px 0px 20px;
     transition: 0.2s;
 }
 .item-da-grid:hover{
-    background-color: #2d486d;
+    background-color: #00265f;
+    transition: 0.2s;
 }
 
+.titulos-home {
+    font-weight: 500;
+    font-size: large;
+    margin-top: 18px;
+}
 
 .interior {
     color: white;
@@ -36,3 +42,31 @@
     flex-direction: column;
     margin-top: -260px;
 }
+
+
+.btn-gerais {
+    margin-top: 30px;
+    max-height: 200px;
+}
+
+.btn {
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 50px;
+    width: 220px;
+    margin-top: 20px;
+    background-color: #0049b6;
+    color: white;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: medium;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn:hover {
+    background-color: #00183a;
+    transition: 0.2s;
+}
+

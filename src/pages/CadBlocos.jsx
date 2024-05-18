@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LayoutCad from "../components/LayoutCad";
 import '../css/CadBlocos.css'
-import { faBuildingColumns, faCube, faCubes } from "@fortawesome/free-solid-svg-icons";
+import {  faCube } from "@fortawesome/free-solid-svg-icons";
 
 const CadBlocos = () => {
 
