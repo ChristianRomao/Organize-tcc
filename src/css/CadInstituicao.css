@@ -32,10 +32,10 @@
     }
 }
 
-.botao {
+.botao-inst{
     font-size: large;
-    background-color: #2A78E4;
-    color: #d6e7ff;
+    background-color: #007226;
+    color: #d0ffe0;
     border-radius: 8px;
     width: 150px;
     height: 40px;
@@ -43,9 +43,10 @@
     margin-right: 100px;
     transition: 0.2s;
     font-weight: bolder;
+    cursor: pointer;
 }
-.botao:hover {
+.botao-inst:hover {
     transition: 0.2s;
-    background-color: #002d6b;
-    color: #d6e7ff;
+    background-color: #09ff5b;
+    color: #007226;
 }

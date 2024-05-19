@@ -6,6 +6,7 @@ import CadInstituicao from "../pages/CadInstituicao";
 import CadPolos from "../pages/CadPolos";
 import Reserva from "../pages/Reserva";
 import CadBlocos from "../pages/CadBlocos";
+import CadSala from "../pages/CadSala";
 
 const Router = () => {
     return (
@@ -38,6 +39,10 @@ const Router = () => {
                 <Route
                     path={"/cadastro-bloco"}
                     element={<CadBlocos/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-sala"}
+                    element={<CadSala/>}>    
                 </Route>
                 <Route
                     path={"/reserva"}

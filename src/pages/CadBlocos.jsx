@@ -20,8 +20,8 @@ const CadBlocos = () => {
     }
 
     return (
-        <LayoutCad title='Cadastro de Bloco' icon={faCube} next=''>
-            <form className='Ajustes'>
+        <LayoutCad title='Cadastro de Bloco' icon={faCube} next='sala'>
+            <form className='ajustes-bloco'>
                 <div>
                     <label className='titulo-inputs-bloco'>Polo</label>
                     <select className='select-bloco' id="" name="Polo" value={selectedOption} onChange={handleSelectChange}>
@@ -42,7 +42,7 @@ const CadBlocos = () => {
                         <button className='adiciona-polo' type="submit" onSubmit={handleSubmit}>Adicionar</button>
                     </div>
                 </div>
-                <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastro de algo</button>
+                <button className='botao-bloco' type="submit" onSubmit={handleSubmit}>Gravar</button>
             </form>
         </LayoutCad>
     );

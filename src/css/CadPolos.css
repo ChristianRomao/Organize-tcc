@@ -4,24 +4,8 @@
     width: 80%;
     margin: 6px 0px;
     display: flex;
-    text-align: center;
     border-radius: 10px;
     border-style: none;
-}
-
-.inputs-inst-polo {
-    background-color: #7c8ca3;
-    padding: 10px 10px;
-    width: 80%;
-    margin: 6px 0px;
-    border-radius: 10px;
-    text-align: center;
-    border-style: none;
-}
-
-.disable {
-    background-color: #7c8ca3;
-    cursor: not-allowed;
 }
 
 .titulo-inputs-polo {
@@ -55,8 +39,8 @@
 
 .botao-polo {
     font-size: large;
-    background-color: #2A78E4;
-    color: #d6e7ff;
+    background-color: #007226;
+    color: #d0ffe0;
     border-radius: 8px;
     width: 150px;
     height: 40px;
@@ -64,9 +48,10 @@
     margin-right: 110px;
     transition: 0.2s;
     font-weight: bolder;
+    cursor: pointer;
 }
 .botao-polo:hover {
     transition: 0.2s;
-    background-color: #002d6b;
-    color: #d6e7ff;
+    background-color: #09ff5b;
+    color: #007226;
 }
