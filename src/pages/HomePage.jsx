@@ -2,8 +2,16 @@ import '../css/HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faFloppyDisk, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import HeaderComponents from '../components/HeaderComponents';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+
+    const navigate = useNavigate()
+
+    const handleCadastro = (cadastros) => {
+        navigate(`/cadastro-${cadastros}`)
+    }
+
     return (
         <div>
             <HeaderComponents/>
@@ -14,12 +22,12 @@ const HomePage = () => {
                             <FontAwesomeIcon icon={faFloppyDisk} style={{color: "#ffffff",}} size='3x'/>
                             <p className='titulos-home'>Cadastro</p>
                             <div className='btn-gerais'>
-                                <button className='btn' type="button">Instituição</button>
-                                <button className='btn' type="button">Polo</button>
-                                <button className='btn' type="button">Bloco</button>
-                                <button className='btn' type="button">Sala</button>
-                                <button className='btn' type="button">Materiais</button>
-                                <button className='btn' type="button">Usuários</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('instituicao')}>Instituição</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('polo')}>Polo</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('bloco')}>Bloco</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('sala')}>Sala</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Materiais</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('usuarios')}>Usuários</button>
                             </div>
                         </div>
                     </div>

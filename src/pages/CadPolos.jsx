@@ -11,7 +11,7 @@ function CadPolos() {
   }
 
   return (
-    <LayoutCad title='Cadastro de Polo.' icon={faLocationDot}>
+    <LayoutCad title='Cadastro de Polo' icon={faLocationDot} next='bloco'>
       <form className='ajustes-polo'>
         <div>
           <label className='titulo-inputs-polo'>Instituição</label>

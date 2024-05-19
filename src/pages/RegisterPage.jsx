@@ -23,7 +23,7 @@ const RegisterPage = () => {
         <div>
             <body className='main'>
                 <div className='area-registro'>
-                    <text className='titulo-principal'>Faça seu registro em <br/> nossa plataforma.</text>
+                    <text className='titulo-principal'>Faça seu registro em <br/> nossa plataforma</text>
                     <div>
                         <label className='titulo-inputs'>Insira seu Email</label>
                         <input className='inputs-registro' placeholder='Seu Nome' type="text"/>

@@ -20,7 +20,7 @@ const CadBlocos = () => {
     }
 
     return (
-        <LayoutCad title='Cadastro de Bloco.' icon={faCube}>
+        <LayoutCad title='Cadastro de Bloco' icon={faCube} next=''>
             <form className='Ajustes'>
                 <div>
                     <label className='titulo-inputs-bloco'>Polo</label>

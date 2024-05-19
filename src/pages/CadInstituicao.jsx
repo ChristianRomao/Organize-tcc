@@ -33,7 +33,7 @@ function CadInstituicao() {
   };
 
   return (
-    <LayoutCad title='Cadastro de Instituição.' icon={faBuildingColumns}>
+    <LayoutCad title='Cadastro de Instituição' icon={faBuildingColumns} next='polo'>
       <form className='Ajustes'>
         <div>
           <label className='titulo-inputs-inst'>Razão Social</label>

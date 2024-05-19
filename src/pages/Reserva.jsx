@@ -26,7 +26,7 @@ function Reserva() {
             <a href="/home" style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para a tela Inicial</a>
           </button>
           <div>
-            <text className='titulo-reserva'>Faça a sua Reserva.</text>
+            <text className='titulo-reserva'>Faça a sua Reserva</text>
           </div> 
           <div className='cadastro-reserva'>
             {/* <div className="icon-container-reserva">

@@ -17,16 +17,34 @@
     align-items: center;
 }
 
+.volta {
+    position: relative;
+    top: 42px;
+    padding: 10px 22px;
+    background-color: #004fbd;
+    border-radius: 10px;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+}
+.volta:hover {
+    transition: 0.2s;
+    background-color: #002d6b;
+    color: #000000;
+}
 
-.voltaHome {
+.proxima {
     position: relative;
     top: 42px;
     padding: 10px 15px;
     background-color: #004fbd;
     border-radius: 10px;
     transition: 0.2s;
+    margin-left: 800px;
+    font-weight: 700;
+    cursor: pointer;
 }
-.voltaHome:hover {
+.proxima:hover {
     transition: 0.2s;
     background-color: #002d6b;
     color: #000000;

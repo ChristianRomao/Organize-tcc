@@ -28,7 +28,7 @@ const Router = () => {
                     element={<HomePage/>}>    
                 </Route>
                 <Route
-                    path={"/cadastro-instituição"}
+                    path={"/cadastro-instituicao"}
                     element={<CadInstituicao/>}>    
                 </Route>
                 <Route
