@@ -1,6 +1,4 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/Modal.css'
-import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const ModalComponent = ({isOpen, onClose, children, titleM}) => {
 
@@ -9,7 +7,7 @@ const ModalComponent = ({isOpen, onClose, children, titleM}) => {
     return (
         <div className="modal-body">
             <div className="modal-content">
-                <button className="modal-close" onClick={onClose}><FontAwesomeIcon icon={faX} size='1.2x'/></button>
+                <button className="modal-close" onClick={onClose}>Fechar</button>
                 <div>
                     <text className='titulo-modal'>{titleM}</text>
                 </div>

@@ -42,7 +42,7 @@ const CadBlocos = () => {
                         <button className='adiciona-polo' type="submit" onSubmit={handleSubmit}>Adicionar</button>
                     </div>
                 </div>
-                <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastro de algo</button>
+                <button className='botao-bloco' type="submit" onSubmit={handleSubmit}>Gravar</button>
             </form>
         </LayoutCad>
     );

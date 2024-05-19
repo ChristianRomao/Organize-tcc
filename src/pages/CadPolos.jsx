@@ -51,7 +51,7 @@ function CadPolos() {
             required
           />
         </div>
-        <button className='botao-polo' type="submit" onSubmit={handleSubmit}>Cadastro Blocos</button>
+        <button className='botao-polo' type="submit" onSubmit={handleSubmit}>Gravar</button>
       </form>
     </LayoutCad>
   );

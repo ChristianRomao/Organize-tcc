@@ -68,7 +68,7 @@ function CadInstituicao() {
             required
           />
         </div>
-        <button className='botao' type="submit" onSubmit={handleSubmit}>Cadastro Polos</button>
+        <button className='botao-inst' type="submit" onSubmit={handleSubmit}>Gravar</button>
       </form>
     </LayoutCad>
   );
