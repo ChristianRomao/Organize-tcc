@@ -16,9 +16,11 @@ function CadPolos() {
         <div>
           <label className='titulo-inputs-polo'>Instituição</label>
           <input
-            className='inputs-polo disable'
+            className='inputs-polo'
+            style={{backgroundColor: "#3a67a7", cursor: 'not-allowed'}}
             type="text"
             name="nm_razaosoc"
+            readOnly
             required
           />
         </div>

@@ -1,4 +1,4 @@
-.select-sala {
+.select-bloco {
     background-color: #d6e7ff;
     padding: 10px 10px;
     width: 80%;
@@ -9,25 +9,25 @@
     font-weight: bolder;
 }
 
-.input-bloco {
+.inputs-sala {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 90%;
+    width: 80%;
     margin: 6px 0px;
     display: flex;
     border-radius: 10px;
     border-style: none;
-    font-weight: bolder;
 }
 
-.titulo-inputs-bloco {
+.titulo-inputs-sala {
     color: #d6e7ff;
     margin-top: 10px;
     padding-left: 10px;
     display: flex;
 }
 
-.ajustes-bloco {
+.ajustes-sala {
+    width: 50%;
     margin-top: 80px;
     animation: slide-in 1s ease forwards;
 }
@@ -42,42 +42,83 @@
     }
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: auto auto;
-}
-
-.botao {
-    font-size: large;
+.materiais-sala {
+    font-size:medium;
     background-color: #2A78E4;
     color: #d6e7ff;
     border-radius: 8px;
     width: 150px;
     height: 40px;
     margin-top: 30px;
-    margin-right: 140px;
+    margin-left: -64px;
     transition: 0.2s;
     font-weight: bolder;
+    cursor: pointer;
 }
-.botao:hover {
+.materiais-sala:hover {
     transition: 0.2s;
     background-color: #002d6b;
     color: #d6e7ff;
 }
 
-.adiciona-polo {
+.grava-sala {
     font-size: large;
     background-color: #007226;
     color: #d6e7ff;
     border-radius: 8px;
-    width: 100px;
-    height: 30px;
-    margin-top: 10px;
+    width: 120px;
+    height: 40px;
+    margin-top: 30px;
+    margin-left: 10px;
     transition: 0.2s;
     font-weight: bolder;
+    cursor: pointer;
 }
-.adiciona-polo:hover {
+.grava-sala:hover {
     transition: 0.2s;
     background-color: #09ff5b;
     color: #00581d;
 }
+
+/* PARTE DO MODAL */
+
+.modal-titulo-sala {
+    font-size: medium;
+    font-weight: 600;
+    color: #d6e7ff;
+    margin-top: 10px;
+    padding-left: 40px;
+    display: flex;
+}
+
+.modal-input-sala {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 180%;
+    margin: 6px 0px;
+    display: flex;
+    border-radius: 10px;
+    border: none;
+    font-size: large;
+    margin-left: 28px;
+}
+
+.grava-materiais {
+    font-size: large;
+    font-weight: bolder;
+    background-color: #007226;
+    color: #d6e7ff;
+    border-radius: 8px;
+    width: 180px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 190px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.grava-materiais:hover {
+    transition: 0.2s;
+    background-color: #09ff5b;
+    color: #00581d;
+}
+

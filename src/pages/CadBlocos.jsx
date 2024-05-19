@@ -20,8 +20,8 @@ const CadBlocos = () => {
     }
 
     return (
-        <LayoutCad title='Cadastro de Bloco' icon={faCube} next=''>
-            <form className='Ajustes'>
+        <LayoutCad title='Cadastro de Bloco' icon={faCube} next='sala'>
+            <form className='ajustes-bloco'>
                 <div>
                     <label className='titulo-inputs-bloco'>Polo</label>
                     <select className='select-bloco' id="" name="Polo" value={selectedOption} onChange={handleSelectChange}>

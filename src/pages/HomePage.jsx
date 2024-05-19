@@ -26,7 +26,7 @@ const HomePage = () => {
                                 <button className='btn' type="button" onClick={() => handleCadastro('polo')}>Polo</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('bloco')}>Bloco</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('sala')}>Sala</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Materiais</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('materiais')}>Materiais</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('usuarios')}>Usuários</button>
                             </div>
                         </div>
