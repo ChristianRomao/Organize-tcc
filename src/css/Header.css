@@ -11,6 +11,10 @@
     margin-top: 4px;
 }
 
+.logo-branco:hover {
+    cursor: pointer;
+}
+
 .resized-logo {
     width: 190px;
 }

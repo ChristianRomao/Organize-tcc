@@ -22,12 +22,18 @@ const HeaderComponents = () => {
         navigate('/login');
     }
 
+    const handleLogoOrganizze = () => {
+        navigate('/home');
+      };
+
+    
     return (
         <header className="header">
             <img 
                 className='logo-branco resized-logo' 
                 src={LogoBranca} 
-                alt="Logo preta Organize"
+                alt="Logo branca Organize"
+                onClick={handleLogoOrganizze}
             />
             <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faUserAlt} size='2x'/></button>
             <nav className={menuVisivel ? "menu visible" : "menu"}>
