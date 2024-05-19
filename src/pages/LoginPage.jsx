@@ -3,8 +3,10 @@ import LogoBranca from '../img/organize-branco.png';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthProvider';
 
 const LoginPage = () => {
+    const {login} = useAuth()
     const navigate = useNavigate();
     const [senhaVisivel, setSenhaVisivel] = useState(false);
     const [ds_email, setEmail] = useState('');
@@ -52,6 +54,7 @@ const LoginPage = () => {
                 setSenhaVisivel(false)
                 const loginData = {ds_email, ds_senha }
                 const response = await axios.post('http://localhost:8080/login', loginData);
+                login(response.data.token);
                 console.log('Usuário autenticado:', response.data.token);
                 
                 navigate('/home')
