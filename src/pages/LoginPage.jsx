@@ -9,8 +9,8 @@ const LoginPage = () => {
     const {login} = useAuth()
     const navigate = useNavigate();
     const [senhaVisivel, setSenhaVisivel] = useState(false);
-    const [ds_email, setEmail] = useState('');
-    const [ds_senha, setSenha] = useState('');
+    const [ds_email, setEmail] = useState('joaquim@gmail.com');
+    const [ds_senha, setSenha] = useState('Teste123@');
     const [emailInvalido, setEmailInvalido] = useState(false);
     const [senhaInvalida, setSenhaInvalida] = useState(false);
     const [erro, setErro] = useState('');
@@ -84,9 +84,6 @@ const LoginPage = () => {
                 </div>
                 <div className='box-input'>
                     <text style={{color: '#D9D9D9', fontWeight: 'bold'}}>Informe seu Login</text>
-                    {console.log(erro)}
-                    {console.log('Senha '+senhaInvalida)}
-                    {console.log('Email '+emailInvalido)}
                     {!(senhaInvalida && emailInvalido) && (<span className='error-login' type='erro'>{erro ? erro : ''}</span>)}
                     <input className={`login ${emailInvalido ? 'input-invalido' : ''}`} type='email' placeholder={emailInvalido ? 'Email deve ser preenchido' : 'Digite seu Email'} onChange={handleEmailChange}/>
                     <div className='input-container'>

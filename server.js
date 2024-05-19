@@ -21,8 +21,8 @@ const popularTabelas = require("./popularTabelas");
 const server = express();
 
 const corsOptions = {
-  origin: 'http://localhost:3000', // Permitir apenas solicitações deste domínio
-  methods: ['GET', 'POST','PUT','DELETE'], // Permitir apenas os métodos GET e POST
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST','PUT','DELETE'],
 };
 
 server.use(cors(corsOptions));
