@@ -1,6 +1,6 @@
 const CadSala = () => {
     return (
-        
+        <div></div>
     );
 }
 
