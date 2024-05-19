@@ -9,7 +9,7 @@ const LayoutCad = ({children, icon, title, next}) => {
     
     const handleNext = () => {
         console.log(next)
-        if(next != ""){
+        if(next !== ""){
             navigate(`/cadastro-${next}`)
         }
     }

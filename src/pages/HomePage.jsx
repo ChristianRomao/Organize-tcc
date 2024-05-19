@@ -3,10 +3,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faFloppyDisk, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import HeaderComponents from '../components/HeaderComponents';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthProvider';
+import { useEffect } from 'react';
 
 const HomePage = () => {
+    const {isAuthenticated} = useAuth();
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if(!isAuthenticated()){
+            navigate('/login')
+        }
+    },[isAuthenticated, navigate])
 
     const handleCadastro = (cadastros) => {
         navigate(`/cadastro-${cadastros}`)

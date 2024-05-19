@@ -3,14 +3,24 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/Header.css';
 import { useState } from 'react';
+import { useAuth } from '../AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderComponents = () => {
+
+    const {logout} = useAuth();
+    const navigate = useNavigate();
 
     const [menuVisivel, setMenuVisivel] = useState(false);
 
     const toggleMenu = () => {
       setMenuVisivel(!menuVisivel);
     };
+
+    const handleLogOut = () =>{
+        logout();
+        navigate('/login');
+    }
 
     return (
         <header className="header">
@@ -23,7 +33,7 @@ const HeaderComponents = () => {
             <nav className={menuVisivel ? "menu visible" : "menu"}>
                 <ul>
                     <li><a href="/perfil">Perfil</a></li>
-                    <li><a href="/login">Log Out</a></li>
+                    <li><a href="/login" onClick={handleLogOut}>Log Out</a></li>
                 </ul>
             </nav>
         </header>
