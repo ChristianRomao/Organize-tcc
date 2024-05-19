@@ -50,6 +50,10 @@ router.post("/instituicao", auth, async (req, res) => {
   try {
     const cpfcnpj = req.body.cd_cpfcnpj
 
+        if(isNaN(cpfcnpj)){
+          return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
+
         // if(cpfcnpj.length == 11){
         //     const cpfValidado = cpf.validate(cpfcnpj);
 
@@ -101,6 +105,10 @@ router.put("/instituicao/:id", auth, async (req, res) => {
     }
 
     const cpfcnpj = req.body.cd_cpfcnpj
+
+    if(isNaN(cpfcnpj)){
+      return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+    }
 
     // if(cpfcnpj.length == 11){
     //     const cpfValidado = cpf.validate(cpfcnpj);

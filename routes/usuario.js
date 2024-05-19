@@ -63,6 +63,10 @@ router.post("/registro", async (req,res) => {
 
         const cpfcnpj = req.body.cd_cpfcnpj
 
+        if(isNaN(cpfcnpj)){
+            return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
+
         // if(cpfcnpj.length == 11){
         //     const cpfValidado = cpf.validate(cpfcnpj);
 
@@ -162,6 +166,10 @@ router.put("/usuario/:id", auth, async (req,res) => {
         const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
 
         const cpfcnpj = req.body.cd_cpfcnpj
+
+        if(isNaN(cpfcnpj)){
+            return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
 
         // if(cpfcnpj.length == 11){
         //     const cpfValidado = cpf.validate(cpfcnpj);
