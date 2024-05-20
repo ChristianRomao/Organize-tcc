@@ -1,10 +1,10 @@
 import { React, useCallback, useEffect, useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import "../css/CadPolos.css";
-import LayoutCad from "../components/LayoutCad";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import axios from "axios";
+import Layout from "../components/Layout";
 
 const CadPolos = () => {
   const { isAuthenticated } = useAuth();
@@ -113,7 +113,7 @@ const CadPolos = () => {
   };
 
   return (
-    <LayoutCad title="Cadastro de Polo" icon={faLocationDot} next="bloco">
+    <Layout title="Cadastro de Polo" icon={faLocationDot} next="bloco">
       <form className="ajustes-polo">
         <div>
           <div>
