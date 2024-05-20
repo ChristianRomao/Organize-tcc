@@ -27,6 +27,14 @@ router.get("/materialSala", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
+//Realiza consulta sem gravar log
+router.get("/consulta-materialSala", auth, async (req,res) => {
+    const materialSalas = await listarMaterialSalas()
+    res.json({
+        materialSalas,
+    });
+});
+
 router.get("/materialSala/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });

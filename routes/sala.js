@@ -26,6 +26,14 @@ router.get("/sala", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
+//Realiza consulta sem gravar log
+router.get("/consulta-sala", auth, async (req,res) => {
+    const salas = await listarSalas()
+    res.json({
+        salas,
+    });
+});
+
 router.get("/sala/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });

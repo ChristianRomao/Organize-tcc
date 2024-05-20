@@ -2,11 +2,9 @@ const express = require("express");
 const {
     listarLogs,
     buscarLogId,
-    gravarLog,
 } = require("../database/log");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
-const { decodeJWT } = require("./decode");
 
 const numeroRegex = /^[0-9]+$/;
 
@@ -15,11 +13,6 @@ router.get("/log", auth, async (req, res) => {
   res.json({
     logs,
   });
-  const acao = ("Consulta realizada na tabela Log.");
-  const decode = await decodeJWT(req.headers.authorization);
-  const userLog = decode.id_usuario;
-  const ip = req.ip;
-  await gravarLog(userLog,ip,acao);
 });
 
 router.get("/log/:id", auth, async (req, res) => {
@@ -35,11 +28,6 @@ router.get("/log/:id", auth, async (req, res) => {
   }
 
   res.json({ log: log });
-  const acao = ("Consulta realizada na tabela Log, com o id: " + id);
-  const decode = await decodeJWT(req.headers.authorization);
-  const userLog = decode.id_usuario;
-  const ip = req.ip;
-  await gravarLog(userLog,ip,acao);
 });
 
 

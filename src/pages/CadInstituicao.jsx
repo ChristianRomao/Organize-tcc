@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 const CadInstituicao = () => {
   const token = localStorage.getItem("token");
-  const [nm_razaosoc, setNm_razaosoc] = useState("");
-  const [cd_cpfcnpj, setCd_cpfcnpj] = useState("");
-  const [nm_fantasia, setNm_fantasia] = useState("");
+  const [nm_razaosoc, setNm_razaosoc] = useState();
+  const [cd_cpfcnpj, setCd_cpfcnpj] = useState();
+  const [nm_fantasia, setNm_fantasia] = useState();
 
   const { isAuthenticated } = useAuth();
 

@@ -26,6 +26,14 @@ router.get("/instituicao", auth, async (req, res) => {
   await gravarLog(userLog,ip,acao);
 });
 
+//Rota utilizada para consulta somente, sem gravar log
+router.get("/consulta-instituicao", auth, async (req, res) => {
+  const instituicoes = await listarInstituicoes();
+  res.json({
+    instituicoes,
+  });
+});
+
 router.get("/instituicao/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
   if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });

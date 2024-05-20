@@ -20,7 +20,7 @@ const CadPolos = () => {
 
   const buscarInstituicao = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8080/instituicao", {
+      const response = await axios.get("http://localhost:8080/consulta-instituicao", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const CadPolos = () => {
 
   const buscarMunicipio = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8080/municipio", {
+      const response = await axios.get("http://localhost:8080/consulta-municipio", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
