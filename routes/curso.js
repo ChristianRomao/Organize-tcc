@@ -47,6 +47,10 @@ router.get("/curso/:id",  auth, async (req,res) => {
 
 router.post("/curso", auth, async (req,res) => {
     try{
+        if(req.body.ds_curso === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+      
         const newCursoJSON = JSON.stringify(req.body);
         const newCurso = JSON.parse(newCursoJSON);
         const cursoSalvo = await gravarCurso(newCurso)
@@ -73,12 +77,17 @@ router.put("/curso/:id", auth, async (req,res) => {
         if (!numeroRegex.test(id)) {
             return res.status(400).json({ error: 'Id deve conter apenas números.' });
         }
+        
         const cursoExiste = await buscarCursoId(id);
         
         if(!cursoExiste){
             return res.status(404).json({error:"Curso não encontrado!"});
         }
         
+        if(req.body.ds_curso === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const curso = {
             ds_curso: req.body.ds_curso
         }

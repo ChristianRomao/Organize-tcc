@@ -49,6 +49,10 @@ router.get("/bloco/:id", auth, async (req, res) => {
 
 router.post("/bloco", auth, async (req, res) => {
   try {
+    if(req.body.nm_bloco === ''){
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+    }
+
     const polo = req.body.polo;
     const poloExiste = await buscarPoloId(polo.id_polo);
 
@@ -83,6 +87,11 @@ router.put("/bloco/:id", auth, async (req, res) => {
     if (!numeroRegex.test(id)) {
       return res.status(400).json({ error: 'Id deve conter apenas números.' });
     }
+
+    if(req.body.nm_bloco === ''){
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+    }
+
     const blocoExiste = await buscarBlocoId(id);
 
     if (!blocoExiste) {

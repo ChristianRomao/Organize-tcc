@@ -52,6 +52,10 @@ router.get("/usuario/:id", auth, async (req,res) => {
 
 router.post("/registro", async (req,res) => {
     try{
+        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const emailUtilizado = await buscarEmail(req.body.ds_email);
         if(emailUtilizado){
             return res.status(400).json({message:"E-mail já utilizado!"});
@@ -62,6 +66,10 @@ router.post("/registro", async (req,res) => {
         const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();
 
         const cpfcnpj = req.body.cd_cpfcnpj
+
+        if(isNaN(cpfcnpj)){
+            return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
 
         // if(cpfcnpj.length == 11){
         //     const cpfValidado = cpf.validate(cpfcnpj);
@@ -159,9 +167,17 @@ router.put("/usuario/:id", auth, async (req,res) => {
             return res.status(404).json({error:"Usuario não encontrado!"});
         }
 
+        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
 
         const cpfcnpj = req.body.cd_cpfcnpj
+
+        if(isNaN(cpfcnpj)){
+            return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
 
         // if(cpfcnpj.length == 11){
         //     const cpfValidado = cpf.validate(cpfcnpj);

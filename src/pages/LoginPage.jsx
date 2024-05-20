@@ -84,9 +84,6 @@ const LoginPage = () => {
                 </div>
                 <div className='box-input'>
                     <text style={{color: '#D9D9D9', fontWeight: 'bold'}}>Informe seu Login</text>
-                    {console.log(erro)}
-                    {console.log('Senha '+senhaInvalida)}
-                    {console.log('Email '+emailInvalido)}
                     {!(senhaInvalida && emailInvalido) && (<span className='error-login' type='erro'>{erro ? erro : ''}</span>)}
                     <input className={`login ${emailInvalido ? 'input-invalido' : ''}`} type='email' placeholder={emailInvalido ? 'Email deve ser preenchido' : 'Digite seu Email'} onChange={handleEmailChange}/>
                     <div className='input-container'>

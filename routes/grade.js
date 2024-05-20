@@ -49,6 +49,10 @@ router.get("/grade/:id", auth, async (req,res) => {
 
 router.post("/grade", auth, async (req,res) => {
     try{
+        if(req.body.nm_professor === '' || req.body.nr_cargahr === '' ||req.body.qt_alunos === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const disciplina = req.body.disciplina;
         const disciplinaExiste = await buscarDisciplinaId(disciplina.id_disciplina)
     
@@ -102,6 +106,10 @@ router.put("/grade/:id", auth, async (req,res) => {
         
         if(!gradeExiste){
             return res.status(404).json({error:"Grade não encontrada!"});
+        }
+
+        if(req.body.nm_professor === '' || req.body.nr_cargahr === '' ||req.body.qt_alunos === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const disciplina = req.body.disciplina_id;

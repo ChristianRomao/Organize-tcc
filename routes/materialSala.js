@@ -49,6 +49,10 @@ router.get("/materialSala/:id", auth, async (req,res) => {
 
 router.post("/materialSala", auth, async (req, res) => {
     try {
+        if(req.body.qt_materialSala === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const sala = req.body.sala;
         const salaExiste = await buscarSalaId(sala.id_sala);
 
@@ -113,6 +117,10 @@ router.put("/materialSala/:id", auth, async (req,res) => {
         
         if(!materialSalaExiste){
             return res.status(404).json({error:"MaterialSala não encontrado!"});
+        }
+
+        if(req.body.qt_materialSala === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const sala = req.body.sala_id;

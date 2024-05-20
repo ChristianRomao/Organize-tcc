@@ -47,6 +47,10 @@ router.get("/disciplina/:id", auth, async (req,res) => {
 
 router.post("/disciplina", auth, async (req,res) => {
     try{
+        if(req.body.nm_disciplina === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const newDisciplinaJSON = JSON.stringify(req.body);
         const newDisciplina = JSON.parse(newDisciplinaJSON);
         const disciplinaSalva = await gravarDisciplina(newDisciplina)
@@ -79,6 +83,10 @@ router.put("/disciplina/:id", auth, async (req,res) => {
             return res.status(404).json({error:"Disciplina não encontrada!"});
         }
         
+        if(req.body.nm_disciplina === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const disciplina = {
             nm_disciplina: req.body.nm_disciplina
         }

@@ -48,6 +48,10 @@ router.get("/sala/:id", auth, async (req,res) => {
 
 router.post("/sala", auth, async (req,res) => {
     try{
+        if(req.body.nm_sala === '' || req.body.qt_capacvigilancia === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const bloco = req.body.bloco;
         const blocoExiste = await buscarBlocoId(bloco.id_bloco)
     
@@ -92,6 +96,10 @@ router.put("/sala/:id", auth, async (req,res) => {
         
         if(!salaExiste){
             return res.status(404).json({error:"Sala não encontrada!"});
+        }
+
+        if(req.body.nm_sala === '' || req.body.qt_capacvigilancia === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const bloco = req.body.bloco_id;

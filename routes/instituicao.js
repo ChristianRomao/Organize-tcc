@@ -48,7 +48,14 @@ router.get("/instituicao/:id", auth, async (req, res) => {
 
 router.post("/instituicao", auth, async (req, res) => {
   try {
+    if(req.body.cd_cpfcnpj === '' || req.body.nm_razaosoc === '' || req.body.nm_fantasia === ''){
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+    }
     const cpfcnpj = req.body.cd_cpfcnpj
+
+        if(isNaN(cpfcnpj)){
+          return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
 
         // if(cpfcnpj.length == 11){
         //     const cpfValidado = cpf.validate(cpfcnpj);
@@ -100,7 +107,15 @@ router.put("/instituicao/:id", auth, async (req, res) => {
       return res.status(404).json({ error: "Instituição não encontrada!" });
     }
 
+    if(req.body.cd_cpfcnpj === '' || req.body.nm_razaosoc === '' || req.body.nm_fantasia === ''){
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+    }
+
     const cpfcnpj = req.body.cd_cpfcnpj
+
+    if(isNaN(cpfcnpj)){
+      return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+    }
 
     // if(cpfcnpj.length == 11){
     //     const cpfValidado = cpf.validate(cpfcnpj);

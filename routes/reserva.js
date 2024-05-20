@@ -53,6 +53,10 @@ router.get("/reserva/:id", auth, async (req,res) => {
 
 router.post("/reserva", auth, async (req,res) => {
     try{
+        if(req.body.dt_inicio === '' || req.body.dt_fim === '' ){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const sala = req.body.sala;
         const salaExiste = await buscarSalaId(sala.id_sala)
 
@@ -135,6 +139,10 @@ router.put("/reserva/:id", auth, async (req,res) => {
         
         if(!reservaExiste){
             return res.status(404).json({error:"Reserva não encontrada!"});
+        }
+
+        if(req.body.dt_inicio === '' || req.body.dt_fim === '' ){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const sala = req.body.sala;

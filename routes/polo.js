@@ -54,6 +54,10 @@ router.get("/polo/:id", auth, async (req,res) => {
 
 router.post("/polo", auth, async (req,res) => {
     try{
+        if(req.body.nm_polo === '' || req.body.ds_endereco === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const instituicao = req.body.instituicao;
         const instituicaoExiste = await buscarInstituicaoId(instituicao.id_instituicao)
     
@@ -102,6 +106,10 @@ router.put("/polo/:id", auth, async (req,res) => {
         
         if(!poloExiste){
             return res.status(404).json({error:"Polo não encontrado!"});
+        }
+
+        if(req.body.nm_polo === '' || req.body.ds_endereco === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const instituicao = req.body.instituicao_id;
