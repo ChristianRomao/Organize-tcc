@@ -7,6 +7,7 @@ import CadPolos from "../pages/CadPolos";
 import Reserva from "../pages/Reserva";
 import CadBlocos from "../pages/CadBlocos";
 import CadSala from "../pages/CadSala";
+import ReservaCons from "../consulta/ReservaCons";
 
 const Router = () => {
     return (
@@ -47,6 +48,10 @@ const Router = () => {
                 <Route
                     path={"/reserva"}
                     element={<Reserva/>}>    
+                </Route>
+                <Route
+                    path={"/reserva-consulta"}
+                    element={<ReservaCons/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>

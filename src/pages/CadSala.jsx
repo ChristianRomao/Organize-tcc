@@ -1,5 +1,5 @@
 import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
-import LayoutCad from "../components/LayoutCad";
+import Layout from "../components/Layout";
 import { useState } from "react";
 import '../css/CadSala.css';
 import ModalComponent from "../components/ModalComponent";
@@ -30,7 +30,7 @@ const CadSala = () => {
     }
 
     return (
-        <LayoutCad title='Cadastro de Sala' icon={faDoorOpen} next=''>
+        <Layout title='Cadastro de Sala' icon={faDoorOpen} next=''>
             <form className='ajustes-sala'>
                 <div>
                     <label className='titulo-inputs-sala'>Bloco</label>
@@ -80,7 +80,7 @@ const CadSala = () => {
                     <button className='grava-materiais' type="submit" onSubmit={handleSubmit}>Adicionar Materiais</button>
                 </form>
             </ModalComponent>
-        </LayoutCad>
+        </Layout>
     );
 }
 

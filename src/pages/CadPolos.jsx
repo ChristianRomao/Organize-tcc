@@ -1,7 +1,7 @@
 import React from 'react';
 import {  faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import '../css/CadPolos.css';
-import LayoutCad from '../components/LayoutCad';
+import Layout from '../components/Layout';
 
 
 function CadPolos() {
@@ -11,7 +11,7 @@ function CadPolos() {
   }
 
   return (
-    <LayoutCad title='Cadastro de Polo' icon={faLocationDot} next='bloco'>
+    <Layout title='Cadastro de Polo' icon={faLocationDot} next='bloco'>
       <form className='ajustes-polo'>
         <div>
           <label className='titulo-inputs-polo'>Instituição</label>
@@ -53,7 +53,7 @@ function CadPolos() {
         </div>
         <button className='botao-polo' type="submit" onSubmit={handleSubmit}>Gravar</button>
       </form>
-    </LayoutCad>
+    </Layout>
   );
 }
 

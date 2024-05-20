@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LayoutCad from "../components/LayoutCad";
+import Layout from "../components/Layout";
 import '../css/CadBlocos.css'
 import {  faCube } from "@fortawesome/free-solid-svg-icons";
 
@@ -20,7 +20,7 @@ const CadBlocos = () => {
     }
 
     return (
-        <LayoutCad title='Cadastro de Bloco' icon={faCube} next='sala'>
+        <Layout title='Cadastro de Bloco' icon={faCube} next='sala'>
             <form className='ajustes-bloco'>
                 <div>
                     <label className='titulo-inputs-bloco'>Polo</label>
@@ -44,7 +44,7 @@ const CadBlocos = () => {
                 </div>
                 <button className='botao-bloco' type="submit" onSubmit={handleSubmit}>Gravar</button>
             </form>
-        </LayoutCad>
+        </Layout>
     );
 }
 

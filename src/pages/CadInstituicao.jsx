@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/CadInstituicao.css";
 import { faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
-import LayoutCad from "../components/LayoutCad";
+import Layout from "../components/Layout";
 import { useAuth } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +59,7 @@ const CadInstituicao = () => {
 };
 
   return (
-    <LayoutCad
+    <Layout
       title="Cadastro de Instituição"
       icon={faBuildingColumns}
       next="polo"
@@ -102,7 +102,7 @@ const CadInstituicao = () => {
           Gravar
         </button>
       </form>
-    </LayoutCad>
+    </Layout>
   );
 };
 

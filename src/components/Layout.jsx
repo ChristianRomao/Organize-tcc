@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeaderComponents from "./HeaderComponents";
-import '../css/LayoutCad.css';
+import '../css/Layout.css';
 import { useNavigate } from "react-router-dom";
 
-const LayoutCad = ({children, icon, title, next}) => {
+const Layout = ({children, icon, title, next}) => {
     
     const navigate = useNavigate()
     
@@ -42,4 +42,4 @@ const LayoutCad = ({children, icon, title, next}) => {
     );
 }
 
-export default LayoutCad;
+export default Layout;
