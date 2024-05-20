@@ -9,8 +9,8 @@ const LoginPage = () => {
     const {login} = useAuth()
     const navigate = useNavigate();
     const [senhaVisivel, setSenhaVisivel] = useState(false);
-    const [ds_email, setEmail] = useState('joaquim@gmail.com');
-    const [ds_senha, setSenha] = useState('Teste123@');
+    const [ds_email, setEmail] = useState('');
+    const [ds_senha, setSenha] = useState('');
     const [emailInvalido, setEmailInvalido] = useState(false);
     const [senhaInvalida, setSenhaInvalida] = useState(false);
     const [erro, setErro] = useState('');
