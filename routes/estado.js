@@ -22,6 +22,14 @@ router.get("/estado", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
+//Realiza consulta sem gravar log
+router.get("/consulta-estado", auth, async (req,res) => {
+    const estados = await listarEstados()
+    res.json({
+        estados
+    });
+});
+
 router.get("/estado/:id", auth, async (req,res) => {
     const id = req.params.id;
     if (!letrasRegex.test(id)) {

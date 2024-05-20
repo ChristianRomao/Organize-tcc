@@ -26,6 +26,14 @@ router.get("/instituicao", auth, async (req, res) => {
   await gravarLog(userLog,ip,acao);
 });
 
+//Rota utilizada para consulta somente, sem gravar log
+router.get("/consulta-instituicao", auth, async (req, res) => {
+  const instituicoes = await listarInstituicoes();
+  res.json({
+    instituicoes,
+  });
+});
+
 router.get("/instituicao/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
   if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
@@ -82,6 +90,7 @@ router.post("/instituicao", auth, async (req, res) => {
 
       res.status(201).json({
           instituicao: instituicaoSalva,
+          message: 'Instituição gravada com sucesso!'
       });
     const acao = ("Gravação realizada na tabela Instituição");
     const decode = await decodeJWT(req.headers.authorization);
@@ -142,6 +151,7 @@ router.put("/instituicao/:id", auth, async (req, res) => {
     const instituicaoAlterada = await alterarInstituicao(id, instituicao);
     res.json({
       instituicao: instituicaoAlterada,
+      message: 'Instituição alterada com sucesso!'
     });
     const acao = ("Alteração realizada na tabela Instituição, com o id: " + id);
     const decode = await decodeJWT(req.headers.authorization);

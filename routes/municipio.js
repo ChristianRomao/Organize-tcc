@@ -20,11 +20,24 @@ router.get("/municipio", auth, async (req, res) => {
     res.json({
       municipios,
   });
-    const acao = ("Consulta completa realizada para todos os municípios");
+    const acao = ("Consulta realizada na tabela Municipio.");
     const decode = await decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;
     await gravarLog(userLog,ip,acao);
+  } catch (error) {
+    console.error("Erro ao consultar todos os municípios:" + error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+//Realiza consulta sem gravar o log
+router.get("/consulta-municipio", auth, async (req, res) => {
+  try {
+    const municipios = await listarMunicipios();
+    res.json({
+      municipios,
+  });
   } catch (error) {
     console.error("Erro ao consultar todos os municípios:" + error);
     res.status(500).json({ message: "Server Error" });

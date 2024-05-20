@@ -26,6 +26,14 @@ router.get("/bloco", auth, async (req, res) => {
   await gravarLog(userLog,ip,acao)
 });
 
+//Realiza consulta sem gravar log
+router.get("/consulta-bloco", auth, async (req, res) => {
+  const blocos = await listarBlocos();
+  res.json({
+    blocos,
+  });
+});
+
 router.get("/bloco/:id", auth, async (req, res) => {
   const id = Number(req.params.id);
   if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });

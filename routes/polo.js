@@ -30,6 +30,13 @@ router.get("/polo", auth, async (req,res) => {
     //END LOG
 });
 
+//Realiza consulta sem gravar log
+router.get("/consulta-polo", auth, async (req,res) => {
+    const polos = await listarPolos()
+    res.json({
+        polos,
+    });
+});
 router.get("/polo/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
