@@ -48,6 +48,10 @@ router.get("/turma/:id", auth, async (req,res) => {
 
 router.post("/turma", auth, async (req,res) => {
     try{
+        if(req.body.ds_turma === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const curso = req.body.curso;
         const cursoExiste = await buscarCursoId(curso.id_curso)
     
@@ -77,22 +81,28 @@ router.post("/turma", auth, async (req,res) => {
 
 router.put("/turma/:id", auth, async (req,res) => {
     try{
-        const curso = req.body.curso_id;
+        const id = Number(req.params.id);
+        const turmaExiste = await buscarTurmaId(id);
+        
         if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+
         if (!numeroRegex.test(id)) {
             return res.status(400).json({ error: 'Id deve conter apenas números.' });
         }
+
+        if(!turmaExiste){
+            return res.status(404).json({error:"Turma não encontrada!"});
+        }
+        
+        if(req.body.ds_turma === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+        
+        const curso = req.body.curso_id;
         const cursoExiste = await buscarCursoId(curso)
     
         if(!cursoExiste){
           return res.status(404).json({ error: "Curso não encontrado!" });
-        }
-        
-        const id = Number(req.params.id);
-        const turmaExiste = await buscarTurmaId(id);
-        
-        if(!turmaExiste){
-            return res.status(404).json({error:"Turma não encontrada!"});
         }
         
         const turma = {

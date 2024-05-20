@@ -43,6 +43,9 @@ router.get("/estado/:id", auth, async (req,res) => {
 
 router.post("/estado", auth, async (req,res) => {
     try{
+        if(req.body.nm_estado === '' || req.body.cd_estado === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
         const newEstadoJSON = JSON.stringify(req.body);
         const newEstado = JSON.parse(newEstadoJSON);
         const estadoSalvo = await gravarEstado(newEstado)
@@ -70,6 +73,10 @@ router.put("/estado/:id", auth, async (req,res) => {
 
     if(!estadoExiste){
         return res.status(404).json({error:"Estado não encontrado!"});
+    }
+
+    if(req.body.nm_estado === '' || req.body.cd_estado === ''){
+        return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
     }
 
     const estado = {

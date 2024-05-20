@@ -52,6 +52,10 @@ router.get("/usuario/:id", auth, async (req,res) => {
 
 router.post("/registro", async (req,res) => {
     try{
+        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const emailUtilizado = await buscarEmail(req.body.ds_email);
         if(emailUtilizado){
             return res.status(400).json({message:"E-mail já utilizado!"});
@@ -161,6 +165,10 @@ router.put("/usuario/:id", auth, async (req,res) => {
         
         if(!usuarioExiste){
             return res.status(404).json({error:"Usuario não encontrado!"});
+        }
+
+        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);

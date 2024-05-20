@@ -55,6 +55,10 @@ router.get("/municipio/:id", auth, async (req, res) => {
 
 router.post("/municipio", auth, async (req, res) => {
   try {
+    if(req.body.nm_municipio === ''){
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+    }
+
     const estado = req.body.estado;
 
     const estadoExiste = await buscarEstadoId(estado.cd_estado)
@@ -94,6 +98,10 @@ router.put("/municipio/:id", auth, async (req, res) => {
 
     if (!municipioExiste) {
       return res.status(404).json({ error: "Municipio não encontrado!" });
+    }
+
+    if(req.body.nm_municipio === ''){
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
     }
 
     const municipio = {

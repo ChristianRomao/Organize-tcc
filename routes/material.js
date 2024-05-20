@@ -47,6 +47,10 @@ router.get("/material/:id", auth, async (req,res) => {
 
 router.post("/material", auth, async (req,res) => {
     try{
+        if(req.body.ds_material === '' || req.body.qt_material === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
         const newMaterialJSON = JSON.stringify(req.body);
         const newMaterial = JSON.parse(newMaterialJSON);
         const materialSalvo = await gravarMaterial(newMaterial)
@@ -77,6 +81,10 @@ router.put("/material/:id", auth, async (req,res) => {
         
         if(!materialExiste){
             return res.status(404).json({error:"Material não encontrado!"});
+        }
+
+        if(req.body.ds_material === '' || req.body.qt_material === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
         const movtoMaterial = materialExiste.qt_material + req.body.qt_material;
