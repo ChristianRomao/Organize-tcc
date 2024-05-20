@@ -82,6 +82,7 @@ router.post("/instituicao", auth, async (req, res) => {
 
       res.status(201).json({
           instituicao: instituicaoSalva,
+          message: 'Instituição gravada com sucesso!'
       });
     const acao = ("Gravação realizada na tabela Instituição");
     const decode = await decodeJWT(req.headers.authorization);
@@ -142,6 +143,7 @@ router.put("/instituicao/:id", auth, async (req, res) => {
     const instituicaoAlterada = await alterarInstituicao(id, instituicao);
     res.json({
       instituicao: instituicaoAlterada,
+      message: 'Instituição alterada com sucesso!'
     });
     const acao = ("Alteração realizada na tabela Instituição, com o id: " + id);
     const decode = await decodeJWT(req.headers.authorization);

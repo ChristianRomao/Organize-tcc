@@ -38,16 +38,17 @@ const CadInstituicao = () => {
       default:
         break;
     }
-    console.log('fant '+nm_fantasia, 'soc '+nm_razaosoc, 'cnpj '+cd_cpfcnpj);
   };
 
-  const handleCadastro = async () => {
-   try{ 
-    const response = await axios.post("http://localhost:8080/instituicao", {
+  const handleCadastroInst = async () => {
+    const payload = {
       nm_razaosoc: nm_razaosoc,
       cd_cpfcnpj: cd_cpfcnpj,
       nm_fantasia: nm_fantasia,
-    },{headers:{
+    };
+
+   try{ 
+    const response = await axios.post("http://localhost:8080/instituicao", payload ,{headers:{
       Authorization: `Bearer ${token}`
     }}
   );
@@ -98,7 +99,7 @@ const CadInstituicao = () => {
             required
           />
         </div>
-        <button className="botao-inst" type="submit" onClick={handleCadastro}>
+        <button className="botao-inst" type="submit" onClick={handleCadastroInst}>
           Gravar
         </button>
       </form>
