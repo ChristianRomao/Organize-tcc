@@ -111,6 +111,7 @@ router.post("/registro", async (req,res) => {
 
         res.status(201).json({
             usuario: usuarioSalvo,
+            message: 'Usuário gravado com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Usuario');
         const userLog = usuarioSalvo.id_usuario;
@@ -182,6 +183,7 @@ router.post("/cadastro-usuario", auth, async (req,res) => {
 
         res.status(201).json({
             usuario: usuarioSalvo,
+            message: 'Usuário gravado com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Usuario');
         const decode = await decodeJWT(req.headers.authorization);
@@ -292,7 +294,8 @@ router.put("/usuario/:id", auth, async (req,res) => {
         
         const usuarioAlterado = await alterarUsuario(id, usuario);
         res.json({
-            usuario: usuarioAlterado
+            usuario: usuarioAlterado,
+            message: 'Usuário alterado com sucesso!',
         })
         const acao = ('Alteração realizada na tabela Usuario, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

@@ -123,6 +123,7 @@ router.post("/reserva", auth, async (req,res) => {
 
         res.json({
             reserva: reservaSalva,
+            message: 'Reserva gravada com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Reserva');
         const decode = await decodeJWT(req.headers.authorization);
@@ -210,7 +211,8 @@ router.put("/reserva/:id", auth, async (req,res) => {
         
         const reservaAlterada = await alterarReserva(id, reserva);
         res.json({
-            reserva: reservaAlterada
+            reserva: reservaAlterada,
+            message: 'Reserva alterada com sucesso!',
         })
         const acao = ('Alteração realizada na tabela reserva, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

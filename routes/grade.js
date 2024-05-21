@@ -90,6 +90,7 @@ router.post("/grade", auth, async (req,res) => {
 
         res.json({
             grade: gradeSalva,
+            message: 'Grade gravada com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Grade');
         const decode = await decodeJWT(req.headers.authorization);
@@ -148,7 +149,8 @@ router.put("/grade/:id", auth, async (req,res) => {
         
         const gradeAlterada = await alterarGrade(id, grade);
         res.json({
-            polo: gradeAlterada
+            polo: gradeAlterada,
+            message: 'Grade alterada com sucesso!',
         })
         const acao = ('Alteração realizada na tabela grade, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

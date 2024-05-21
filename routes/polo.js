@@ -21,13 +21,11 @@ router.get("/polo", auth, async (req,res) => {
         polos,
     });
 
-    //LOG
     const acao = ('Consulta realizada na tabela Polo.')
     const decode = await decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;
     await gravarLog(userLog,ip,acao);
-    //END LOG
 });
 
 //Realiza consulta sem gravar log
@@ -50,13 +48,11 @@ router.get("/polo/:id", auth, async (req,res) => {
     }
 
     res.json({polo : polo});
-    //LOG
     const acao = ('Consulta realizada na tabela polo, com o id: ' + id);
     const decode = await decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;
     await gravarLog(userLog,ip,acao);
-    //END LOG
 });
 
 router.post("/polo", auth, async (req,res) => {
@@ -89,6 +85,7 @@ router.post("/polo", auth, async (req,res) => {
 
         res.json({
             polo: poloSalvo,
+            message: 'Polo gravado com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Polo');
         const decode = await decodeJWT(req.headers.authorization);
@@ -142,7 +139,8 @@ router.put("/polo/:id", auth, async (req,res) => {
         
         const poloAlterado = await alterarPolo(id, polo);
         res.json({
-            polo: poloAlterado
+            polo: poloAlterado,
+            message: 'Polo alterado com sucesso!',
         })
         const acao = ('Alteração realizada na tabela polo, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

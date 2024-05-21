@@ -80,6 +80,7 @@ router.post("/sala", auth, async (req,res) => {
 
         res.json({
             sala: salaSalva,
+            message: 'Sala gravada com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Sala');
         const decode = await decodeJWT(req.headers.authorization);
@@ -129,7 +130,8 @@ router.put("/sala/:id", auth, async (req,res) => {
         
         const salaAlterada = await alterarSala(id, sala);
         res.json({
-            sala: salaAlterada
+            sala: salaAlterada,
+            message: 'Sala alterada com sucesso!',
         })
         const acao = ('Alteração realizada na tabela sala, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

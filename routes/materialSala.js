@@ -101,6 +101,7 @@ router.post("/materialSala", auth, async (req, res) => {
 
         res.json({
             materialSalas: materialSalasSalvos,
+            message: 'MaterialSala gravado com sucesso!',
         });
         const acao = ('Gravação realizada na tabela MaterialSala');
         const decode = await decodeJWT(req.headers.authorization);
@@ -154,7 +155,8 @@ router.put("/materialSala/:id", auth, async (req,res) => {
         
         const materialSalaAlterado = await alterarMaterialSala(id, materialSala);
         res.json({
-            materialSala: materialSalaAlterado
+            materialSala: materialSalaAlterado,
+            message: 'MaterialSala alterado com sucesso!',
         })
         const acao = ('Alteração realizada na tabela MaterialSala, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

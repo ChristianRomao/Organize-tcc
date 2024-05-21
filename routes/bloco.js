@@ -76,6 +76,7 @@ router.post("/bloco", auth, async (req, res) => {
 
     res.json({
       bloco: blocoSalvo,
+      message: 'Bloco gravado com sucesso!',
     });
     const acao = ("Gravação realizada na tabela Bloco");
     const decode = await decodeJWT(req.headers.authorization);
@@ -121,6 +122,7 @@ router.put("/bloco/:id", auth, async (req, res) => {
     const blocoAlterado = await alterarBloco(id, bloco);
     res.json({
       bloco: blocoAlterado,
+      message: 'Bloco alterado com sucesso!',
     });
     const acao = ("Alteração realizada na tabela bloco, com o id: " + id);
     const decode = await decodeJWT(req.headers.authorization);

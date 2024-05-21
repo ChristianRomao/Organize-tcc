@@ -59,7 +59,8 @@ router.post("/estado", auth, async (req,res) => {
         const estadoSalvo = await gravarEstado(newEstado)
 
         res.json({
-            estado : estadoSalvo
+            estado : estadoSalvo,
+            message: 'Estado gravado com sucesso!',
         })
         const acao = ('Gravação realizada na tabela Estado');
         const decode = await decodeJWT(req.headers.authorization);
@@ -93,7 +94,8 @@ router.put("/estado/:id", auth, async (req,res) => {
 
     const estadoAlterado = await alterarEstado(id, estado);
     res.json({
-        estado: estadoAlterado
+        estado: estadoAlterado,
+        message: 'Estado alterado com sucesso!',
     })
     const acao = ('Alteração realizada na tabela Estado, com o id: ' + id);
     const decode = await decodeJWT(req.headers.authorization);

@@ -64,7 +64,8 @@ router.post("/disciplina", auth, async (req,res) => {
         const disciplinaSalva = await gravarDisciplina(newDisciplina)
 
         res.json({
-            disciplina: disciplinaSalva
+            disciplina: disciplinaSalva,
+            message: 'Disciplina gravada com sucesso!',
         })
         const acao = ('Gravação realizada na tabela Disciplina');
         const decode = await decodeJWT(req.headers.authorization);
@@ -101,7 +102,8 @@ router.put("/disciplina/:id", auth, async (req,res) => {
         
         const disciplinaAlterada = await alterarDisciplina(id, disciplina);
         res.json({
-            disciplina: disciplinaAlterada
+            disciplina: disciplinaAlterada,
+            message: 'Disciplina alterada com sucesso!',
         })
         const acao = ('Alteração realizada na tabela Disciplina, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

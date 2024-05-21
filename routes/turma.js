@@ -75,6 +75,7 @@ router.post("/turma", auth, async (req,res) => {
 
         res.json({
             turma: turmaSalva,
+            message: 'Turma gravada com sucesso!',
         });
         const acao = ('Gravação realizada na tabela Turma');
         const decode = await decodeJWT(req.headers.authorization);
@@ -120,7 +121,8 @@ router.put("/turma/:id", auth, async (req,res) => {
         
         const turmaAlterado = await alterarTurma(id, turma);
         res.json({
-            turma: turmaAlterado
+            turma: turmaAlterado,
+            message: 'Turma alterada com sucesso!',
         })
         const acao = ('Alteração realizada na tabela turma, com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);

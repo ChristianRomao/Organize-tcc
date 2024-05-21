@@ -88,6 +88,7 @@ router.post("/municipio", auth, async (req, res) => {
 
     res.json({
       municipio: municipioSalvo,
+      message: 'Munícipio gravado com sucesso!',
     });
     const acao = ("Gravação realizada na tabela Municipio");
     const decode = await decodeJWT(req.headers.authorization);
@@ -124,6 +125,7 @@ router.put("/municipio/:id", auth, async (req, res) => {
     const municipioAlterado = await alterarMunicipio(id, municipio);
     res.json({
       municipio: municipioAlterado,
+      message: 'Município alterado com sucesso!',
     });
     const acao = ("Alteração realizada na tabela Municipio, com o id: " + id);
     const decode = await decodeJWT(req.headers.authorization);
