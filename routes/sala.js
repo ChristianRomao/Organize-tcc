@@ -2,6 +2,7 @@ const express = require("express");
 const {
     listarSalas,
     buscarSalaId,
+    buscarSalasPorPolo,
     gravarSala,
     alterarSala,
     deletarSala
@@ -48,6 +49,26 @@ router.get("/sala/:id", auth, async (req,res) => {
 
     res.json({sala : sala});
     const acao = ('Consulta realizada na tabela sala, com o id: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
+});
+
+router.get("/sala/polo/:id", auth, async (req,res) => {
+    const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+        return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
+    const salas = await buscarSalasPorPolo(id)
+
+    if(!salas){
+        return res.status(404).json({error:"Sala não encontrada!"});
+    }
+
+    res.json({salas});
+    const acao = ('Consulta realizada na tabela sala para o polo com o id: ' + id);
     const decode = await decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;

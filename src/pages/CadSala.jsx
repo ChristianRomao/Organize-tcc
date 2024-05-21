@@ -106,7 +106,7 @@ const CadSala = () => {
     <Layout title="Cadastro de Sala" icon={faDoorOpen} next="">
       <form className="ajustes-sala">
         <div>
-          <label className="titulo-inputs-sala">Bloco</label>
+          <label className="titulo-inputs-sala">Bloco - Polo</label>
           <select
             className="select-sala"
             id=""

@@ -45,6 +45,32 @@ const buscarSalaId = (id) =>{
     });
 }
 
+const buscarSalasPorPolo = (poloId) => {
+  return prisma.sala.findMany({
+      where: {
+          bloco: {
+              polo_id: poloId,
+          },
+      },
+      include: {
+          bloco: {
+              include: {
+                  polo: {
+                      include: {
+                          instituicao: true,
+                          municipio: {
+                              include: {
+                                  estado: true,
+                              },
+                          },
+                      },
+                  },
+              },
+          },
+      },
+  });
+};
+
 const gravarSala = (sala) => {
     return prisma.sala.create({
         data:{
@@ -75,6 +101,7 @@ const deletarSala = (id) => {
 module.exports = {
     listarSalas,
     buscarSalaId,
+    buscarSalasPorPolo,
     gravarSala,
     alterarSala,
     deletarSala
