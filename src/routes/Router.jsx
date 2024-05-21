@@ -8,6 +8,7 @@ import CadReserva from "../pages/CadReserva";
 import CadBlocos from "../pages/CadBlocos";
 import CadSala from "../pages/CadSala";
 import ConsReserva from "../consulta/ConsReserva";
+import CadMunicipio from "../pages/CadMunicipio";
 
 const Router = () => {
     return (
@@ -28,6 +29,10 @@ const Router = () => {
                 <Route
                     path={"/home"}
                     element={<HomePage/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-municipio"}
+                    element={<CadMunicipio/>}>    
                 </Route>
                 <Route
                     path={"/cadastro-instituicao"}
