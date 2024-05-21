@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import '../css/CadBlocos.css'
 import {  faCube } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CadBlocos = () => {
     const { isAuthenticated } = useAuth();
@@ -37,7 +40,7 @@ const CadBlocos = () => {
         } else {
           buscarPolo();
         }
-      }, [isAuthenticated, navigate, buscarInstituicao, buscarMunicipio]);
+      }, [isAuthenticated, navigate, buscarPolo]);
 
     const handleSelectChange = (event) => {
       setSelectedOption(event.target.value);
