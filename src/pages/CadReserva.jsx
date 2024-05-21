@@ -4,7 +4,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import '../css/Reserva.css';
 import HeaderComponents from '../components/HeaderComponents';
 
-function Reserva() {
+const CadReserva = () => {
 
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -87,4 +87,4 @@ function Reserva() {
   );
 }
 
-export default Reserva;
+export default CadReserva;

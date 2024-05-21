@@ -4,10 +4,10 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import CadInstituicao from "../pages/CadInstituicao";
 import CadPolos from "../pages/CadPolos";
-import Reserva from "../pages/Reserva";
+import CadReserva from "../pages/CadReserva";
 import CadBlocos from "../pages/CadBlocos";
 import CadSala from "../pages/CadSala";
-import ReservaCons from "../consulta/ReservaCons";
+import ConsReserva from "../consulta/ConsReserva";
 
 const Router = () => {
     return (
@@ -46,12 +46,12 @@ const Router = () => {
                     element={<CadSala/>}>    
                 </Route>
                 <Route
-                    path={"/reserva"}
-                    element={<Reserva/>}>    
+                    path={"/cadastro-reserva"}
+                    element={<CadReserva/>}>    
                 </Route>
                 <Route
-                    path={"/reserva-consulta"}
-                    element={<ReservaCons/>}>    
+                    path={"/consulta-reserva"}
+                    element={<ConsReserva/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>

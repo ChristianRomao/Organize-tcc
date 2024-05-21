@@ -63,6 +63,8 @@ const CadBlocos = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      setNm_bloco('');
+      setSelectPolo('');
       console.log(response.data);
     } catch (error) {
       console.log(error.response.data);
@@ -106,7 +108,7 @@ const CadBlocos = () => {
             />
             <button
               className="adiciona-polo"
-              type="submit"
+              type="button"
               onClick={handleCadastroBloco}
             >
               Adicionar
@@ -115,7 +117,7 @@ const CadBlocos = () => {
         </div>
         <button
           className="botao-bloco"
-          type="submit"
+          type="button"
           onClick={handleCadastroBloco}
         >
           Gravar

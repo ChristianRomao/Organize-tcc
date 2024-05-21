@@ -3,8 +3,21 @@ const prisma = require ("./prisma");
 const listarSalas = () =>{
     return prisma.sala.findMany({
         include: {
-            bloco: true,    
-        }
+            bloco: {
+              include: {
+                polo: {
+                  include: {
+                    instituicao: true,
+                    municipio: {
+                      include: {
+                        estado: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
     })
 }
 
@@ -14,8 +27,21 @@ const buscarSalaId = (id) =>{
             id_sala: id
         },
         include: {
-            bloco: true,    
-        }
+            bloco: {
+              include: {
+                polo: {
+                  include: {
+                    instituicao: true,
+                    municipio: {
+                      include: {
+                        estado: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
     });
 }
 

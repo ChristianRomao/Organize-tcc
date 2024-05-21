@@ -78,8 +78,7 @@ const CadPolos = () => {
     const { name, value } = event.target;
     switch (name) {
       case "nm_polo":
-        setNm_polo(value);
-        
+        setNm_polo(value);  
         break;
       case "ds_endereco":
         setDs_endereco(value);
@@ -106,6 +105,10 @@ const CadPolos = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      setNm_polo('');
+      setDs_endereco('');
+      setSelectInstituicao('');
+      setSelectMunicipio('');
       console.log(response.data);
     } catch (error) {
       console.log(error.response.data);
@@ -183,7 +186,7 @@ const CadPolos = () => {
         </div>
         <button
           className="botao-polo"
-          type="submit"
+          type="button"
           onClick={handleCadastroPolo}
         >
           Gravar

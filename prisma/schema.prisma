@@ -16,7 +16,7 @@ datasource db {
 model Instituicao {
   id_instituicao Int     @id @default(autoincrement())
   nm_razaosoc    String
-  cd_cpfcnpj     String
+  cd_cpfcnpj     String  @unique
   nm_fantasia    String
   polos          Polo[]
 }

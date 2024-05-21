@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 
-const ReservaCons = () => {
+const ConsReserva = () => {
     return (
        <Layout>
             
@@ -8,4 +8,4 @@ const ReservaCons = () => {
     );
 }
 
-export default ReservaCons;
+export default ConsReserva;

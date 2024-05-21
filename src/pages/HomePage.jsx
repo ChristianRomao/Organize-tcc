@@ -21,6 +21,9 @@ const HomePage = () => {
         navigate(`/cadastro-${cadastros}`)
     }
 
+    const handleReserva = (acao) => {
+        navigate(`/${acao}-reserva`)
+    }
     return (
         <div>
             <HeaderComponents/>
@@ -59,8 +62,8 @@ const HomePage = () => {
                             <FontAwesomeIcon icon={faCalendarDays} size='3x'/>
                             <p className='titulos-home'>Reserva</p>
                             <div className='btn-gerais'>
-                                <button className='btn' type="button">Cadastrar</button>
-                                <button className='btn' type="button">Consultar</button>
+                                <button className='btn' type="button" onClick={() => handleReserva('cadastro')}>Cadastrar</button>
+                                <button className='btn' type="button" onClick={() => handleReserva('consulta')}>Consultar</button>
                                 <button className='btn' type="button">Relatório</button>
                             </div>
                         </div>

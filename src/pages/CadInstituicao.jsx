@@ -52,6 +52,9 @@ const CadInstituicao = () => {
       Authorization: `Bearer ${token}`
     }}
   );
+    setCd_cpfcnpj('');
+    setNm_fantasia('');
+    setNm_razaosoc('');
     console.log(response.data);
   }catch(error){
     console.log(error.response.data);
@@ -99,7 +102,7 @@ const CadInstituicao = () => {
             required
           />
         </div>
-        <button className="botao-inst" type="submit" onClick={handleCadastroInst}>
+        <button className="botao-inst" type="button" onClick={handleCadastroInst}>
           Gravar
         </button>
       </form>

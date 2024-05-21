@@ -64,7 +64,7 @@ router.post("/sala", auth, async (req,res) => {
         const blocoExiste = await buscarBlocoId(bloco.id_bloco)
     
         if(!blocoExiste){
-          return res.status(404).json({ error: "Sala não encontrada!" });
+          return res.status(404).json({ error: "Bloco não encontrada!" });
         }
 
         if(req.body.qt_capacvigilancia <= 0){
