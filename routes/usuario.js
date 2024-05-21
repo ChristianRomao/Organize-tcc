@@ -113,6 +113,77 @@ router.post("/registro", async (req,res) => {
             usuario: usuarioSalvo,
         });
         const acao = ('Gravação realizada na tabela Usuario');
+        const userLog = usuarioSalvo.id_usuario;
+        const ip = req.ip;
+        await gravarLog(userLog,ip,acao);
+    }catch (error) {
+        console.error("Erro ao alterar curso:", error);
+        if (error instanceof PrismaClientKnownRequestError) {
+            const errorMessage = error.message;
+            const constraintNameMatch = errorMessage.match(/`([^`]+)`$/);
+            const constraintName = constraintNameMatch ? constraintNameMatch[1] : "Unknown Constraint";
+            res.status(500).json({ message: "Server Error", constraintName });
+        } else {
+            res.status(500).json({ message: "Server Error", error });
+        }
+    }
+})
+
+router.post("/cadastro-usuario", auth, async (req,res) => {
+    try{
+        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
+            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        }
+
+        const emailUtilizado = await buscarEmail(req.body.ds_email);
+        if(emailUtilizado){
+            return res.status(400).json({message:"E-mail já utilizado!"});
+        }
+
+        const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
+
+        const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();
+
+        const cpfcnpj = req.body.cd_cpfcnpj
+
+        if(isNaN(cpfcnpj)){
+            return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
+        }
+
+        // if(cpfcnpj.length == 11){
+        //     const cpfValidado = cpf.validate(cpfcnpj);
+
+        //     if(!cpfValidado){
+        //         return res.status(404).json({error:"CPF inválido!"});
+        //     }
+        // }else if(cpfcnpj.length == 14){
+        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+
+        //     if(!cnpjValidado){
+        //         return res.status(404).json({error:"CNPJ inválido!"});
+        //     }
+        // }else{
+        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        // }
+
+        if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
+            return res.status(400).json({ message: "Nome não pode conter números/caracteres especiais!" });
+        }
+
+        const usuario = {
+            cd_cpfcnpj: cpfcnpj,
+            nm_usuario: req.body.nm_usuario,
+            dt_nascimento: dt_nascimentoForm,
+            ds_email: req.body.ds_email,
+            ds_senha: senhaCriptografada,
+            ds_funcao: req.body.ds_funcao
+        }
+        const usuarioSalvo = await gravarUsuario(usuario);
+
+        res.status(201).json({
+            usuario: usuarioSalvo,
+        });
+        const acao = ('Gravação realizada na tabela Usuario');
         const decode = await decodeJWT(req.headers.authorization);
         const userLog = decode.id_usuario;
         const ip = req.ip;
