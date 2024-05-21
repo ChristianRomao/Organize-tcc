@@ -121,7 +121,7 @@ const CadPolos = () => {
             <select
               className="inputs-polo"
               id=""
-              name="nm_razaosoc"
+              name="id_instituicao"
               value={selectInstituicao}
               onChange={handleSetInstituicao}
               required
@@ -143,7 +143,7 @@ const CadPolos = () => {
           <select
             className="inputs-polo"
             id=""
-            name="nm_municipio"
+            name="id_municipio"
             value={selectMunicipio}
             onChange={handleSetMunicipio}
             required

@@ -6,7 +6,7 @@ import ModalComponent from "../components/ModalComponent";
 
 const CadSala = () => {
 
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectBloco, setSelectBloco] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {

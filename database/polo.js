@@ -3,7 +3,8 @@ const prisma = require ("./prisma");
 const listarPolos = () =>{
     return prisma.polo.findMany({
             include: {
-            instituicao: true,    
+            instituicao: true,
+            municipio:true    
         }
     })
 }
@@ -14,7 +15,8 @@ const buscarPoloId = (id) =>{
             id_polo: id
         },
         include: {
-            instituicao: true,    
+            instituicao: true,  
+            municipio:true  
         }
     });
 }
