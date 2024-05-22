@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import '../css/Reserva.css';
 import HeaderComponents from '../components/HeaderComponents';
+import { useNavigate } from 'react-router-dom';
 
 const CadReserva = () => {
+
+  const navigate = useNavigate()
 
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -21,17 +22,18 @@ const CadReserva = () => {
       <HeaderComponents/>
       <body className='reserva-home'>
         <div className='reserva-body'>
-          <button className='voltaHome-reserva'>
-            <FontAwesomeIcon icon={faArrowLeft} style={{color: "#d6e7ff", margin: "0em 1em"}} />
-            <a href="/home" style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para a tela Inicial</a>
-          </button>
+          <div>
+            <button className='voltaHome'>
+              <p style={{color: "#d6e7ff", margin: "0em 1em"}} onClick={()=>navigate(-1)}>Voltar</p>
+            </button>
+            <button className='vaiConsulta'>
+              <p style={{color: "#d6e7ff", margin: "0em 1em"}} onClick={()=>navigate('/consulta-reserva')}>Ir para Consulta</p>
+            </button>
+          </div>
           <div>
             <text className='titulo-reserva'>Faça a sua Reserva</text>
           </div> 
           <div className='cadastro-reserva'>
-            {/* <div className="icon-container-reserva">
-              <FontAwesomeIcon icon={faLocationDot} style={{color: "#d6e7ff"}} className="large-icon"/>
-            </div> */}
             <form className='ajustes-reserva'>
               <label className='titulo-inputs-reserva'>Insira o dia e a hora:</label>
               <div className='inputs-reserva'>
