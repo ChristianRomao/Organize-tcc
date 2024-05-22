@@ -101,12 +101,12 @@ router.post("/reserva", auth, async (req,res) => {
         const alunosTurma = gradeExiste.qt_alunos;
 
         if(alunosVigilancia < alunosTurma){
-            return res.status(406).json({ message: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+            return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
         }
 
         const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
         if(existeReserva != ""){
-            return res.status(406).json({ message: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
+            return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
         }
         //END VALIDAÇÕES
 
@@ -190,12 +190,12 @@ router.put("/reserva/:id", auth, async (req,res) => {
         const alunosTurma = gradeExiste.qt_alunos;
 
         if(alunosVigilancia < alunosTurma){
-            return res.status(406).json({ message: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+            return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
         }
 
         const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
         if(existeReserva != ""){
-            return res.status(406).json({ message: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
+            return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} nas datas informadas!` });
         }
         //END VALIDAÇÕES
 

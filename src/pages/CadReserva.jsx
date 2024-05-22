@@ -1,21 +1,88 @@
-import React, { useState } from 'react';
-import '../css/Reserva.css';
-import HeaderComponents from '../components/HeaderComponents';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import "../css/Reserva.css";
+import HeaderComponents from "../components/HeaderComponents";
+import { useAuth } from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CadReserva = () => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  const navigate = useNavigate()
+  const [salaPolos, setSalaPolos] = useState([]);
+  const [selectPolo, setSelectPolo] = useState("");
+  const [polos, setPolos] = useState([]);
+  const [selectSalaPolo, setSelectSalaPolo] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
 
-  const [selectedOption, setSelectedOption] = useState('');
+  const buscarPolo = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/consulta-polo",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.polos;
+      if (Array.isArray(data)) {
+        setPolos(data);
+      } else {
+        console.error("Formato inexperado do respose de polos", data);
+        setPolos([]);
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }, [token]);
 
-  const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
+  const buscarSalaPolo = useCallback(async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/consulta-sala/polo/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.salas;
+      if (Array.isArray(data)) {
+        setSalaPolos(data);
+      } else {
+        console.error("Formato inexperado do respose de Sala", data);
+        setSalaPolos([]);
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login");
+    } else {
+      buscarPolo();
+      buscarSalaPolo('');
+    }
+  }, [isAuthenticated, navigate, buscarPolo, buscarSalaPolo]);
+
+  const handleSetSalaPolo = (event) => {
+    const salaPolo = event.target.value;
+    setSelectSalaPolo(salaPolo);
   };
 
-  const handleSubmit = () => {
-
+  const handleSetPolo = (event) => {
+    const polo = event.target.value
+    setSelectPolo(polo);
+    buscarSalaPolo(polo);
   }
+
+  const handleCadastrarReserva = () => {};
 
   return (
     <div className='tudo'>
@@ -41,52 +108,106 @@ const CadReserva = () => {
                   <input className='date-reserva' type="date" required/>
                   <input className='date-reserva' type="date" required/> 
                 </div>
-                <div className='input-individual'>
-                  <input className='time-reserva' type="time" required/>
-                  <input className='time-reserva' type="time" required/>
+                <div className="input-individual">
+                  <input className="time-reserva" type="time" required />
+                  <input className="time-reserva" type="time" required />
                 </div>
               </div>
-              <div className='inputs-reserva'>
-                <div className='select-individual'>
-                  <label className='titulo-selects-reserva'>Escolha o Polo:</label>
-                  <select className='selects-reserva' id="" name="Polos" value={selectedOption} onChange={handleSelectChange}>
-                    <option value="Polo 1">Polo 1</option>
+              <div className="inputs-reserva">
+                <div className="select-individual">
+                  <label className="titulo-selects-reserva">
+                    Escolha o Polo:
+                  </label>
+                  <select
+                    className="selects-reserva"
+                    id=""
+                    name="id_polo"
+                    value={selectPolo}
+                    onChange={handleSetPolo}
+                  >
+                  <option value="">Selecione um polo</option>
+                  {polos.map((polo) => (
+                    <option
+                      key={polo.id_polo}
+                      value={polo.id_polo}
+                    >
+                      {polo.nm_polo}
+                    </option>
+                  ))}
                   </select>
                 </div>
-                <div className='select-individual'>
-                  <label className='titulo-selects-reserva'>Escolha a Sala:</label>
-                  <select className='selects-reserva' id="" name="Salas" value={selectedOption} onChange={handleSelectChange}>
-                    <option value="Polo 1">Bloco D, Sala D10</option>
+                <div className="select-individual">
+                  <label className="titulo-selects-reserva">
+                    Escolha a Sala:
+                  </label>
+                  <select
+                    className="selects-reserva"
+                    id=""
+                    name="id_sala"
+                    value={selectSalaPolo}
+                    onChange={handleSetSalaPolo}
+                  >
+                    <option value="">Selecione uma sala</option>
+                  {salaPolos.map((salaPolo) => (
+                    <option
+                      key={salaPolo.id_sala}
+                      value={salaPolo.id_sala}
+                    >
+                      {salaPolo.nm_sala} - {salaPolo.bloco.nm_bloco} - {salaPolo.bloco.polo.nm_polo} 
+                    </option>
+                  ))}
                   </select>
                 </div>
               </div>
-              <div className='inputs-reserva'>
-                <div className='select-individual'>
-                  <label className='titulo-selects-reserva'>Responsavel pela Sala:</label>
-                  <select className='selects-reserva' id="" name="Responsavel" value={selectedOption} onChange={handleSelectChange}>
-                    <option value="Polo 1">Pedro</option>
+              <div className="inputs-reserva">
+                <div className="select-individual">
+                  <label className="titulo-selects-reserva">
+                    Responsavel pela Sala:
+                  </label>
+                  <select
+                    className="selects-reserva"
+                    id=""
+                    name="Responsavel"
+                    value={selectedOption}
+                    onChange={selectedOption}
+                  >
+                    <option value="">Selecione o responsável</option>
                   </select>
                 </div>
-                <div className='select-individual'>
-                  <label className='titulo-selects-reserva'>Selecione a Grade:</label>
-                  <select className='selects-reserva' id="" name="Grade" value={selectedOption} onChange={handleSelectChange}>
-                  <option value="Polo 1">Não sei</option>
+                <div className="select-individual">
+                  <label className="titulo-selects-reserva">
+                    Selecione a Grade:
+                  </label>
+                  <select
+                    className="selects-reserva"
+                    id=""
+                    name="Grade"
+                    value={selectedOption}
+                    onChange={selectedOption}
+                  >
+                    <option value="Polo 1">Não sei</option>
                   </select>
                 </div>
               </div>
-              <button className='botao-reserva' type="submit" onSubmit={handleSubmit}>Fazer Reserva</button>
+              <button
+                className="botao-reserva"
+                type="submit"
+                onSubmit={handleCadastrarReserva}
+              >
+                Fazer Reserva
+              </button>
             </form>
           </div>
-          <div className='descricao-reserva'>
-              <text className='titulo-descricao'>Detalhes da Reserva</text>
-              <div>
-                {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
-              </div>
+          <div className="descricao-reserva">
+            <text className="titulo-descricao">Detalhes da Reserva</text>
+            <div>
+              {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
+            </div>
           </div>
         </div>
       </body>
     </div>
   );
-}
+};
 
 export default CadReserva;
