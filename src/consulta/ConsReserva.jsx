@@ -15,6 +15,7 @@ const ConsReserva = () => {
                         <option value="Tipos" disabled selected hidden>Selecione o tipo</option>
                         <option value="Tipos" >AAA</option>
                         <option value="Tipos" >aaaaaaaaaa</option>
+                        <option value="Tipos" >aaaaaaaaaa</option>
                     </select>
                     <input 
                         className="inputs-consulta-reserva"
