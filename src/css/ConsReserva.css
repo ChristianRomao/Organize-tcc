@@ -1,0 +1,76 @@
+.ajustes-consulta-reserva {
+    width: 100%;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    animation: slide-in 1s ease forwards;
+}
+@keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(-25px);
+    }
+}
+
+.conteudo-consulta-reserva {
+    display: flex;
+    flex-direction: column;
+    margin-top: -26em;
+    margin-inline: 10em;
+}
+
+.grid-cons-reserva {
+    display: flex;
+    background-color: #003681;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.titulo-consulta-reserva {
+    margin-left: -28em;
+    color: #ffffff;
+}
+
+.select-consulta-reserva {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 50%;
+    margin: 6px 0px;
+    border-radius: 10px;
+    border-style: none;
+    font-weight: bolder;
+}
+
+.inputs-consulta-reserva {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 100%;
+    margin: 2px 20px;
+    border-radius: 10px;
+    border-style: none;
+}
+.inputs-consulta-reserva::placeholder {
+    color: black;
+    font-weight: 600;
+}
+
+.botao-consulta-reserva {
+    font-size: large;
+    background-color: #007226;
+    color: #d6e7ff;
+    border-radius: 10px;
+    width: 20em;
+    transition: 0.2s;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.botao-consulta-reserva:hover {
+    transition: 0.2s;
+    background-color: #09ff5b;
+    color: #00581d;
+}

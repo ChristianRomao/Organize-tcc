@@ -18,7 +18,7 @@
 }
 
 .cadastro-reserva {
-    background-color: #0E1826;
+    background-color: #00183a;
     width: 40%;
     height: 65vh;
     margin-top: 2%;
@@ -29,15 +29,34 @@
     box-shadow: 0px 0px 20px;
 }
 
-.voltaHome-reserva {
+.voltaHome {
+    position: relative;
+    top: 42px;
+    padding: 10px 22px;
+    background-color: #004fbd;
+    border-radius: 10px;
+    transition: 0.2s;
+    font-weight: 700;
+    cursor: pointer;
+}
+.voltaHome:hover {
+    transition: 0.2s;
+    background-color: #002d6b;
+    color: #000000;
+}
+
+.vaiConsulta {
     position: relative;
     top: 42px;
     padding: 10px 15px;
     background-color: #004fbd;
     border-radius: 10px;
     transition: 0.2s;
+    margin-left: 800px;
+    font-weight: 700;
+    cursor: pointer;
 }
-.voltaHome-reserva:hover {
+.vaiConsulta:hover {
     transition: 0.2s;
     background-color: #002d6b;
     color: #000000;
@@ -170,7 +189,7 @@
 }
 
 .descricao-reserva {
-    background-color: #0E1826;
+    background-color: #00183a;
     width: 20%;
     height: 65vh;
     margin-top: -30.8%;
@@ -191,8 +210,8 @@
 
 .botao-reserva {
     font-size: large;
-    background-color: #2A78E4;
-    color: #d6e7ff;
+    background-color: #007226;
+    color: #d0ffe0;
     border-radius: 8px;
     width: 140px;
     height: 40px;
@@ -203,6 +222,6 @@
 }
 .botao-reserva:hover {
     transition: 0.2s;
-    background-color: #002d6b;
-    color: #d6e7ff;
+    background-color: #09ff5b;
+    color: #007226;
 }

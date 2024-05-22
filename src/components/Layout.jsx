@@ -3,7 +3,7 @@ import HeaderComponents from "./HeaderComponents";
 import '../css/Layout.css';
 import { useNavigate } from "react-router-dom";
 
-const Layout = ({children, icon, title, next}) => {
+const Layout = ({children, icon, title, next, noicon}) => {
     
     const navigate = useNavigate()
     
@@ -31,9 +31,9 @@ const Layout = ({children, icon, title, next}) => {
                         <text className='titulo'>{title}</text>
                     </div>
                     <div className='area-cadastro'>
-                        <div className="icon-container">
+                        {!noicon && <div className="icon-container">
                             <FontAwesomeIcon icon={icon} style={{ color: "#d6e7ff" }} className="large-icon" />
-                        </div>
+                        </div>}
                         {children}
                     </div>
                 </div>
