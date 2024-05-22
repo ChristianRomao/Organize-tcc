@@ -33,8 +33,8 @@ const HomePage = () => {
                         <div className='interior'>
                             <FontAwesomeIcon icon={faFloppyDisk} style={{color: "#ffffff",}} size='3x'/>
                             <p className='titulos-home'>Cadastro</p>
-                            <div className='btn-gerais scrollable'>
-                            {/* <div className='btn-gerais'> */}
+                            {/* <div className='btn-gerais scrollable'> */}
+                            <div className='btn-gerais'>
                                 <button className='btn' type="button" onClick={() => handleCadastro('municipio')}>Município</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('instituicao')}>Instituição</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('polo')}>Polo</button>
