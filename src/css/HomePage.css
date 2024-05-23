@@ -49,40 +49,6 @@
     max-height: 200px;
 }
 
-
-/* Incluindo scroll na tela */
-/* .btn-gerais {
-    margin-top: 20px;
-    max-height: 422px;
-    overflow-y: auto;
-    margin-bottom: -300px
-} */
-
-.scrollable{
-    padding-right: 50px;
-    margin-right: -80px;
-}
-
-.scrollable::-webkit-scrollbar {
-    padding-left: 50px;
-    width: 8px;
-}
-
-.scrollable::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.scrollable::-webkit-scrollbar-thumb {
-    background: #2a77e4;
-    border-radius: 10px;
-}
-
-.scrollable::-webkit-scrollbar-thumb:hover {
-    background: #0000009f;
-}
-/* Incluindo scroll na tela acima */
-
 .btn {
     display: grid;
     grid-template-columns: auto auto;

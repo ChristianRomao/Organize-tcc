@@ -14,6 +14,8 @@ const CadReserva = () => {
 
   const [salaPolos, setSalaPolos] = useState([]);
   const [selectPolo, setSelectPolo] = useState("");
+  const [usuarios, setUsuarios] = useState([]);
+  const [selectUsuario, setSelectUsuario] = useState("");
   const [polos, setPolos] = useState([]);
   const [selectSalaPolo, setSelectSalaPolo] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -44,6 +46,28 @@ const CadReserva = () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/consulta-sala/polo/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.salas;
+      if (Array.isArray(data)) {
+        setSalaPolos(data);
+      } else {
+        console.error("Formato inexperado do respose de Sala", data);
+        setSalaPolos([]);
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }, [token]);
+
+  const buscarUsuario = useCallback(async (id) => {
+    try {
+      const response = await axios.get(
+        'http://localhost:8080/consulta-usuario',
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -21,6 +21,20 @@ const buscarGradeId = (id) =>{
     });
 }
 
+const buscarGradePorTurma = (turmaId) =>{
+    return prisma.grade.findFirst({
+        where:{
+            turma:{
+                turma_id:turmaId
+            }
+        },
+        include: {
+            disciplina: true,
+            turma: true,
+        }
+    });
+}
+
 const gravarGrade = (grade) => {
     return prisma.grade.create({
         data:{
@@ -59,6 +73,7 @@ const deletarGrade = (id) => {
 module.exports = {
     listarGrades,
     buscarGradeId,
+    buscarGradePorTurma,
     gravarGrade,
     alterarGrade,
     deletarGrade

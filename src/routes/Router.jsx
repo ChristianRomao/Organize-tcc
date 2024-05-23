@@ -7,7 +7,7 @@ import CadPolos from "../pages/CadPolos";
 import CadReserva from "../pages/CadReserva";
 import CadBlocos from "../pages/CadBlocos";
 import CadSala from "../pages/CadSala";
-import ConsReserva from "../consulta/ReservaCons";
+import ConsReserva from "../consulta/ConsReserva";
 import CadMunicipio from "../pages/CadMunicipio";
 
 const Router = () => {
