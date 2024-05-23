@@ -45,6 +45,24 @@ const buscarGradePorTurma = (turmaId) =>{
     });
 }
 
+const buscarGradePorAno = (nrAnoLetivo) =>{
+    return prisma.grade.findMany({
+        where:{
+            turma:{
+                nr_anoletivo: nrAnoLetivo,
+            }    
+        },
+        include: {
+            disciplina: true,
+            turma:{
+                include:{
+                    curso:true
+                }
+            }
+        }
+    });
+}
+
 const gravarGrade = (grade) => {
     return prisma.grade.create({
         data:{
@@ -84,6 +102,7 @@ module.exports = {
     listarGrades,
     buscarGradeId,
     buscarGradePorTurma,
+    buscarGradePorAno,
     gravarGrade,
     alterarGrade,
     deletarGrade

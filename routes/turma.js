@@ -3,6 +3,7 @@ const {buscarCursoId} = require("../database/curso");
 const {
     listarTurmas,
     buscarTurmaId,
+    buscarTurmaAno,
     gravarTurma,
     alterarTurma,
     deletarTurma
@@ -54,9 +55,29 @@ router.get("/turma/:id", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
+router.get("/consulta-turma-anoletivo/:id", auth, async (req,res) => {
+    const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Ano para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+        return res.status(400).json({ error: 'Ano deve conter apenas números.' });
+    }
+    const turmas = await buscarTurmaAno(id);
+
+    if(!turmas){
+        return res.status(404).json({error:"Turmas não encontradas!"});
+    }
+
+    res.json({turmas});
+    const acao = ('Consulta realizada na tabela turma, com o ano: ' + id);
+    const decode = await decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
+});
+
 router.post("/turma", auth, async (req,res) => {
     try{
-        if(req.body.ds_turma === ''){
+        if(req.body.ds_turma === '' || req.body.nr_anoletivo === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
@@ -69,6 +90,7 @@ router.post("/turma", auth, async (req,res) => {
 
         const turma = {
             ds_turma: req.body.ds_turma,
+            nr_anoletivo: req.body.nr_anoletivo,
             curso_id: curso.id_curso,
         }
         const turmaSalva = await gravarTurma(turma);
@@ -116,6 +138,7 @@ router.put("/turma/:id", auth, async (req,res) => {
         
         const turma = {
             ds_turma: req.body.ds_turma,
+            nr_anoletivo:req.body.nr_anoletivo,
             curso_id: curso,
         }
         
