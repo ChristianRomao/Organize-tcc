@@ -1,5 +1,4 @@
 import Layout from "../components/Layout";
-
 import "../css/ConsReserva.css";
 
 const ConsReserva = () => {
