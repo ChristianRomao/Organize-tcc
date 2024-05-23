@@ -33,8 +33,8 @@ const HomePage = () => {
                         <div className='interior'>
                             <FontAwesomeIcon icon={faFloppyDisk} style={{color: "#ffffff",}} size='3x'/>
                             <p className='titulos-home'>Cadastro</p>
-                            {/* <div className='btn-gerais scrollable'> */}
-                            <div className='btn-gerais'>
+                            <div className='btn-gerais scrollable'>
+                            {/* <div className='btn-gerais'> */}
                                 <button className='btn' type="button" onClick={() => handleCadastro('municipio')}>Município</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('instituicao')}>Instituição</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('polo')}>Polo</button>
@@ -54,12 +54,16 @@ const HomePage = () => {
                             <FontAwesomeIcon icon={faMagnifyingGlass} size='3x'/>
                             <p className='titulos-home'>Consulta</p>
                             <div className='btn-gerais scrollable'>
-                                <button className='btn' type="button">Instituição</button>
-                                <button className='btn' type="button">Polo</button>
-                                <button className='btn' type="button">Bloco</button>
-                                <button className='btn' type="button">Sala</button>
-                                <button className='btn' type="button">Materiais</button>
-                                <button className='btn' type="button">Usuários</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro()}>Instituição</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro()}>Polo</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro()}>Bloco</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro()}>Sala</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro()}>Materiais</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro()}>Usuários</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Curso</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Disciplina</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Turma</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Grade</button>
                             </div>
                         </div>
                     </div>

@@ -44,23 +44,23 @@
 }
 
 
-.btn-gerais {
+/* .btn-gerais {
     margin-top: 30px;
     max-height: 200px;
-}
+} */
 
 
 /* Incluindo scroll na tela */
-/* .btn-gerais {
-    margin-top: 20px;
-    max-height: 422px;
+.btn-gerais {
+    margin-top: 30px;
+    max-height: 500px;
     overflow-y: auto;
     margin-bottom: -300px
-} */
+}
 
 .scrollable{
-    padding-right: 50px;
-    margin-right: -80px;
+    padding-right: 70px;
+    margin-right: -78px;
 }
 
 .scrollable::-webkit-scrollbar {
