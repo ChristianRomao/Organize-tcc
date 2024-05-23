@@ -1,0 +1,52 @@
+.inputs-disciplina {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 80%;
+    margin: 6px 0px;
+    display: flex;
+    text-align: center;
+    border-radius: 10px;
+    border-style: none;
+}
+
+.titulo-inputs-disciplina {
+    color: #d6e7ff;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
+.Ajustes {
+    width: 50%;
+    margin-top: 80px;
+    animation: slide-in 1s ease forwards;
+}
+@keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(-25px);
+    }
+}
+
+.botao-disciplina{
+    font-size: large;
+    background-color: #007226;
+    color: #d0ffe0;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    margin-top: 30px;
+    margin-right: 100px;
+    transition: 0.2s;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.botao-disciplina:hover {
+    transition: 0.2s;
+    background-color: #09ff5b;
+    color: #007226;
+}

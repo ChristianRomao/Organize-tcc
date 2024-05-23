@@ -34,7 +34,6 @@ const HomePage = () => {
                             <FontAwesomeIcon icon={faFloppyDisk} style={{color: "#ffffff",}} size='3x'/>
                             <p className='titulos-home'>Cadastro</p>
                             <div className='btn-gerais scrollable'>
-                            {/* <div className='btn-gerais'> */}
                                 <button className='btn' type="button" onClick={() => handleCadastro('municipio')}>Município</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('instituicao')}>Instituição</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('polo')}>Polo</button>
@@ -42,9 +41,8 @@ const HomePage = () => {
                                 <button className='btn' type="button" onClick={() => handleCadastro('sala')}>Sala</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('materiais')}>Materiais</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('usuarios')}>Usuários</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('curso')}>Curso</button>
+                                <button className='btn' type="button" onClick={() => handleCadastro('curso-turma')}>Curso/Turma</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('disciplina')}>Disciplina</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('turma')}>Turma</button>
                                 <button className='btn' type="button" onClick={() => handleCadastro('grade')}>Grade</button>
                             </div>
                         </div>

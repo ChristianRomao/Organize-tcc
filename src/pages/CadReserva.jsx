@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import "../css/Reserva.css";
 import HeaderComponents from "../components/HeaderComponents";
 import { useAuth } from "../AuthProvider";
@@ -12,13 +10,16 @@ const CadReserva = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  const [salaPolos, setSalaPolos] = useState([]);
-  const [selectPolo, setSelectPolo] = useState("");
   const [usuarios, setUsuarios] = useState([]);
   const [selectUsuario, setSelectUsuario] = useState("");
   const [polos, setPolos] = useState([]);
+  const [selectPolo, setSelectPolo] = useState("");
+  const [salaPolos, setSalaPolos] = useState([]);
   const [selectSalaPolo, setSelectSalaPolo] = useState("");
-  const [selectedOption, setSelectedOption] = useState("");
+  const [cursos, setCursos] = useState([]);
+  const [selectCurso, setSelectCurso] = useState("");
+  const [gradeTurmas, setGradeTurmas] = useState([]);
+  const [selectGradeTurma, setSelectGradeTurma] = useState("");
 
   const buscarPolo = useCallback(async () => {
     try {
@@ -74,12 +75,56 @@ const CadReserva = () => {
           },
         }
       );
-      const data = response.data.salas;
+      const data = response.data.usuarios;
       if (Array.isArray(data)) {
-        setSalaPolos(data);
+        setUsuarios(data);
       } else {
         console.error("Formato inexperado do respose de Sala", data);
-        setSalaPolos([]);
+        setUsuarios([]);
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }, [token]);
+
+  const buscarCurso = useCallback(async (id) => {
+    try {
+      const response = await axios.get(
+        'http://localhost:8080/consulta-curso',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.cursos;
+      if (Array.isArray(data)) {
+        setCursos(data);
+      } else {
+        console.error("Formato inexperado do respose de Curso", data);
+        setCursos([]);
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }, [token]);
+
+  const buscarGradeTurma = useCallback(async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/consulta-grade/turma/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.grades;
+      if (Array.isArray(data)) {
+        setGradeTurmas(data);
+      } else {
+        console.error("Formato inexperado do respose de Sala", data);
+        setGradeTurmas([]);
       }
     } catch (error) {
       console.log(error.response.data);
@@ -92,8 +137,11 @@ const CadReserva = () => {
     } else {
       buscarPolo();
       buscarSalaPolo('');
+      buscarUsuario();
+      buscarCurso();
+      buscarGradeTurma('');
     }
-  }, [isAuthenticated, navigate, buscarPolo, buscarSalaPolo]);
+  }, [isAuthenticated, navigate, buscarPolo, buscarSalaPolo, buscarUsuario,buscarCurso,buscarGradeTurma]);
 
   const handleSetSalaPolo = (event) => {
     const salaPolo = event.target.value;
@@ -104,6 +152,22 @@ const CadReserva = () => {
     const polo = event.target.value
     setSelectPolo(polo);
     buscarSalaPolo(polo);
+  }
+  
+  const handleSetUsuario = (event) => {
+    const usuario = event.target.value
+    setSelectUsuario(usuario);
+  }
+  
+  const handleSetCurso = (event) => {
+    const curso = event.target.value
+    setSelectCurso(curso);
+    buscarGradeTurma(curso);
+  }
+
+  const handleSetGradeTurma = (event) => {
+    const gradeTurma = event.target.value;
+    setSelectGradeTurma(gradeTurma);
   }
 
   const handleCadastrarReserva = () => {};
@@ -192,24 +256,63 @@ const CadReserva = () => {
                     className="selects-reserva"
                     id=""
                     name="Responsavel"
-                    value={selectedOption}
-                    onChange={selectedOption}
+                    value={selectUsuario}
+                    onChange={handleSetUsuario}
                   >
                     <option value="">Selecione o responsável</option>
+                    {usuarios.map((usuario) => (
+                    <option
+                      key={usuario.id_usuario}
+                      value={usuario.id_usuario}
+                    >
+                      {usuario.nm_usuario} 
+                    </option>
+                  ))}
                   </select>
                 </div>
                 <div className="select-individual">
                   <label className="titulo-selects-reserva">
-                    Selecione a Grade:
+                    Selecione o Curso:
+                  </label>
+                  <select
+                    className="selects-reserva"
+                    id=""
+                    name="id_curso"
+                    value={selectCurso}
+                    onChange={handleSetCurso}
+                  >
+                    <option value="">Selecione o curso</option>
+                    {cursos.map((curso) => (
+                    <option
+                      key={curso.id_curso}
+                      value={curso.id_curso}
+                    >
+                      {curso.ds_curso} 
+                    </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="select-individual">
+                  <label className="titulo-selects-reserva">
+                    Selecione a Turma:
                   </label>
                   <select
                     className="selects-reserva"
                     id=""
                     name="Grade"
-                    value={selectedOption}
-                    onChange={selectedOption}
+                    value={selectGradeTurma}
+                    onChange={handleSetGradeTurma}
                   >
-                    <option value="Polo 1">Não sei</option>
+                    <option value="">Selecione a turma</option>
+                    {gradeTurmas.map((gradeTurma) => (
+                    <option
+                      key={gradeTurma.id_grade}
+                      value={gradeTurma.id_grade}
+                    >
+                      {console.log(gradeTurma)}
+                      {gradeTurma.turma.ds_turma} - {gradeTurma.turma.curso.ds_curso}
+                    </option>
+                    ))}
                   </select>
                 </div>
               </div>

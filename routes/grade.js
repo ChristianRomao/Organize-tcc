@@ -69,7 +69,8 @@ router.get("/consulta-grade/turma/:id", auth, async (req,res) => {
     if (!numeroRegex.test(id)) {
       return res.status(400).json({ error: 'Id deve conter apenas números.' });
     }
-    const grades = await buscarGradePorTurma(id)
+    
+    const grades = await buscarGradePorTurma(id);
 
     if(!grades){
         return res.status(404).json({error:"Grade não encontrada!"});
