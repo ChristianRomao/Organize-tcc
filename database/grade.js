@@ -4,7 +4,11 @@ const listarGrades = () =>{
     return prisma.grade.findMany({
         include: {
             disciplina: true,
-            turma: true,
+            turma:{
+                include:{
+                    curso:true
+                }
+            }
         }
     })
 }
@@ -16,21 +20,27 @@ const buscarGradeId = (id) =>{
         },
         include: {
             disciplina: true,
-            turma: true,
+            turma:{
+                include:{
+                    curso:true
+                }
+            }
         }
     });
 }
 
 const buscarGradePorTurma = (turmaId) =>{
-    return prisma.grade.findFirst({
+    return prisma.grade.findMany({
         where:{
-            turma:{
-                turma_id:turmaId
-            }
+            turma_id: turmaId,
         },
         include: {
             disciplina: true,
-            turma: true,
+            turma:{
+                include:{
+                    curso:true
+                }
+            }
         }
     });
 }

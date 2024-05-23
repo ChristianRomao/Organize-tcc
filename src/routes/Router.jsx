@@ -9,6 +9,9 @@ import CadBlocos from "../pages/CadBlocos";
 import CadSala from "../pages/CadSala";
 import ConsReserva from "../consulta/ConsReserva";
 import CadMunicipio from "../pages/CadMunicipio";
+import CadDisciplina from "../pages/CadDisciplina";
+import CadCursoTurma from "../pages/CadCursoTurma";
+import CadGrade from "../pages/CadGrade";
 
 const Router = () => {
     return (
@@ -49,6 +52,18 @@ const Router = () => {
                 <Route
                     path={"/cadastro-sala"}
                     element={<CadSala/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-curso-turma"}
+                    element={<CadCursoTurma/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-disciplina"}
+                    element={<CadDisciplina/>}>    
+                </Route>
+                <Route
+                    path={"/cadastro-grade"}
+                    element={<CadGrade/>}>    
                 </Route>
                 <Route
                     path={"/cadastro-reserva"}
