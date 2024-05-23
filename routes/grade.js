@@ -3,6 +3,7 @@ const {
     listarGrades,
     buscarGradeId,
     buscarGradePorTurma,
+    buscarGradePorAno,
     gravarGrade,
     alterarGrade,
     deletarGrade
@@ -43,6 +44,13 @@ router.get("/consulta-grade/turma", auth, async (req,res) => {
     });
 });
 
+router.get("/consulta-grade/turma-ano", auth, async (req,res) => {
+    const grades = await listarGrades()
+    res.json({
+        grades,
+    });
+});
+
 router.get("/grade/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
     if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
@@ -71,6 +79,22 @@ router.get("/consulta-grade/turma/:id", auth, async (req,res) => {
     }
     
     const grades = await buscarGradePorTurma(id);
+
+    if(!grades){
+        return res.status(404).json({error:"Grade não encontrada!"});
+    }
+
+    res.json({grades});
+});
+
+router.get("/consulta-grade/turma-ano/:id", auth, async (req,res) => {
+    const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Amo para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Ano deve conter apenas números.' });
+    }
+    
+    const grades = await buscarGradePorAno(id);
 
     if(!grades){
         return res.status(404).json({error:"Grade não encontrada!"});

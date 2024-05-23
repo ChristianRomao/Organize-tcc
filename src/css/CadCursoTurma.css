@@ -72,3 +72,8 @@
     background-color: #09ff5b;
     color: #00581d;
 }
+
+.error-cursoturma{
+    color: #ff0000;
+    font-style: oblique;
+}
