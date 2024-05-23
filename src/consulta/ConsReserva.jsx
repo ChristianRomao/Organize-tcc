@@ -24,7 +24,36 @@ const ConsReserva = () => {
                         placeholder="Pesquise de cordo com o tipo"
                         id="" 
                     />
-                    <button className="botao-consulta-reserva" type="button">Alterar conteúdo</button>
+                    <button className="botao-consulta-reserva" type="button">Pesquisar</button>
+                </div>
+                <div className="tabela">
+                    <table>
+                        <thead className="cabecalho">
+                            <tr>
+                                <th>Nr Reserva</th>
+                                <th>Sala</th>
+                                <th>Usuário</th>
+                                <th>Turma</th>
+                                <th>Início</th>
+                                <th>Fim</th>
+                                <th>Status</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody className="contudo-tabela">
+                            <tr>
+                                <td>Reserva</td>
+                                <td>Sala</td>
+                                <td>Usuário</td>
+                                <td>Turma</td>
+                                <td>Data I</td>
+                                <td>Data F</td>
+                                <td>Status</td>
+                                <td>Observação</td>
+                                <td><button>editar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>           
         </div>

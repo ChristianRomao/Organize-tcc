@@ -20,7 +20,7 @@
 .conteudo-consulta-reserva {
     display: flex;
     flex-direction: column;
-    margin-top: -26em;
+    margin-top: -22em;
     margin-inline: 10em;
 }
 
@@ -50,7 +50,7 @@
     background-color: #d6e7ff;
     padding: 10px 10px;
     width: 100%;
-    margin: 2px 20px;
+    margin: 1px 20px;
     border-radius: 10px;
     border-style: none;
 }
@@ -61,8 +61,8 @@
 
 .botao-consulta-reserva {
     font-size: large;
-    background-color: #007226;
-    color: #d6e7ff;
+    background-color: #95bfff;
+    color: #001f4b;
     border-radius: 10px;
     width: 20em;
     transition: 0.2s;
@@ -71,6 +71,21 @@
 }
 .botao-consulta-reserva:hover {
     transition: 0.2s;
-    background-color: #09ff5b;
-    color: #00581d;
+    background-color: #001636;
+    color: #95bfff;
+}
+
+.tabela {
+    background-color: #003d99;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-inline: -6em;
+    margin-top: 32px;
+}
+
+.cabecalho {
+    background-color: #6598e4;
+    border-radius: 10px;
 }
