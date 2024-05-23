@@ -30,27 +30,27 @@ const ConsReserva = () => {
                     <table>
                         <thead className="cabecalho">
                             <tr>
-                                <th>Nr Reserva</th>
-                                <th>Sala</th>
-                                <th>Usuário</th>
-                                <th>Turma</th>
-                                <th>Início</th>
-                                <th>Fim</th>
-                                <th>Status</th>
-                                <th>Observação</th>
+                                <th className="colunas-cabecalho">Nr Reserva</th>
+                                <th className="colunas-cabecalho">Sala</th>
+                                <th className="colunas-cabecalho">Usuário</th>
+                                <th className="colunas-cabecalho">Turma</th>
+                                <th className="colunas-cabecalho">Início</th>
+                                <th className="colunas-cabecalho">Fim</th>
+                                <th className="colunas-cabecalho">Status</th>
+                                <th className="colunas-cabecalho">Observação</th>
                             </tr>
                         </thead>
                         <tbody className="contudo-tabela">
                             <tr>
-                                <td>Reserva</td>
-                                <td>Sala</td>
-                                <td>Usuário</td>
-                                <td>Turma</td>
-                                <td>Data I</td>
-                                <td>Data F</td>
-                                <td>Status</td>
-                                <td>Observação</td>
-                                <td><button>editar</button></td>
+                                <td className="colunas-body">Reserva</td>
+                                <td className="colunas-body">Sala</td>
+                                <td className="colunas-body">Usuário</td>
+                                <td className="colunas-body">Turma</td>
+                                <td className="colunas-body">Data I</td>
+                                <td className="colunas-body">Data F</td>
+                                <td className="colunas-body">Status</td>
+                                <td className="colunas-body">Observação</td>
+                                <td className="colunas-body" style={{background: "#003d99"}}><button className="btn-editar">editar</button></td>
                             </tr>
                         </tbody>
                     </table>
