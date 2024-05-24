@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import '../css/RegisterPage.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 
 const RegisterPage = () => {
+
+    const navigate = useNavigate();
 
     const [ds_email, setDs_email] = useState('');
     const [ds_senha, setDs_senha] = useState('');
@@ -16,6 +18,27 @@ const RegisterPage = () => {
     const validaEmailReg = (ds_email) => {
         const validaEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return validaEmail.test(ds_email);
+    }
+
+    const handleVoltaLogin = () => {
+        // if(ds_email !== "" || ds_senha !== "" || cd_cpfcnpj !== "" || nm_usuario !== "" || dt_nascimento !== "" || ds_funcao !== ""){
+        //     confirmAlert({
+        //         title: "Confirmação",
+        //         message: "Possue campos preenchidos. Deseja Voltar?",
+        //         buttons: [
+        //             {
+        //                 label: "Sim",
+        //                 onClick: navigate('/login')
+        //             },
+        //             {
+        //                 label: "Não",
+        //                 onClick: ()=>{}
+        //             }
+        //         ],
+        //         closeOnEscape: true,
+        //         closeOnClickOutside: true
+        //     })
+        // }
     }
 
     const handleChange = (event) => {
@@ -47,32 +70,81 @@ const RegisterPage = () => {
         <div>
             <body className='main'>
                 <div className='area-registro'>
-                    <text className='titulo-principal'>Faça seu registro em <br/> nossa plataforma</text>
-                    <div>
+                    <p className='titulo-principal'>Faça seu registro</p>
+                    <div className='conteudo-form'>
                         <label className='titulo-inputs'>Digite seu nome</label>
-                        <input className='inputs-registro' placeholder='Seu Nome' type="text" onChange={handleChange} value={nm_usuario}/>
+                        <input 
+                            className='inputs-registro' 
+                            placeholder='Seu Nome Completo' 
+                            type="text"
+                            name="nm_usuario"
+                            onChange={handleChange} 
+                            value={nm_usuario}
+                        />
 
                         <label className='titulo-inputs'>Digite seu CPF/CNPJ</label>
-                        <input className='inputs-registro' placeholder='CPF/CNPJ' type="text" onChange={handleChange} value={cd_cpfcnpj}/>
+                        <input 
+                            className='inputs-registro' 
+                            placeholder='CPF/CNPJ' 
+                            type="text" 
+                            name="cd_cpfcnpj"
+                            onChange={handleChange} 
+                            value={cd_cpfcnpj}
+                        />
                         
-                        <label className='titulo-inputs'>Seu Nascimento</label>
-                        <input className='inputs-registro' type="date" onChange={handleChange} value={dt_nascimento}/>
+                        <label className='titulo-inputs'>Data de Nascimento</label>
+                        <input 
+                            className='inputs-registro' 
+                            type="date" 
+                            name="dt_nascimento"
+                            onChange={handleChange} 
+                            value={dt_nascimento}
+                        />
                         
                         <label className='titulo-inputs'>Insira seu Email</label>
-                        <div className='email-input-container'>
-                            <input className='inputs-registro' placeholder='exemplo@email.com' onChange={handleChange} value={ds_email} type="email" />
-                            {ds_email && (isValid ? (
-                                <FontAwesomeIcon className='edit-icon' icon={faCheck} style={{color: "#00ff15",}} />
-                            ) : (
-                                <FontAwesomeIcon className='edit-icon' icon={faCircleExclamation} style={{color: "#ff0000",}} />
-                            ))}
+                        <input 
+                            className='inputs-registro' 
+                            placeholder='exemplo@email.com' 
+                            onChange={handleChange} 
+                            value={ds_email} 
+                            type="email"
+                            name="ds_email"
+                        />
+
+                        
+                        <label className='titulo-inputs'>Insira sua Senha</label>
+                        <input 
+                            className='inputs-registro' 
+                            placeholder='Exem1234' 
+                            type="text" 
+                            name="ds_senha"
+                            onChange={handleChange} 
+                            value={ds_senha}
+                        />
+
+                        <label className='titulo-inputs'>Confirme sua Senha</label>
+                        <input 
+                            className='inputs-registro' 
+                            placeholder='Exem1234' 
+                            type="text" 
+                            name="ds_senha"
+                            onChange={handleChange} 
+                            value={ds_senha}
+                        />
+                        
+                        <label className='titulo-inputs'>Função do usuário</label>
+                        <input 
+                            className='inputs-registro' 
+                            placeholder='Função Usuário' 
+                            type="text"
+                            name="ds_funcao"
+                            onChange={handleChange} 
+                            value={ds_funcao}
+                        />
+                        <div>
+                            <button className='voltar-login' type="button" onClick={handleVoltaLogin}>Login</button>
+                            <button className='btn-registro' type="button">Registrar</button>
                         </div>
-                        
-                        <label className='titulo-inputs'>Insira seu Email</label>
-                        <input className='inputs-registro' placeholder='Seu Nome' type="text" />
-                        
-                        <label className='titulo-inputs'>Insira seu Email</label>
-                        <input className='inputs-registro' placeholder='Seu Nome' type="text" />
                     </div>
                 </div>
             </body>
