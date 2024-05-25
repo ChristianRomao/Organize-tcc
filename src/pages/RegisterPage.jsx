@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import '../css/RegisterPage.css';
 import { useNavigate } from 'react-router-dom';
-import { confirmAlert } from 'react-confirm-alert';
 
 const RegisterPage = () => {
 
@@ -14,6 +13,7 @@ const RegisterPage = () => {
     const [dt_nascimento, setDt_nascimento] = useState('');
     const [ds_funcao, setDs_funcao] = useState('');
     const [isValid, setIsValid] = useState(true);
+    const [showAlert, setShowAlert] = useState(false);
 
     const validaEmailReg = (ds_email) => {
         const validaEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -21,24 +21,11 @@ const RegisterPage = () => {
     }
 
     const handleVoltaLogin = () => {
-        // if(ds_email !== "" || ds_senha !== "" || cd_cpfcnpj !== "" || nm_usuario !== "" || dt_nascimento !== "" || ds_funcao !== ""){
-        //     confirmAlert({
-        //         title: "Confirmação",
-        //         message: "Possue campos preenchidos. Deseja Voltar?",
-        //         buttons: [
-        //             {
-        //                 label: "Sim",
-        //                 onClick: navigate('/login')
-        //             },
-        //             {
-        //                 label: "Não",
-        //                 onClick: ()=>{}
-        //             }
-        //         ],
-        //         closeOnEscape: true,
-        //         closeOnClickOutside: true
-        //     })
-        // }
+        if(ds_email !== "" || ds_senha !== "" || cd_cpfcnpj !== "" || nm_usuario !== "" || dt_nascimento !== "" || ds_funcao !== ""){
+            setShowAlert(true);
+        }else{
+            navigate("/login")
+        }
     }
 
     const handleChange = (event) => {
@@ -63,6 +50,14 @@ const RegisterPage = () => {
             case "ds_funcao":
                 setDs_funcao(value)
                 break;
+        }
+    }
+
+    const handleConfirmAlert = (confirm) => {
+        if (confirm) {
+            navigate('/login');
+        } else {
+            setShowAlert(false);
         }
     }
 
@@ -97,6 +92,7 @@ const RegisterPage = () => {
                             className='inputs-registro' 
                             type="date" 
                             name="dt_nascimento"
+                            max={new Date().toISOString().split("T")[0]}
                             onChange={handleChange} 
                             value={dt_nascimento}
                         />
@@ -148,6 +144,20 @@ const RegisterPage = () => {
                     </div>
                 </div>
             </body>
+            {showAlert && (
+                <div className="return-login-alert-overlay">
+                    <div className="return-login-alert">
+                        <div className="return-login-alert-body">
+                            <h1>ATENÇÃO!</h1>
+                            <p>Possui(em) campo(s) preenchido(s).<br/>Deseja voltar?</p>
+                            <div className="return-login-alert-button-group">
+                                <button onClick={() => handleConfirmAlert(true)}>Sim</button>
+                                <button onClick={() => handleConfirmAlert(false)}>Não</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
