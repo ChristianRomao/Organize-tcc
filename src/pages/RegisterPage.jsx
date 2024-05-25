@@ -15,7 +15,6 @@ const RegisterPage = () => {
     const [isValid, setIsValid] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
 
-
     const validaEmailReg = (ds_email) => {
         const validaEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return validaEmail.test(ds_email);
