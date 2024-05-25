@@ -21,23 +21,23 @@
 
 
 .menu-button {
-    background-color: #C6D7EE;
+    background-color: #ffffff;
     border: none;
-    color: #0E1826; /* Cor do texto do botão */
+    color: #001430; /* Cor do texto do botão */
     cursor: pointer;
     margin: 18px;
     margin-right: 20px;
-    padding: 12px 12px;
+    padding: 12px 28px;
     border-radius: 50px 50px;
     position: absolute;
     top: 0;
     right: 0;
-    transition: 0.5s;
+    transition: 0.4s;
 }
 
 .menu-button:hover {
-    background-color: #eee;
-    transition: 0.5s;
+    color: #ffffff;
+    background-color: #001430;
     pointer-events: painted;
 }
 
@@ -48,7 +48,7 @@
     background-color: #001531;
     transform: translateY(10%) translateX(-10px);
     opacity: 0;
-    padding: 20px 40px 20px 30px;
+    padding: 20px 30px 20px 20px;
     visibility: hidden;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
     border-radius: 0px 0px 14px 14px;
@@ -57,9 +57,24 @@
 .menu.visible {
     background-color: #001531;
     color: #C6D7EE;
-    padding: 20px 40px 20px 30px;
+    padding: 20px 30px 20px 20px;
     opacity: 1;
     visibility: visible;
+}
+
+.logout {
+    background: #006eff;
+    color: white;
+    font-size: large;
+    font-weight: 600;
+    padding: 14px;
+    border-radius: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}.logout:hover {
+    color: black;
+    background: #ffffff;
 }
 
 ul li {

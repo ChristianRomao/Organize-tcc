@@ -1,5 +1,5 @@
 import LogoBranca from '../img/organize-branco.png';
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/Header.css';
 import { useState } from 'react';
@@ -35,11 +35,12 @@ const HeaderComponents = () => {
                 alt="Logo branca Organize"
                 onClick={handleLogoOrganizze}
             />
-            <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faUserAlt} size='2x'/></button>
+            <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faRightFromBracket} size='2x'/></button>
             <nav className={menuVisivel ? "menu visible" : "menu"}>
                 <ul>
-                    <li><a href="/perfil">Perfil</a></li>
-                    <li><a href="/login" onClick={handleLogOut}>Log Out</a></li>
+                    <li>
+                        <button className='logout' onClick={handleLogOut}>Log Out</button>
+                    </li>
                 </ul>
             </nav>
         </header>
