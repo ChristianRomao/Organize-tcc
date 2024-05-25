@@ -92,6 +92,7 @@ const buscarReservaId = (id) => {
 const gravarReserva = (reserva) => {
   return prisma.reserva.create({
     data: {
+      nm_reserva: reserva.nm_reserva,
       dt_inicio: reserva.dt_inicio,
       dt_fim: reserva.dt_fim,
       ds_observacao: reserva.ds_observacao,
@@ -120,7 +121,7 @@ const alterarReserva = (id, reserva) => {
 //   });
 // };
 
-const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
+/*const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
   return prisma.reserva.findMany({
       where: {
           sala_id: id_sala,
@@ -156,6 +157,25 @@ const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
               },
           ],
       },
+  });
+};*/
+
+const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
+  return prisma.reserva.findMany({
+    where: {
+      sala_id: id_sala,
+      status_cd: "A",
+      OR: [
+        {
+          dt_inicio: {
+            lte: dt_fim, 
+          },
+          dt_fim: {
+            gte: dt_inicio, 
+          },
+        },
+      ],
+    },
   });
 };
 

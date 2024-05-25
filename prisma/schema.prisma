@@ -95,6 +95,7 @@ model Sala {
 
 model Reserva {
   id_reserva     Int      @id @default(autoincrement())
+  nm_reserva     String
   dt_inicio     DateTime @db.DateTime()
   dt_fim        DateTime @db.DateTime()
   ds_observacao String?
