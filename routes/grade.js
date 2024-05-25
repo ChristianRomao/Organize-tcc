@@ -4,9 +4,11 @@ const {
     buscarGradeId,
     buscarGradePorTurma,
     buscarGradePorAno,
+    buscarGradePorCursoAno,
     gravarGrade,
     alterarGrade,
-    deletarGrade
+    deletarGrade,
+    buscarGradePorCurso
 } = require("../database/grade");
 const {buscarDisciplinaId} = require("../database/disciplina");
 const {buscarTurmaId} = require("../database/turma");
@@ -37,7 +39,7 @@ router.get("/consulta-grade", auth, async (req,res) => {
     });
 });
 
-router.get("/consulta-grade/turma", auth, async (req,res) => {
+router.get("/consulta-grade/turma/curso", auth, async (req,res) => {
     const grades = await listarGrades()
     res.json({
         grades,
@@ -89,7 +91,7 @@ router.get("/consulta-grade/turma/:id", auth, async (req,res) => {
 
 router.get("/consulta-grade/turma-ano/:id", auth, async (req,res) => {
     const id = Number(req.params.id);
-    if(id < 0) return res.status(404).json({ error: "Amo para consulta inválido!" });
+    if(id < 0) return res.status(404).json({ error: "Ano para consulta inválido!" });
     if (!numeroRegex.test(id)) {
       return res.status(400).json({ error: 'Ano deve conter apenas números.' });
     }
@@ -101,6 +103,42 @@ router.get("/consulta-grade/turma-ano/:id", auth, async (req,res) => {
     }
 
     res.json({grades});
+});
+
+router.get("/consulta-grade/curso/:cursoId?/ano/:anoLetivo?", auth, async (req,res) => {
+    const cursoId = req.params.cursoId ? Number(req.params.cursoId) : null;
+    const anoLetivo = req.params.anoLetivo ? Number(req.params.anoLetivo) : null;
+    
+    if ((cursoId && cursoId < 0) || (anoLetivo && anoLetivo < 0)) {
+        return res.status(404).json({ error: "Id para consulta inválido!" });
+    }
+    if ((cursoId && !numeroRegex.test(cursoId)) || (anoLetivo && !numeroRegex.test(anoLetivo))) {
+        return res.status(400).json({ error: 'Id e Ano devem conter apenas números.' });
+    }
+
+    try{
+
+        // const grades = await buscarGradePorCursoAno(cursoId, anoLetivo);
+        let grades;
+        if (cursoId && anoLetivo) {
+            grades = await buscarGradePorCursoAno(cursoId, anoLetivo);
+        } else if (cursoId) {
+            grades = await buscarGradePorCurso(cursoId);
+        } else if (anoLetivo) {
+            grades = await buscarGradePorAno(anoLetivo);
+        } else {
+            grades = await listarGrades();
+        }
+        
+        if (!grades || grades.length === 0) {
+            return res.status(404).json({ error: "Grade não encontrada!" });
+        }
+        
+        res.json({grades});
+    } catch (error) {
+        console.error("Erro ao buscar grades:", error);
+        res.status(500).json({ message: "Server Error" });
+    }
 });
 
 router.post("/grade", auth, async (req,res) => {
