@@ -17,6 +17,8 @@ const {formatarDataISO} = require("../transformarData");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 
+const moment = require('moment');
+
 const numeroRegex = /^[0-9]+$/;
 
 router.get("/reserva", auth, async (req,res) => {
@@ -59,7 +61,7 @@ router.get("/reserva/:id", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
-router.post("/reserva", auth, async (req,res) => {
+/*router.post("/reserva", auth, async (req,res) => {
     try{
         if(req.body.dt_inicio === '' || req.body.dt_fim === '' ){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
@@ -134,7 +136,101 @@ router.post("/reserva", auth, async (req,res) => {
         console.error('Erro ao gravar Reserva:'+ error);
         res.status(500).json({message:"Server Error"});
     }
-})
+})*/
+
+router.post("/reserva", auth, async (req, res) => {
+  try {
+    if (!req.body.dt_inicio || !req.body.dt_fim) {
+      return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+    }
+
+    const sala = req.body.sala;
+    const salaExiste = await buscarSalaId(sala.id_sala);
+
+    if (!salaExiste) {
+      return res.status(404).json({ error: "Sala não encontrada!" });
+    }
+
+    const grade = req.body.grade;
+    const gradeExiste = await buscarGradeId(grade.id_grade);
+
+    if (!gradeExiste) {
+      return res.status(404).json({ error: "Grade não encontrada!" });
+    }
+
+    const usuario = req.body.usuario;
+    const usuarioExiste = await buscarUsuarioId(usuario.id_usuario);
+
+    if (!usuarioExiste) {
+      return res.status(404).json({ error: "Usuario não encontrado!" });
+    }
+
+    const status = req.body.status;
+    const statusExiste = await buscarStatusId(status.cd_status);
+
+    if (!statusExiste) {
+      return res.status(404).json({ error: "Status não encontrado!" });
+    }
+
+    const dt_inicioForm = moment(req.body.dt_inicio).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    const dt_fimForm = moment(req.body.dt_fim).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+
+    const alunosVigilancia = salaExiste.qt_capacvigilancia;
+    const alunosTurma = gradeExiste.qt_alunos;
+
+    if (alunosVigilancia < alunosTurma) {
+      return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+    }
+
+    const dataInicio = moment(dt_inicioForm).startOf('day');
+    const dataFim = moment(dt_fimForm).startOf('day');
+    const reservas = [];
+
+    for (let date = dataInicio; date.isSameOrBefore(dataFim); date.add(1, 'days')) {
+      const currentDate = date.format('YYYY-MM-DD');
+      const dt_inicioDia = `${currentDate}T${moment(req.body.dt_inicio).add(1,'seconds').format('HH:mm:ss.SSSZ')}`;
+      const dt_fimDia = `${currentDate}T${moment(req.body.dt_fim).format('HH:mm:ss.SSSZ')}`;
+
+      const existeReserva = await buscarReservasPeriodoSala(sala.id_sala, dt_inicioDia, dt_fimDia);
+
+      if (existeReserva.length > 0) {
+        const horaInicio = moment(req.body.dt_inicio).add(1, 'seconds').format('HH:mm:ss');
+        return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} na data ${currentDate} às ${horaInicio}!` });
+      }
+
+      reservas.push({
+        dt_inicio: dt_inicioDia,
+        dt_fim: dt_fimDia,
+        nm_reserva: req.body.nm_reserva,
+        ds_observacao: req.body.ds_observacao,
+        status_cd: status.cd_status,
+        sala_id: sala.id_sala,
+        grade_id: grade.id_grade,
+        usuario_id: usuario.id_usuario,
+      });
+    }
+
+    for (const reserva of reservas) {
+      await gravarReserva(reserva);
+    }
+
+    res.json({
+      reservas: reservas,
+      message: 'Reservas gravadas com sucesso!',
+    });
+
+    const acao = 'Gravação realizada na tabela Reserva';
+    const decode = decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog, ip, acao);
+
+  } catch (error) {
+    console.error('Erro ao gravar Reserva:' + error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 
 router.put("/reserva/:id", auth, async (req,res) => {
     try{
@@ -200,6 +296,7 @@ router.put("/reserva/:id", auth, async (req,res) => {
         //END VALIDAÇÕES
 
         const reserva = {
+            nm_reserva:     req.body.nm_reserva,
             dt_inicio:      dt_inicioForm,
             dt_fim:         dt_fimForm,
             ds_observacao:  req.body.ds_observacao,

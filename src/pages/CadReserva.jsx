@@ -288,33 +288,73 @@ const CadReserva = () => {
     buscarGradeCursoAno(selectCurso, anoLetivo);
   };
 
-  const handleSelectDataInicio = (event) => {
-    const dataInicio = event.target.value;
-    setSelectDataInicio(dataInicio);
-    if(selectDataFim < dataInicio){
-      setSelectDataFim(dataInicio);
-    }
+
+  const handleChangeSelect = (event) =>{
+    const {name,value} = event.target;
+    switch(name){
+      case "dt_inicio":
+        setSelectDataInicio(value);
+        if(selectDataFim < value){
+          setSelectDataFim(value);
+        }
+        break;
+      case "dt_fim":
+        setSelectDataFim(value);
+        break;
+      case "hr_inicio":
+        setSelectHoraInicio(value);
+        if(selectHoraFim < value){
+          setSelectHoraFim(value);
+        }
+        break;
+      case "hr_fim":
+        setSelectHoraFim(value);
+        break;
+      default:
+        break;
+    };
   };
 
-  const handleSelectDataFim = (event) => {
-    const dataFim = event.target.value;
-    setSelectDataFim(dataFim);
-  };
-  
-  const handleSelectHoraInicio = (event) => {
-    const horaInicio = event.target.value;
-    setSelectHoraInicio(horaInicio);
-    if(selectHoraFim < horaInicio){
-      setSelectHoraFim(horaInicio);
-    }
-  };
+  const getDistinctAnoTurmas = (turmas) => {
+    if (!turmas) return [];
+    const distinctAnos = [];
+    const setAnos = new Set();
 
-  const handleSelectHoraFim = (event) => {
-    const horaFim = event.target.value;
-    setSelectHoraFim(horaFim);
-  };
+    turmas.forEach((turma) => {
+      if (!setAnos.has(turma.nr_anoletivo)) {
+        setAnos.add(turma.nr_anoletivo);
+        distinctAnos.push(turma);
+      }
+    });
 
-  const handleCadastrarReserva = () => {};
+    return distinctAnos;
+  }
+
+  const handleCadastrarReserva = async () => {
+    // event.preventDefault();
+    // const payload = {
+    //   nm_sala: nm_sala,
+    //   qt_capacvigilancia: Number(qt_capacvigilancia),
+    //   bloco: {
+    //     id_bloco: Number(selectBloco),
+    //   }
+    // };
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:8080/sala",
+    //     payload,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   );
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.log(error.response.data);
+    // }
+
+  };
 
   return (
     <div className="tudo">
@@ -351,25 +391,28 @@ const CadReserva = () => {
                 <div className="input-individual">
                   <input
                     className="date-reserva"
+                    name="dt_inicio"
                     type="date"
                     value={selectDataInicio}
                     min={dataFixa}
-                    onChange={handleSelectDataInicio}
+                    onChange={handleChangeSelect}
                     required
                   />
                   <input
                     className="date-reserva"
+                    name="dt_fim"
                     type="date"
                     value={selectDataFim}
                     min={selectDataInicio}
-                    onChange={handleSelectDataFim}
+                    onChange={handleChangeSelect}
                     required
                   />
                 </div>
                 <div className="input-individual">
                   <select 
                     className="time-reserva"
-                    onChange={handleSelectHoraInicio}
+                    name="hr_inicio"
+                    onChange={handleChangeSelect}
                     value={selectHoraInicio}
                     required>
                     <option value="">hh:mm</option>
@@ -381,7 +424,8 @@ const CadReserva = () => {
                   </select>
                   <select 
                     className="time-reserva"
-                    onChange={handleSelectHoraFim}
+                    name="hr_fim"
+                    onChange={handleChangeSelect}
                     value={selectHoraFim}
                     required>
                     <option value="">hh:mm</option>
@@ -493,7 +537,7 @@ const CadReserva = () => {
                         ? "Selecione o curso"
                         : "Selecione o ano letivo"}
                     </option>
-                    {anoTurmas.map((anoTurma) => (
+                    {getDistinctAnoTurmas(anoTurmas).map((anoTurma) => (
                       <option key={anoTurma.id_turma} value={anoTurma.id_turma}>
                         {anoTurma.nr_anoletivo}
                       </option>
@@ -530,10 +574,9 @@ const CadReserva = () => {
                 disabled={!!error}
                 className={error ? "error-reserva" : "botao-reserva"}
                 type="submit"
-                onSubmit={handleCadastrarReserva}
+                onClick={handleCadastrarReserva}
               >
                 {error ? error : "Fazer Reserva"}
-                {/* Fazer Reserva */}
               </button>
             </form>
           </div>
