@@ -217,11 +217,29 @@
     height: 40px;
     margin-top: 40px;
     margin-left: 132px;
-    transition: 0.2s;
+    transition: 0.1s;
     font-weight: bolder;
 }
 .botao-reserva:hover {
     transition: 0.2s;
     background-color: #09ff5b;
     color: #007226;
+}
+
+.error-reserva {
+    font-size: large;
+    background-color: #720000;
+    color: #ffd0d0;
+    border-radius: 8px;
+    width: 210px;
+    height: 40px;
+    margin-top: 40px;
+    margin-left: 97px;
+    transition: 0.1s;
+    font-weight: bolder;
+}
+.error-reserva:hover {
+    transition: 0.2s;
+    background-color: #ff0909;
+    color: #720000;
 }

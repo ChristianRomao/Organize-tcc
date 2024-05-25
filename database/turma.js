@@ -19,6 +19,19 @@ const buscarTurmaId = (id) =>{
     });
 }
 
+const buscarTurmaCurso = (cursoId) =>{
+    return prisma.turma.findMany({
+        where:{
+            curso: {
+                 id_curso: cursoId
+            },
+        },
+        include: {
+            curso: true,
+        }
+    });
+}
+
 const buscarTurmaAno = (ano) =>{
     return prisma.turma.findMany({
         where:{
@@ -60,6 +73,7 @@ const deletarTurma = (id) => {
 module.exports = {
     listarTurmas,
     buscarTurmaId,
+    buscarTurmaCurso,
     buscarTurmaAno,
     gravarTurma,
     alterarTurma,
