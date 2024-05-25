@@ -16,10 +16,16 @@ const ConsReserva = () => {
                         <option value="Tipos" >AAA</option>
                     </select>
                     <input 
+                        className="inputs-data-reserva"
+                        type="date"     
+                        name="Data Reserva"     
+                        id=""
+                    />
+                    <input 
                         className="inputs-consulta-reserva"
                         type="search" 
                         name="" 
-                        placeholder="Pesquise de cordo com o tipo"
+                        placeholder="Pesquise de acordo com o tipo"
                         id="" 
                     />
                     <button className="botao-consulta-reserva" type="button">Pesquisar</button>
