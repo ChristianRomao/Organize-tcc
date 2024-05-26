@@ -19,10 +19,9 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                     <div>
                         <text className='titulo-consulta'>{titleCons}</text>
                     </div>
-                    <div className='area-consulta'>
-                        <div className="grid-cons-reserva">
+                        <div className="grid-consulta">
                             <select 
-                                className="select-consulta-reserva" 
+                                className="select-consulta" 
                                 name="Tipo Filtro" 
                                 id=""
                             >
@@ -32,20 +31,21 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                                 ))}    ===Aqui foi o gpt que deu um exemplo de se usar, se tu achar alguma outra solução ta dale===  */}
                             </select>
                             <input 
-                                className="inputs-consulta-reserva"
+                                className="inputs-consulta"
                                 type="search" 
                                 name="Buscar" 
                                 placeholder="Buscar"
                                 id="" 
                             />
                             <button 
-                                className="botao-consulta-reserva"  
+                                className="botao-consulta"  
                                 type="button"   
                                 onClick={onSearch}
                             >
                                 Pesquisar
                             </button>
                         </div>
+                    <div className='area-consulta'>
                         {children}
                     </div>
                 </div>

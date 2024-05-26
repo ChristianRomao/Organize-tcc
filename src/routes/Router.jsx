@@ -12,6 +12,7 @@ import CadMunicipio from "../pages/CadMunicipio";
 import CadDisciplina from "../pages/CadDisciplina";
 import CadCursoTurma from "../pages/CadCursoTurma";
 import CadGrade from "../pages/CadGrade";
+import ConsInstituicao from "../consulta/ConsInstituicao";
 
 const Router = () => {
     return (
@@ -72,6 +73,10 @@ const Router = () => {
                 <Route
                     path={"/consulta-reserva"}
                     element={<ConsReserva/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-instituicao"}
+                    element={<ConsInstituicao/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>

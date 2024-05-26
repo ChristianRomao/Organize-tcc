@@ -34,7 +34,7 @@
 }
 
 .titulo-consulta {
-    color: #ffffff;
+    color: #000000;
     font-size: xx-large;
     position: relative;
     top: 80px;
@@ -54,7 +54,6 @@
 }
 
 .area-consulta {
-    background-color: #00183a;
     text-align: center;
     width: 60%;
     height: 74vh;
@@ -65,4 +64,51 @@
     flex-direction: row;
     gap: 18px;
     box-shadow: 0px 0px 20px;
+}
+
+.grid-consulta {
+    display: flex;
+    background-color: #003681;
+    border-radius: 20px;
+    padding: 10px 10px 9.4px 10px;
+}
+
+.select-consulta {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 50%;
+    margin: 6px 0px;
+    border-radius: 10px;
+    border-style: none;
+    font-weight: bolder;
+}
+
+.inputs-consulta {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 100%;
+    margin: 1px 0px;
+    border-radius: 10px;
+    border-style: none;
+}
+.inputs-consulta::placeholder {
+    color: black;
+    font-weight: 600;
+}
+
+.botao-consulta {
+    font-size: large;
+    background-color: #95bfff;
+    color: #001f4b;
+    border-radius: 10px;
+    width: 20em;
+    margin: 0px 0px 0px 18px;
+    transition: 0.2s;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.botao-consulta:hover {
+    transition: 0.2s;
+    background-color: #001636;
+    color: #95bfff;
 }
