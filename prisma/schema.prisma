@@ -96,9 +96,10 @@ model Sala {
 model Reserva {
   id_reserva     Int      @id @default(autoincrement())
   nm_reserva     String
-  dt_inicio     DateTime @db.DateTime()
-  dt_fim        DateTime @db.DateTime()
-  ds_observacao String?
+  dt_inicio      DateTime @db.DateTime()
+  dt_fim         DateTime @db.DateTime()
+  id_grupo       String
+  ds_observacao  String?
 
   //RELACIONAMENTOS
   sala    Sala @relation(fields: [sala_id], references: [id_sala])
