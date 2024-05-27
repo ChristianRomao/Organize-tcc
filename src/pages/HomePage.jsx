@@ -18,7 +18,11 @@ const HomePage = () => {
     },[isAuthenticated, navigate])
 
     const handleCadastro = (cadastros) => {
-        navigate(`/cadastro-${cadastros}`)
+        if(cadastros === 'usuarios'){
+            navigate(`/registro`)
+        }else{
+            navigate(`/cadastro-${cadastros}`)
+        }
     }
 
     const handleReserva = (acao) => {
