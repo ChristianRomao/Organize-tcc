@@ -10,6 +10,9 @@ const CadReserva = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
+  const [inAllDay, setInAllDay] = useState(false);
+  const [nmReserva, setNmReserva] = useState("");
+  const [dsObservacao, setDsObservacao] = useState("");
   const [usuarios, setUsuarios] = useState([]);
   const [selectUsuario, setSelectUsuario] = useState("");
   const [polos, setPolos] = useState([]);
@@ -288,13 +291,12 @@ const CadReserva = () => {
     buscarGradeCursoAno(selectCurso, anoLetivo);
   };
 
-
-  const handleChangeSelect = (event) =>{
-    const {name,value} = event.target;
-    switch(name){
+  const handleChangeSelect = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
       case "dt_inicio":
         setSelectDataInicio(value);
-        if(selectDataFim < value){
+        if (selectDataFim < value) {
           setSelectDataFim(value);
         }
         break;
@@ -303,17 +305,36 @@ const CadReserva = () => {
         break;
       case "hr_inicio":
         setSelectHoraInicio(value);
-        if(selectHoraFim < value){
+        if (selectHoraFim < value) {
           setSelectHoraFim(value);
         }
         break;
       case "hr_fim":
         setSelectHoraFim(value);
         break;
+      case "nm_reserva":
+        setNmReserva(value);
+        break;
+      case "ds_observacao":
+        setDsObservacao(value);
+        break;
       default:
         break;
-    };
+    }
   };
+
+  const handleChangeCheckBox = (event) =>{
+    const inCheck = event.target.checked;
+    if(inCheck){
+      setSelectHoraInicio('00:00');
+      setSelectHoraFim('23:30');
+      setInAllDay(true)
+    }else{
+      setSelectHoraInicio('');
+      setSelectHoraFim('');
+      setInAllDay(false);
+    }
+  }
 
   const getDistinctAnoTurmas = (turmas) => {
     if (!turmas) return [];
@@ -328,7 +349,7 @@ const CadReserva = () => {
     });
 
     return distinctAnos;
-  }
+  };
 
   const handleCadastrarReserva = async () => {
     // event.preventDefault();
@@ -353,7 +374,6 @@ const CadReserva = () => {
     // } catch (error) {
     //   console.log(error.response.data);
     // }
-
   };
 
   return (
@@ -379,211 +399,259 @@ const CadReserva = () => {
               </p>
             </button>
           </div>
-          <div>
-            <text className="titulo-reserva">Faça a sua Reserva</text>
-          </div>
-          <div className="cadastro-reserva">
-            <form className="ajustes-reserva">
-              <label className="titulo-inputs-reserva">
-                Informe o dia e a hora:
-              </label>
-              <div className="inputs-reserva">
-                <div className="input-individual">
-                  <input
-                    className="date-reserva"
-                    name="dt_inicio"
-                    type="date"
-                    value={selectDataInicio}
-                    min={dataFixa}
-                    onChange={handleChangeSelect}
-                    required
-                  />
-                  <input
-                    className="date-reserva"
-                    name="dt_fim"
-                    type="date"
-                    value={selectDataFim}
-                    min={selectDataInicio}
-                    onChange={handleChangeSelect}
-                    required
-                  />
-                </div>
-                <div className="input-individual">
-                  <select 
-                    className="time-reserva"
-                    name="hr_inicio"
-                    onChange={handleChangeSelect}
-                    value={selectHoraInicio}
-                    required>
-                    <option value="">hh:mm</option>
-                    {horaMinuto.map((time, index) => (
-                      <option key={index} value={time}>
-                        {time}
-                      </option>
-                    ))}
-                  </select>
-                  <select 
-                    className="time-reserva"
-                    name="hr_fim"
-                    onChange={handleChangeSelect}
-                    value={selectHoraFim}
-                    required>
-                    <option value="">hh:mm</option>
-                    {horaMinuto.map((time, index) => (
-                      <option key={index} value={time} disabled={selectHoraInicio > time}>
-                        {time}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+          <div className="body-content">
+            <div className="cadastro-reserva">
+              <div className="titulo-reserva-div">
+                <text className="titulo-reserva">Faça a sua Reserva</text>
               </div>
-              <div className="inputs-reserva">
-                <div className="select-individual">
-                  <label className="titulo-selects-reserva">
-                    Escolha o Polo:
+              <form className="ajustes-reserva">
+                <div className="inputs-reserva-data">
+                  <label className="titulo-inputs-reserva-data">
+                    Informe o dia e a hora:
                   </label>
-                  <select
-                    className="selects-reserva"
-                    id=""
-                    name="id_polo"
-                    value={selectPolo}
-                    onChange={handleSetPolo}
-                  >
-                    <option value="">Selecione um polo</option>
-                    {polos.map((polo) => (
-                      <option key={polo.id_polo} value={polo.id_polo}>
-                        {polo.nm_polo}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="select-individual">
-                  <label className="titulo-selects-reserva">
-                    Escolha a Sala:
+                  <div className="input-individual">
+                    <input
+                      className="date-reserva"
+                      name="dt_inicio"
+                      type="date"
+                      value={selectDataInicio}
+                      min={dataFixa}
+                      onChange={handleChangeSelect}
+                      required
+                    />
+                    <input
+                      className="date-reserva"
+                      name="dt_fim"
+                      type="date"
+                      value={selectDataFim}
+                      min={selectDataInicio}
+                      onChange={handleChangeSelect}
+                      required
+                    />
+                  </div>
+                  <div className="input-individual">
+                    <select
+                      disabled={inAllDay}
+                      className="time-reserva"
+                      name="hr_inicio"
+                      onChange={handleChangeSelect}
+                      value={selectHoraInicio}
+                      required
+                    >
+                      <option value="">hh:mm</option>
+                      {horaMinuto.map((time, index) => (
+                        <option key={index} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      disabled={inAllDay}
+                      className="time-reserva"
+                      name="hr_fim"
+                      onChange={handleChangeSelect}
+                      value={selectHoraFim}
+                      required
+                    >
+                      <option value="">hh:mm</option>
+                      {horaMinuto.map((time, index) => (
+                        <option
+                          key={index}
+                          value={time}
+                          disabled={selectHoraInicio > time}
+                        >
+                          {time}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <label className="checkbox-reserva-data">
+                    <input
+                      type="checkbox"
+                      name="in_allday"
+                      className="checkbox-button"
+                      checked={inAllDay}
+                      onChange={handleChangeCheckBox}
+                    ></input>
+                    Selecionar o dia todo?
                   </label>
-                  <select
-                    className="selects-reserva"
-                    id=""
-                    name="id_sala"
-                    value={selectSalaPolo}
-                    onChange={handleSetSalaPolo}
-                  >
-                    <option value="">Selecione uma sala</option>
-                    {salaPolos.map((salaPolo) => (
-                      <option key={salaPolo.id_sala} value={salaPolo.id_sala}>
-                        {salaPolo.nm_sala} - {salaPolo.bloco.nm_bloco} -{" "}
-                        {salaPolo.bloco.polo.nm_polo}
-                      </option>
-                    ))}
-                  </select>
                 </div>
+                <div className="divider"></div>
+                <div className="inputs-reserva">
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Nome da reserva:
+                    </label>
+                    <input
+                      type="text"
+                      className="selects-reserva"
+                      placeholder="Nome da reserva"
+                      name="nm_reserva"
+                      onChange={handleChangeSelect}
+                      value={nmReserva}
+                    />
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Escolha o Polo:
+                    </label>
+                    <select
+                      className="selects-reserva"
+                      id=""
+                      name="id_polo"
+                      value={selectPolo}
+                      onChange={handleSetPolo}
+                    >
+                      <option value="">Selecione um polo</option>
+                      {polos.map((polo) => (
+                        <option key={polo.id_polo} value={polo.id_polo}>
+                          {polo.nm_polo}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Escolha a Sala:
+                    </label>
+                    <select
+                      className="selects-reserva"
+                      id=""
+                      name="id_sala"
+                      value={selectSalaPolo}
+                      onChange={handleSetSalaPolo}
+                    >
+                      <option value="">Selecione uma sala</option>
+                      {salaPolos.map((salaPolo) => (
+                        <option key={salaPolo.id_sala} value={salaPolo.id_sala}>
+                          {salaPolo.nm_sala} - {salaPolo.bloco.nm_bloco} -{" "}
+                          {salaPolo.bloco.polo.nm_polo}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Responsavel pela Sala:
+                    </label>
+                    <select
+                      className="selects-reserva"
+                      id=""
+                      name="Responsavel"
+                      value={selectUsuario}
+                      onChange={handleSetUsuario}
+                    >
+                      <option value="">Selecione o responsável</option>
+                      {usuarios.map((usuario) => (
+                        <option
+                          key={usuario.id_usuario}
+                          value={usuario.id_usuario}
+                        >
+                          {usuario.nm_usuario}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Selecione o Curso:
+                    </label>
+                    <select
+                      className="selects-reserva"
+                      id=""
+                      name="id_curso"
+                      value={selectCurso}
+                      onChange={handleSetCurso}
+                    >
+                      <option value="">Selecione o curso</option>
+                      {cursos.map((curso) => (
+                        <option key={curso.id_curso} value={curso.id_curso}>
+                          {curso.ds_curso}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Selecione o Ano:
+                    </label>
+                    <select
+                      disabled={!selectCurso || (!!error && !selectAnoTurma)}
+                      className="selects-reserva"
+                      id=""
+                      name="id_curso"
+                      value={selectAnoTurma}
+                      onChange={handleSetAnoTurma}
+                    >
+                      <option value="">
+                        {!selectCurso
+                          ? "Selecione o curso"
+                          : "Selecione o ano letivo"}
+                      </option>
+                      {getDistinctAnoTurmas(anoTurmas).map((anoTurma) => (
+                        <option
+                          key={anoTurma.id_turma}
+                          value={anoTurma.id_turma}
+                        >
+                          {anoTurma.nr_anoletivo}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Selecione a Grade:
+                    </label>
+                    <select
+                      disabled={!!error}
+                      className="selects-reserva"
+                      id=""
+                      name="Grade"
+                      value={selectGradeTurma}
+                      onChange={handleSetGradeTurma}
+                    >
+                      <option value="">Selecione a grade</option>
+                      {gradeTurmas.map((gradeTurma) => (
+                        <option
+                          key={gradeTurma.id_grade}
+                          value={gradeTurma.id_grade}
+                        >
+                          {gradeTurma.turma.ds_turma} -{" "}
+                          {gradeTurma.turma.curso.ds_curso} -{" "}
+                          {gradeTurma.turma.nr_anoletivo}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="select-individual">
+                    <label className="titulo-selects-reserva">
+                      Observação:
+                    </label>
+                    <input
+                      type="text"
+                      className="selects-reserva"
+                      name="ds_observacao"
+                      placeholder="Observação para a reserva"
+                      onChange={handleChangeSelect}
+                      value={dsObservacao}
+                    />
+                  </div>
+                </div>
+                <button
+                  disabled={!!error}
+                  className={error ? "error-reserva" : "botao-reserva"}
+                  type="submit"
+                  onClick={handleCadastrarReserva}
+                >
+                  {error ? error : "Fazer Reserva"}
+                </button>
+              </form>
+            </div>
+            <div className="descricao-reserva">
+              <text className="titulo-descricao">Detalhes da Reserva</text>
+              <div>
+                {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
               </div>
-              <div className="inputs-reserva">
-                <div className="select-individual">
-                  <label className="titulo-selects-reserva">
-                    Responsavel pela Sala:
-                  </label>
-                  <select
-                    className="selects-reserva"
-                    id=""
-                    name="Responsavel"
-                    value={selectUsuario}
-                    onChange={handleSetUsuario}
-                  >
-                    <option value="">Selecione o responsável</option>
-                    {usuarios.map((usuario) => (
-                      <option
-                        key={usuario.id_usuario}
-                        value={usuario.id_usuario}
-                      >
-                        {usuario.nm_usuario}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="select-individual">
-                  <label className="titulo-selects-reserva">
-                    Selecione o Curso:
-                  </label>
-                  <select
-                    className="selects-reserva"
-                    id=""
-                    name="id_curso"
-                    value={selectCurso}
-                    onChange={handleSetCurso}
-                  >
-                    <option value="">Selecione o curso</option>
-                    {cursos.map((curso) => (
-                      <option key={curso.id_curso} value={curso.id_curso}>
-                        {curso.ds_curso}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="select-individual">
-                  <label className="titulo-selects-reserva">
-                    Selecione o Ano Letivo:
-                  </label>
-                  <select
-                    disabled={!selectCurso || (!!error && !selectAnoTurma)}
-                    className="selects-reserva"
-                    id=""
-                    name="id_curso"
-                    value={selectAnoTurma}
-                    onChange={handleSetAnoTurma}
-                  >
-                    <option value="">
-                      {!selectCurso
-                        ? "Selecione o curso"
-                        : "Selecione o ano letivo"}
-                    </option>
-                    {getDistinctAnoTurmas(anoTurmas).map((anoTurma) => (
-                      <option key={anoTurma.id_turma} value={anoTurma.id_turma}>
-                        {anoTurma.nr_anoletivo}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="select-individual">
-                  <label className="titulo-selects-reserva">
-                    Selecione a Grade:
-                  </label>
-                  <select
-                    disabled={!!error}
-                    className="selects-reserva"
-                    id=""
-                    name="Grade"
-                    value={selectGradeTurma}
-                    onChange={handleSetGradeTurma}
-                  >
-                    <option value="">Selecione a grade</option>
-                    {gradeTurmas.map((gradeTurma) => (
-                      <option
-                        key={gradeTurma.id_grade}
-                        value={gradeTurma.id_grade}
-                      >
-                        {gradeTurma.turma.ds_turma} -{" "}
-                        {gradeTurma.turma.curso.ds_curso} -{" "}
-                        {gradeTurma.turma.nr_anoletivo}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <button
-                disabled={!!error}
-                className={error ? "error-reserva" : "botao-reserva"}
-                type="submit"
-                onClick={handleCadastrarReserva}
-              >
-                {error ? error : "Fazer Reserva"}
-              </button>
-            </form>
-          </div>
-          <div className="descricao-reserva">
-            <text className="titulo-descricao">Detalhes da Reserva</text>
-            <div>
-              {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
             </div>
           </div>
         </div>

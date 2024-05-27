@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { useCallback, useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
+import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const CadCursoTurma = () => {
@@ -122,7 +122,7 @@ const CadCursoTurma = () => {
     };
   
     return (
-      <Layout title="Cadastro de Curso/Turma" icon={faBarsStaggered} next="disciplina">
+      <Layout title="Cadastro de Curso/Turma" icon={faGraduationCap} next="disciplina">
         <form className="ajustes-cursoturma">
             <div>
                 <label className="titulo-inputs-cursoturma-title">Curso</label>

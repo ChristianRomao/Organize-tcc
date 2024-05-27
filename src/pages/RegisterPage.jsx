@@ -24,7 +24,7 @@ const RegisterPage = () => {
         if(ds_email !== "" || ds_senha !== "" || cd_cpfcnpj !== "" || nm_usuario !== "" || dt_nascimento !== "" || ds_funcao !== ""){
             setShowAlert(true);
         }else{
-            navigate("/login")
+            navigate(-1)
         }
     }
 
@@ -55,7 +55,7 @@ const RegisterPage = () => {
 
     const handleConfirmAlert = (confirm) => {
         if (confirm) {
-            navigate('/login');
+            navigate(-1);
         } else {
             setShowAlert(false);
         }
@@ -138,7 +138,7 @@ const RegisterPage = () => {
                             value={ds_funcao}
                         />
                         <div>
-                            <button className='voltar-login' type="button" onClick={handleVoltaLogin}>Login</button>
+                            <button className='voltar' type="button" onClick={handleVoltaLogin}>Voltar</button>
                             <button className='btn-registro' type="button">Registrar</button>
                         </div>
                     </div>
