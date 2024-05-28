@@ -13,6 +13,7 @@ import CadDisciplina from "../pages/CadDisciplina";
 import CadCursoTurma from "../pages/CadCursoTurma";
 import CadGrade from "../pages/CadGrade";
 import ConsInstituicao from "../consulta/ConsInstituicao";
+import CadMateriais from "../pages/CadMateriais";
 
 const Router = () => {
     return (
@@ -26,6 +27,7 @@ const Router = () => {
                     path={"/login"}
                     element={<LoginPage/>}>    
                 </Route>
+                {/* CADASTRO */}
                 <Route
                     path={"/registro"}
                     element={<RegisterPage/>}>    
@@ -70,6 +72,11 @@ const Router = () => {
                     path={"/cadastro-reserva"}
                     element={<CadReserva/>}>    
                 </Route>
+                <Route
+                    path={"/cadastro-materiais"}
+                    element={<CadMateriais/>}>    
+                </Route>
+                {/* CONSULTA */}
                 <Route
                     path={"/consulta-reserva"}
                     element={<ConsReserva/>}>    
