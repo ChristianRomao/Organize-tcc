@@ -21,7 +21,9 @@ const { gravarLog } = require("../database/log");
 const { v4: uuidv4 } = require('uuid');
 
 
-const moment = require('moment');
+const moment = require('moment-timezone');
+
+const TIMEZONE = 'America/Sao_Paulo';
 
 const numeroRegex = /^[0-9]+$/;
 const letrasRegex = /^[A-Za-z]+$/;
@@ -271,7 +273,7 @@ router.post("/reserva", auth, async (req, res) => {
     if (!statusExiste) {
       return res.status(404).json({ error: "Status não encontrado!" });
     }
-
+    
     const dt_inicioForm = moment(req.body.dt_inicio).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
     const dt_fimForm = moment(req.body.dt_fim).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
 
@@ -279,21 +281,30 @@ router.post("/reserva", auth, async (req, res) => {
     const alunosTurma = gradeExiste.qt_alunos;
 
     if (alunosVigilancia < alunosTurma) {
-      return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+      return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida na sala! (${alunosVigilancia})` });
     }
 
     const dataInicio = moment(dt_inicioForm).startOf('day');
     const dataFim = moment(dt_fimForm).startOf('day');
     const reservas = [];
-
     const id_grupo = uuidv4();
 
     for (let date = dataInicio; date.isSameOrBefore(dataFim); date.add(1, 'days')) {
-      const currentDate = date.format('YYYY-MM-DD');
-      const dt_inicioDia = `${currentDate}T${moment(req.body.dt_inicio).add(1,'seconds').format('HH:mm:ss.SSSZ')}`;
-      const dt_fimDia = `${currentDate}T${moment(req.body.dt_fim).format('HH:mm:ss.SSSZ')}`;
 
-      const existeReserva = await buscarReservasPeriodoSala(sala.id_sala, dt_inicioDia, dt_fimDia);
+      const currentDate = date.format('YYYY-MM-DD');
+
+      const inicioMoment = moment(req.body.dt_inicio).add(1, 'seconds');
+
+      const dt_inicioDia = new Date(inicioMoment).toLocaleString('pt-BR');
+      const dt_fimDia = new Date(req.body.dt_fim).toLocaleString('pt-BR');
+  
+      const [inicioDia, inicioHora] = dt_inicioDia.split(', ');
+      const [fimDia, fimHora] = dt_fimDia.split(', ');
+
+      const dt_inicioDate = `${moment(inicioDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${inicioHora}.000Z`;
+      const dt_fimDate = `${moment(fimDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${fimHora}.000Z`;
+
+      const existeReserva = await buscarReservasPeriodoSala(sala.id_sala, dt_inicioDate, dt_fimDate);
 
       if (existeReserva.length > 0) {
         const horaInicio = moment(req.body.dt_inicio).add(1, 'seconds').format('HH:mm:ss');
@@ -301,8 +312,8 @@ router.post("/reserva", auth, async (req, res) => {
       }
 
       reservas.push({
-        dt_inicio: dt_inicioDia,
-        dt_fim: dt_fimDia,
+        dt_inicio: dt_inicioDate,
+        dt_fim: dt_fimDate,
         nm_reserva: req.body.nm_reserva,
         ds_observacao: req.body.ds_observacao,
         id_grupo: id_grupo,
@@ -319,7 +330,7 @@ router.post("/reserva", auth, async (req, res) => {
 
     res.json({
       reservas: reservas,
-      message: 'Reservas gravadas com sucesso!',
+      message: 'Reserva(s) gravada(s) com sucesso!',
     });
 
     const acao = 'Gravação realizada na tabela Reserva';
@@ -334,7 +345,7 @@ router.post("/reserva", auth, async (req, res) => {
   }
 });
 
-
+//Não vai utilizar esse PUT
 router.put("/reserva/:id", auth, async (req,res) => {
     try{
 
@@ -389,7 +400,7 @@ router.put("/reserva/:id", auth, async (req,res) => {
         const alunosTurma = gradeExiste.qt_alunos;
 
         if(alunosVigilancia < alunosTurma){
-            return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida pela vigilância! (${alunosVigilancia})` });
+            return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida na sala! (${alunosVigilancia})` });
         }
 
         //const existeReserva = await buscarReservasPeriodoSala(sala.id_sala,dt_inicioForm,dt_fimForm);
@@ -416,9 +427,12 @@ router.put("/reserva/:id", auth, async (req,res) => {
         // })
         for (let date = dataInicio; date.isSameOrBefore(dataFim); date.add(1, 'days')) {
           const currentDate = date.format('YYYY-MM-DD');
-          const dt_inicioDia = `${currentDate}T${moment(req.body.dt_inicio).add(1, 'seconds').format('HH:mm:ss.SSSZ')}`;
-          const dt_fimDia = `${currentDate}T${moment(req.body.dt_fim).format('HH:mm:ss.SSSZ')}`;
-    
+          let dt_inicioDia = `${currentDate}T${moment.tz(req.body.dt_inicio, TIMEZONE).add(1, 'seconds').format('HH:mm:ss.SSSZ')}`;
+          let dt_fimDia = `${currentDate}T${moment.tz(req.body.dt_fim, TIMEZONE).format('HH:mm:ss.SSSZ')}`;
+
+          dt_inicioDia = new Date(it.dt_inicioDia).toLocaleString('PT-BR');
+          dt_fimDia = new Date(it.dt_fimDia).toLocaleString('PT-BR');
+          
           const existeReserva = await buscarReservasPeriodoSala(sala.id_sala, dt_inicioDia, dt_fimDia);
     
           if (existeReserva.length > 0) {
@@ -441,7 +455,7 @@ router.put("/reserva/:id", auth, async (req,res) => {
         const reservaAlterada = await alterarReserva(id, reserva);
         res.json({
           reserva: reservaAlterada,
-          message: 'Reserva alterada com sucesso!',
+          message: 'Reserva(s) alterada(s) com sucesso!',
         });
         
         const acao = ('Alteração realizada na tabela reserva, com o id: ' + id);
@@ -455,6 +469,7 @@ router.put("/reserva/:id", auth, async (req,res) => {
     }
     })
 
+//Não vai utilizar esse PUT
 router.put("/reservas/nome/:nome", auth, async (req, res) => {
   try {
     const nome = req.params.nome;

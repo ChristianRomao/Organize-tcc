@@ -1,4 +1,5 @@
 const prisma = require("./prisma");
+const moment = require('moment-timezone');
 
 const listarReservas = () => {
   return prisma.reserva.findMany({
@@ -145,10 +146,10 @@ const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
       OR: [
         {
           dt_inicio: {
-            lte: dt_fim, 
+            lte: dt_inicio, 
           },
           dt_fim: {
-            gte: dt_inicio, 
+            gte: dt_fim, 
           },
         },
       ],
@@ -203,11 +204,15 @@ const buscarReservaGrupo = (grupoId) => {
 };
 
 const gravarReserva = (reserva) => {
+
+  const dt_inicio = moment(reserva.dt_inicio).utcOffset(-3);
+  const dt_fim = moment(reserva.dt_fim).utcOffset(-3);
+
   return prisma.reserva.create({
     data: {
       nm_reserva: reserva.nm_reserva,
-      dt_inicio: reserva.dt_inicio,
-      dt_fim: reserva.dt_fim,
+      dt_inicio: dt_inicio,
+      dt_fim: dt_fim,
       ds_observacao: reserva.ds_observacao,
       id_grupo: reserva.id_grupo,
       status_cd: reserva.status_cd,

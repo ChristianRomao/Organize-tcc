@@ -1,4 +1,5 @@
 const prisma = require("./prisma");
+const moment = require('moment');
 
 const listarLogs = () => {
   return prisma.log.findMany({
@@ -20,10 +21,14 @@ const buscarLogId = (id) => {
 };
 
 const gravarLog = (userLog,ip,acao) => {
+  let dt_log = new Date().toLocaleString('pt-BR')
+  const [dia, hora] = dt_log.split(', ');
+  const data = `${moment(dia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${hora}.000Z`;
+
   return prisma.log.create({
     data: {
       usuario_id: userLog,
-      dt_log: new Date(),
+      dt_log: data,
       nr_ip:ip,
       ds_acao:acao
     },
