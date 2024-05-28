@@ -157,7 +157,7 @@ const CadPolos = () => {
                 key={municipio.id_municipio}
                 value={municipio.id_municipio}
               >
-                {municipio.nm_municipio}
+                {municipio.nm_municipio} - {municipio.estado.cd_estado}
               </option>
             ))}
           </select>

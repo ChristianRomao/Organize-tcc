@@ -27,6 +27,9 @@ const CadReserva = () => {
   const [selectAnoTurma, setSelectAnoTurma] = useState("");
 
   const [error, setError] = useState("");
+  const [alerta, setAlerta] = useState("");
+  const [success, setSuccess] = useState("");
+  const [errorGrade, setErrorGrade] = useState("");
 
   const [selectDataInicio, setSelectDataInicio] = useState("");
   const [selectDataFim, setSelectDataFim] = useState("");
@@ -84,7 +87,7 @@ const CadReserva = () => {
   );
 
   const buscarUsuario = useCallback(
-    async (id) => {
+    async () => {
       try {
         const response = await axios.get(
           "http://localhost:8080/consulta-usuario",
@@ -124,14 +127,14 @@ const CadReserva = () => {
         const data = response.data.cursos;
         if (Array.isArray(data)) {
           setCursos(data);
-          setError("");
+          setErrorGrade("");
         } else {
           console.error("Formato inexperado do respose de Curso", data);
           setCursos([]);
         }
       } catch (error) {
         console.log(error.response.data);
-        setError(error.response.data.error);
+        setErrorGrade(error.response.data.error);
       }
     },
     [token]
@@ -151,14 +154,14 @@ const CadReserva = () => {
         const data = response.data.turmas;
         if (Array.isArray(data)) {
           setAnoTurmas(data);
-          setError("");
+          setErrorGrade("");
         } else {
           console.error("Formato inexperado do respose de Turma", data);
           setAnoTurmas([]);
         }
       } catch (error) {
         console.log(error.response.data);
-        setError(error.response.data.error);
+        setErrorGrade(error.response.data.error);
       }
     },
     [token]
@@ -195,7 +198,7 @@ const CadReserva = () => {
         }
       } catch (error) {
         console.log(error.response.data);
-        setError(error.response.data.error);
+        setErrorGrade(error.response.data.error);
         setGradeTurmas([]);
       }
     },
@@ -244,17 +247,27 @@ const CadReserva = () => {
   const handleSetSalaPolo = (event) => {
     const salaPolo = event.target.value;
     setSelectSalaPolo(salaPolo);
+    setSuccess("");
+    setAlerta("");
+    setError("");
   };
 
   const handleSetPolo = (event) => {
     const polo = event.target.value;
     setSelectPolo(polo);
+    setSelectSalaPolo("");
     buscarSalaPolo(polo);
+    setSuccess("");
+    setAlerta("");
+    setError("");
   };
 
   const handleSetUsuario = (event) => {
     const usuario = event.target.value;
     setSelectUsuario(usuario);
+    setSuccess("");
+    setAlerta("");
+    setError("");
   };
 
   const handleSetCurso = (event) => {
@@ -263,10 +276,14 @@ const CadReserva = () => {
     setSelectCurso(curso);
     setSelectAnoTurma("");
     setSelectGradeTurma("");
+    setSuccess("");
+    setAlerta("");
+    setError("");
     if (curso) {
       buscarAnoTurma(curso);
     } else {
       setAnoTurmas([]);
+      setErrorGrade("");
     }
 
     buscarGradeCursoAno(curso, "");
@@ -275,11 +292,17 @@ const CadReserva = () => {
   const handleSetGradeTurma = (event) => {
     const gradeTurma = event.target.value;
     setSelectGradeTurma(gradeTurma);
+    setSuccess("");
+    setAlerta("");
+    setError("");
   };
 
   const handleSetAnoTurma = (event) => {
     const anoTurma = event.target.value;
     setSelectAnoTurma(anoTurma);
+    setSuccess("");
+    setAlerta("");
+    setError("");
 
     let anoLetivo = "";
     if (anoTurma) {
@@ -293,6 +316,9 @@ const CadReserva = () => {
 
   const handleChangeSelect = (event) => {
     const { name, value } = event.target;
+    setSuccess("");
+    setAlerta("");
+    setError("");
     switch (name) {
       case "dt_inicio":
         setSelectDataInicio(value);
@@ -324,6 +350,9 @@ const CadReserva = () => {
   };
 
   const handleChangeCheckBox = (event) =>{
+    setSuccess("");
+    setAlerta("");
+    setError("");
     const inCheck = event.target.checked;
     if(inCheck){
       setSelectHoraInicio('00:00');
@@ -352,28 +381,68 @@ const CadReserva = () => {
   };
 
   const handleCadastrarReserva = async () => {
-    // event.preventDefault();
-    // const payload = {
-    //   nm_sala: nm_sala,
-    //   qt_capacvigilancia: Number(qt_capacvigilancia),
-    //   bloco: {
-    //     id_bloco: Number(selectBloco),
-    //   }
-    // };
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8080/sala",
-    //     payload,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     }
-    //   );
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.log(error.response.data);
-    // }
+    console.log(selectHoraInicio+'     '+selectHoraFim);
+    if(!selectDataInicio || !selectDataFim || !selectHoraInicio || !selectHoraFim || !nmReserva || !selectSalaPolo || !selectUsuario || !selectGradeTurma){
+      setError("Campos obrigatórios devem ser preenchidos!")
+    }else{
+      setError("")
+    }
+    
+    let dataIniCompleta = ''
+    let dataFimCompleta = ''
+
+    if(selectHoraInicio && selectHoraFim){
+      dataIniCompleta = selectDataInicio+' '+selectHoraInicio+':00';
+      dataFimCompleta = selectDataFim+' '+selectHoraFim+':00';
+    }
+    const payload = {
+      nm_reserva : nmReserva,
+      dt_inicio: dataIniCompleta,
+      dt_fim: dataFimCompleta,
+      ds_observacao: dsObservacao,
+      sala:{
+        id_sala: Number(selectSalaPolo)
+      },
+      usuario:{
+        id_usuario: Number(selectUsuario)
+      },
+      grade:{
+        id_grade: Number(selectGradeTurma)
+      },
+      status:{
+        cd_status: 'A'
+      }
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/reserva",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setNmReserva('');
+      setSelectPolo('');
+      setSelectGradeTurma('');
+      setSelectUsuario('');
+      setSelectCurso('');
+      setSelectAnoTurma('');
+      setSelectSalaPolo('');
+      setSelectGradeTurma('');
+      setDsObservacao('');
+      setSelectHoraInicio('');
+      setSelectHoraFim('');
+      setSelectDataInicio(dataFixa);
+      setSelectDataFim(dataFixa);
+      setInAllDay(false);
+      setSuccess(response.data.message)
+    } catch (error) {
+      console.log(error.response.data);
+      setSuccess("");
+      setAlerta(error.response.data.alert);
+    }
   };
 
   return (
@@ -411,7 +480,7 @@ const CadReserva = () => {
                   </label>
                   <div className="input-individual">
                     <input
-                      className="date-reserva"
+                      className={error && !selectDataInicio ?"date-reserva-error":"date-reserva"}
                       name="dt_inicio"
                       type="date"
                       value={selectDataInicio}
@@ -420,7 +489,7 @@ const CadReserva = () => {
                       required
                     />
                     <input
-                      className="date-reserva"
+                      className={error && !selectDataFim ?"date-reserva-error":"date-reserva"}
                       name="dt_fim"
                       type="date"
                       value={selectDataFim}
@@ -432,7 +501,7 @@ const CadReserva = () => {
                   <div className="input-individual">
                     <select
                       disabled={inAllDay}
-                      className="time-reserva"
+                      className={error && !selectHoraInicio ?"time-reserva-error":"time-reserva"}
                       name="hr_inicio"
                       onChange={handleChangeSelect}
                       value={selectHoraInicio}
@@ -447,7 +516,7 @@ const CadReserva = () => {
                     </select>
                     <select
                       disabled={inAllDay}
-                      className="time-reserva"
+                      className={error && !selectHoraFim ?"time-reserva-error":"time-reserva"}
                       name="hr_fim"
                       onChange={handleChangeSelect}
                       value={selectHoraFim}
@@ -479,7 +548,7 @@ const CadReserva = () => {
                 <div className="divider"></div>
                 <div className="inputs-reserva">
                   <div className="select-individual">
-                    <label className="titulo-selects-reserva">
+                    <label className={error && !nmReserva ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
                       Nome da reserva:
                     </label>
                     <input
@@ -511,7 +580,7 @@ const CadReserva = () => {
                     </select>
                   </div>
                   <div className="select-individual">
-                    <label className="titulo-selects-reserva">
+                  <label className={error && !selectSalaPolo ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
                       Escolha a Sala:
                     </label>
                     <select
@@ -531,7 +600,7 @@ const CadReserva = () => {
                     </select>
                   </div>
                   <div className="select-individual">
-                    <label className="titulo-selects-reserva">
+                  <label className={error && !selectUsuario ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
                       Responsavel pela Sala:
                     </label>
                     <select
@@ -576,7 +645,7 @@ const CadReserva = () => {
                       Selecione o Ano:
                     </label>
                     <select
-                      disabled={!selectCurso || (!!error && !selectAnoTurma)}
+                      disabled={!selectCurso || (!!errorGrade && !selectAnoTurma)}
                       className="selects-reserva"
                       id=""
                       name="id_curso"
@@ -599,11 +668,11 @@ const CadReserva = () => {
                     </select>
                   </div>
                   <div className="select-individual">
-                    <label className="titulo-selects-reserva">
-                      Selecione a Grade:
+                  <label className={error && !selectGradeTurma ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
+                      Selecione a Grade/Turma:
                     </label>
                     <select
-                      disabled={!!error}
+                      disabled={!!errorGrade}
                       className="selects-reserva"
                       id=""
                       name="Grade"
@@ -637,13 +706,14 @@ const CadReserva = () => {
                     />
                   </div>
                 </div>
+                <text className={success ? "message-success" : alerta ? "message-alert" : error ? "message-error" : ""}>{"" || alerta || error || success}</text>
                 <button
-                  disabled={!!error}
-                  className={error ? "error-reserva" : "botao-reserva"}
-                  type="submit"
+                  disabled={!!errorGrade || !!error}
+                  className={errorGrade ? "error-reserva" : "botao-reserva"}
+                  type="button"
                   onClick={handleCadastrarReserva}
                 >
-                  {error ? error : "Fazer Reserva"}
+                  {errorGrade ? errorGrade : "Fazer Reserva"}
                 </button>
               </form>
             </div>
