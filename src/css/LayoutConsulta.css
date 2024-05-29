@@ -1,13 +1,9 @@
-:root {
-    --cor-fundo: #C6D7EE;
-}
-
 .home-consulta {
     width: 100%;
+    height: 100%;
     height: 93.2vh;
-    background-color: var(--cor-fundo);
     position: fixed;
-    z-index: -1;
+    background-color: #00183a;
 }
 
 .body-layout-consulta {
@@ -18,13 +14,13 @@
 }
 
 .volta-consulta {
-    position: relative;
-    top: 1.6em;
-    padding: 10px 22px;
-    background-color: #004fbd;
+    margin-right: 20px;
+    padding: 16px 40px;
+    background-color: #026bff;
     border-radius: 10px;
     transition: 0.2s;
     font-weight: 700;
+    font-size: medium;
     cursor: pointer;
 }
 .volta-consulta:hover {
@@ -34,10 +30,10 @@
 }
 
 .titulo-consulta {
-    color: #000000;
+    color: #d6e7ff;
     font-size: xx-large;
     position: relative;
-    top: 80px;
+    top: -66px;
     text-align: center;
     font-weight: bold;
     animation: slide-in 1s ease forwards;
@@ -53,31 +49,20 @@
     }
 }
 
-.area-consulta {
-    text-align: center;
-    width: 60%;
-    height: 74vh;
-    border-radius: 20px;
-    display: flex;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    flex-direction: row;
-    gap: 18px;
-    box-shadow: 0px 0px 20px;
-}
-
 .grid-consulta {
     display: flex;
+    margin-top: -30px;
     background-color: #003681;
     border-radius: 20px;
     padding: 10px 10px 9.4px 10px;
+    box-shadow: 0px 0px 20px #006aff;
 }
 
 .select-consulta {
     background-color: #d6e7ff;
     padding: 10px 10px;
     width: 50%;
-    margin: 6px 0px;
+    margin: 6px 18px 6px 0px;
     border-radius: 10px;
     border-style: none;
     font-weight: bolder;
@@ -112,3 +97,14 @@
     background-color: #001636;
     color: #95bfff;
 }
+
+.area-consulta {
+    background-color: #003175;
+    width: 70%;
+    margin-top: 40px;
+    border-radius: 20px;
+    height: 72vh;
+    gap: 18px;
+    box-shadow: 0px 0px 20px #006aff;
+}
+
