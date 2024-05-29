@@ -50,6 +50,8 @@ const RegisterPage = () => {
             case "ds_funcao":
                 setDs_funcao(value)
                 break;
+            default:
+                break;
         }
     }
 

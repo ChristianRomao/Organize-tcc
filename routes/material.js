@@ -2,6 +2,7 @@ const express = require("express");
 const {
     listarMateriais,
     buscarMaterialId,
+    buscarMaterialNome,
     gravarMaterial,
     alterarMaterial,
     deletarMaterial
@@ -26,10 +27,18 @@ router.get("/material", auth, async (req,res) => {
 });
 
 //Realiza consulta sem gravar log
-router.get("/consulta-material", auth, async (req,res) => {
-    const materiais = await listarMateriais()
+router.get("/consulta-material/:ds_material?", auth, async (req,res) => {
+    const ds_material = req.params.ds_material
+    let materiais = ''
+    
+    if(ds_material){   
+        materiais = await buscarMaterialNome(ds_material);
+    }else{
+        materiais = await listarMateriais()
+    }
+
     res.json({
-        materiais,
+        materiais:materiais
     });
 });
 
@@ -55,7 +64,7 @@ router.get("/material/:id", auth, async (req,res) => {
 
 router.post("/material", auth, async (req,res) => {
     try{
-        if(req.body.ds_material === '' || req.body.qt_material === ''){
+        if(req.body.ds_material === '' || req.body.qt_material === '' || req.body.qt_material === 0){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
@@ -68,7 +77,7 @@ router.post("/material", auth, async (req,res) => {
             message: 'Material gravado com sucesso!',
         })
         const acao = ('Gravação realizada na tabela Material');
-        const decode = await decodeJWT(req.headers.authorization);
+        const decode = decodeJWT(req.headers.authorization);
         const userLog = decode.id_usuario;
         const ip = req.ip;
         await gravarLog(userLog,ip,acao);

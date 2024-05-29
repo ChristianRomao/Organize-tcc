@@ -12,6 +12,16 @@ const buscarMaterialId = (id) =>{
     });
 }
 
+const buscarMaterialNome = (descricao) =>{
+    return prisma.material.findMany({
+        where:{
+            ds_material:{
+                contains:descricao
+            }
+        }
+    });
+}
+
 const gravarMaterial = (material) => {
     return prisma.material.create({
         data:{
@@ -44,6 +54,7 @@ const deletarMaterial = (id) => {
 module.exports = {
     listarMateriais,
     buscarMaterialId,
+    buscarMaterialNome,
     gravarMaterial,
     alterarMaterial,
     deletarMaterial

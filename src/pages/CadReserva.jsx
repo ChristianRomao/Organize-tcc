@@ -438,6 +438,9 @@ const CadReserva = () => {
       setSelectDataFim(dataFixa);
       setInAllDay(false);
       setSuccess(response.data.message)
+      setTimeout(() =>{
+        setSuccess('');
+      },5000)
     } catch (error) {
       console.log(error.response.data);
       setSuccess("");
