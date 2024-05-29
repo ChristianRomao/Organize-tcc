@@ -1,5 +1,5 @@
 import HeaderComponents from "./HeaderComponents";
-import '../css/Layout.css';
+import '../css/LayoutConsulta.css';
 import { useNavigate } from "react-router-dom";
 
 const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
@@ -12,39 +12,43 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
             <body className='home-consulta'>
                 <div className='body-layout-consulta'>
                     <div>
-                        <button className='volta-consulta' onClick={()=>navigate(-1)}>
-                            <p style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar para o Inicio</p>
-                        </button>
-                    </div>
-                    <div>
                         <text className='titulo-consulta'>{titleCons}</text>
                     </div>
-                        <div className="grid-consulta">
-                            <select 
-                                className="select-consulta" 
-                                name="Tipo Filtro" 
-                                id=""
+                    <div className="grid-consulta">
+                        <div>
+                            <button     
+                                className='volta-consulta'  
+                                style={{color: "#d6e7ff"}} 
+                                onClick={()=>navigate(-1)}
                             >
-                                <option value="Tipos" disabled selected hidden>Selecione</option>
-                                {/* {tipoOptions.map((option, index) => (
-                                    <option key={index} value={option}>{option}</option> 
-                                ))}    ===Aqui foi o gpt que deu um exemplo de se usar, se tu achar alguma outra solução ta dale===  */}
-                            </select>
-                            <input 
-                                className="inputs-consulta"
-                                type="search" 
-                                name="Buscar" 
-                                placeholder="Buscar"
-                                id="" 
-                            />
-                            <button 
-                                className="botao-consulta"  
-                                type="button"   
-                                onClick={onSearch}
-                            >
-                                Pesquisar
+                                Voltar
                             </button>
                         </div>
+                        <select 
+                            className="select-consulta" 
+                            name="Tipo Filtro" 
+                            id=""
+                        >
+                            <option value="Tipos" disabled selected hidden>Selecione</option>
+                            {/* {tipoOptions.map((option, index) => (
+                                <option key={index} value={option}>{option}</option> 
+                            ))}    ===Aqui foi o gpt que deu um exemplo de se usar, se tu achar alguma outra solução ta dale===  */}
+                        </select>
+                        <input 
+                            className="inputs-consulta"
+                            type="search" 
+                            name="Buscar" 
+                            placeholder="Buscar"
+                            id="" 
+                        />
+                        <button 
+                            className="botao-consulta"  
+                            type="button"   
+                            onClick={onSearch}
+                        >
+                            Pesquisar
+                        </button>
+                    </div>
                     <div className='area-consulta'>
                         {children}
                     </div>

@@ -4,12 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/Header.css';
 import { useState } from 'react';
 import { useAuth } from '../AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import LayoutConsulta from './LayoutConsulta';
 
 const HeaderComponents = () => {
 
     const {logout} = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const isLayoutConsulta = location.pathname.startsWith(`/consulta`);
 
     const [menuVisivel, setMenuVisivel] = useState(false);
 
@@ -24,8 +28,9 @@ const HeaderComponents = () => {
 
     const handleLogoOrganizze = () => {
         navigate('/home');
-      };
+    };
 
+    
     
     return (
         <header className="header">
@@ -35,7 +40,11 @@ const HeaderComponents = () => {
                 alt="Logo branca Organize"
                 onClick={handleLogoOrganizze}
             />
-            <button className="menu-button" onClick={toggleMenu}><FontAwesomeIcon icon={faRightFromBracket} size='2x'/></button>
+            {!isLayoutConsulta && (
+                <button className="menu-button" onClick={toggleMenu}>
+                    <FontAwesomeIcon icon={faRightFromBracket} size='2x'/>
+                </button>
+            )}
             <nav className={menuVisivel ? "menu visible" : "menu"}>
                 <ul>
                     <li>

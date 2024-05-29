@@ -25,6 +25,14 @@ const HomePage = () => {
         }
     }
 
+    const handleConsulta = (consulta) => {
+        if(consulta === 'usuarios'){
+            navigate(`/consulta`)
+        }else{
+            navigate(`/consulta-${consulta}`)
+        }
+    }
+
     const handleReserva = (acao) => {
         navigate(`/${acao}-reserva`)
     }
@@ -56,16 +64,16 @@ const HomePage = () => {
                             <FontAwesomeIcon icon={faMagnifyingGlass} size='3x'/>
                             <p className='titulos-home'>Consulta</p>
                             <div className='btn-gerais scrollable'>
-                                <button className='btn' type="button" onClick={() => handleCadastro()}>Instituição</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro()}>Polo</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro()}>Bloco</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro()}>Sala</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro()}>Materiais</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro()}>Usuários</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Curso</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Disciplina</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Turma</button>
-                                <button className='btn' type="button" onClick={() => handleCadastro('')}>Grade</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('instituicao')}>Instituição</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta()}>Polo</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta()}>Bloco</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta()}>Sala</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta()}>Materiais</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta()}>Usuários</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Curso</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Disciplina</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Turma</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Grade</button>
                             </div>
                         </div>
                     </div>
