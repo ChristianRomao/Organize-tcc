@@ -19,6 +19,13 @@ const buscarEmail = (email) => {
         }
     })
 }
+const buscarCpfCnpj = (cdCpfCnpj) => {
+    return prisma.usuario.findUnique({
+        where: {
+            cd_cpfcnpj: cdCpfCnpj,
+        }
+    })
+}
 
 const gravarUsuario = (usuario) => {
     return prisma.usuario.create({
@@ -54,6 +61,7 @@ module.exports = {
     listarUsuarios,
     buscarUsuarioId,
     buscarEmail,
+    buscarCpfCnpj,
     gravarUsuario,
     alterarUsuario,
     deletarUsuario

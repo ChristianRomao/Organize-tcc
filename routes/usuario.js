@@ -3,6 +3,7 @@ const {
     listarUsuarios,
     buscarUsuarioId,
     buscarEmail,
+    buscarCpfCnpj,
     gravarUsuario,
     alterarUsuario,
     deletarUsuario
@@ -66,7 +67,12 @@ router.post("/registro", async (req,res) => {
 
         const emailUtilizado = await buscarEmail(req.body.ds_email);
         if(emailUtilizado){
-            return res.status(400).json({message:"E-mail já utilizado!"});
+            return res.status(400).json({error:"E-mail já utilizado!"});
+        }
+
+        const cpfCnpjUtilizado = await buscarCpfCnpj(req.body.cd_cpfcnpj);
+        if(cpfCnpjUtilizado){
+            return res.status(400).json({error:"CFP/CNPJ já cadastrado!"});
         }
 
         const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
@@ -94,9 +100,8 @@ router.post("/registro", async (req,res) => {
         // }else{
         //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
         // }
-
-        if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
-            return res.status(400).json({ message: "Nome não pode conter números/caracteres especiais!" });
+        if (!/^[a-zA-Z\s]+$/.test(req.body.nm_usuario)) {
+            return res.status(400).json({ error: "Nome não pode conter números, acentos, 'ç' ou caracteres especiais!" });
         }
 
         const usuario = {
@@ -118,7 +123,7 @@ router.post("/registro", async (req,res) => {
         const ip = req.ip;
         await gravarLog(userLog,ip,acao);
     }catch (error) {
-        console.error("Erro ao alterar curso:", error);
+        console.error("Erro ao gravar usuario:", error);
         if (error instanceof PrismaClientKnownRequestError) {
             const errorMessage = error.message;
             const constraintNameMatch = errorMessage.match(/`([^`]+)`$/);
@@ -138,7 +143,7 @@ router.post("/cadastro-usuario", auth, async (req,res) => {
 
         const emailUtilizado = await buscarEmail(req.body.ds_email);
         if(emailUtilizado){
-            return res.status(400).json({message:"E-mail já utilizado!"});
+            return res.status(400).json({error:"E-mail já utilizado!"});
         }
 
         const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
@@ -168,7 +173,7 @@ router.post("/cadastro-usuario", auth, async (req,res) => {
         // }
 
         if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
-            return res.status(400).json({ message: "Nome não pode conter números/caracteres especiais!" });
+            return res.status(400).json({ error: "Nome não pode conter números/caracteres especiais!" });
         }
 
         const usuario = {
@@ -280,7 +285,7 @@ router.put("/usuario/:id", auth, async (req,res) => {
         const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();
 
         if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
-            return res.status(400).json({ message: "Nome não pode conter números/caracteres especiais!" });
+            return res.status(400).json({ error: "Nome não pode conter números/caracteres especiais!" });
         }
 
         const usuario = {
