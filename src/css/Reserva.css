@@ -139,7 +139,8 @@
 
 
 .date-reserva:focus {
-    background-color: #77ffbbd7;
+    background-color: #333ba7;
+    color:#ffffff;
 }
 
 .time-reserva {
@@ -162,7 +163,8 @@
 }
 
 .time-reserva:focus {
-    background-color: #77ffbbd7;
+    background-color: #333ba7;
+    color:#ffffff;
 }
 
 .ajustes-reserva {
@@ -233,7 +235,8 @@
 }
 
 .selects-reserva:focus {
-    background-color: #77ffbbd7;
+    background-color: #333ba7;
+    color:#ffffff;
 }
 
 .selects-reserva::placeholder {
@@ -284,13 +287,13 @@
     height: 68vh;
     border-radius: 20px;
     display: flex;
-    align-items: center;
+    align-items: first baseline;
     justify-content: center;
     box-shadow: 0px 0px 20px;
 }
 
 .titulo-descricao {
-    margin-top: -105%;
+    margin-top: 20px;
     font-size: x-large;
     color: white;
     font-weight: bold;

@@ -158,7 +158,7 @@ const handleConfirmAlert = (confirm) => {
             <button className="vaiConsulta">
               <p
                 style={{ color: "#d6e7ff", margin: "0em 1em" }}
-                onClick={() => navigate("/consulta-materiais")}
+                onClick={() => navigate("/home")}
               >
                 Ir para Consulta
               </p>
@@ -203,7 +203,7 @@ const handleConfirmAlert = (confirm) => {
                         required
                       />
                     </div>
-                    <text className={error ? "message-error" : success ? "message-success" : ""}>{"" || error || success}</text>
+                    <text className={error ? "message-materiais-error" : success ? "message-materiais-success" : ""}>{"" || error || success}</text>
                     <button
                       disabled={!!error && !qt_material}
                       className="botao-materiais"
@@ -218,13 +218,13 @@ const handleConfirmAlert = (confirm) => {
             </div>
             <div className="descricao-materiais">
               <div className="header-descricao">
-                <text className="titulo-descricao">Materiais no Estoque</text>
+                <text className="titulo-descricao-materiais">Materiais no Estoque</text>
                 <input type="search" className="search-descricao" placeholder="Buscar pela descrição" name="search" value={search} onChange={handleChange}/>
               </div>
               <div className="content">
                 {materiais.map((material) => (
                   <div key={material.id_material} className="material-item">
-                    <h2>{material.ds_material}</h2>
+                    <h3>{material.ds_material}</h3>
                     <p>Quantidade: {material.qt_material}</p>
                   </div>
                 ))}

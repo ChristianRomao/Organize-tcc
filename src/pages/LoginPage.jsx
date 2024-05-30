@@ -110,7 +110,25 @@ const LoginPage = () => {
             <div className="container-right ">
                 <div className='sobre'>
                     <h1 className='titulo-sobre'>Quem somos?</h1>
-                    <text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</text>
+                    <div>
+    <h4>Missão:</h4>
+    <p className='content-sobre'>
+      Facilitar a gestão acadêmica por meio de soluções inovadoras e eficientes, proporcionando uma organização otimizada das salas de aula e recursos materiais, para melhorar a experiência acadêmica de todos os envolvidos.
+    </p>
+    <h4>Visão:</h4>
+    <p className='content-sobre'>
+      Ser reconhecida como referência em tecnologia educacional, oferecendo ferramentas que impulsionam a eficiência e a transparência na gestão acadêmica, contribuindo para o sucesso das instituições de ensino.
+    </p>
+    <h4>Valores:</h4>
+    <ul>
+      <li>
+        <strong>Inovação:</strong> Buscamos constantemente soluções criativas e tecnologicamente avançadas para atender às necessidades em constante evolução do setor educacional.
+      </li>
+      <li>
+        <strong>Eficiência:</strong> Comprometemo-nos em desenvolver sistemas que otimizam processos e facilitam a rotina dos usuários, proporcionando maior produtividade e satisfação.
+      </li>
+    </ul>
+  </div>
                 </div>
                 <img className='logo-branca' src={LogoBranca} alt="Logo branca Organize"/>
             </div>
