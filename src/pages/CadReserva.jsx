@@ -721,7 +721,7 @@ const CadReserva = () => {
               </form>
             </div>
             <div className="descricao-reserva">
-              <text className="titulo-descricao">Detalhes da Reserva</text>
+              <text className="titulo-descricao">Detalhes</text>
               <div>
                 {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
               </div>

@@ -1,0 +1,84 @@
+.inputs-grade {
+    background-color: #d6e7ff;
+    padding: 10px 10px;
+    width: 80%;
+    margin: 6px 0px;
+    display: flex;
+    border-radius: 10px;
+    border-style: none;
+}
+
+.titulo-inputs-grade {
+    color: #d6e7ff;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
+.titulo-inputs-grade-error {
+    color: #f00;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
+.titulo-inst-grade {
+    color: #7c8ca3;
+    margin-top: 10px;
+    display: flex;
+}
+
+.ajustes-grade {
+    width: 50%;
+    margin-top: 80px;
+    animation: slide-in 1s ease forwards;
+    justify-content: center;
+    align-items: center;
+}
+@keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(-25px);
+    }
+}
+
+.botao-grade {
+    font-size: large;
+    background-color: #007226;
+    color: #d0ffe0;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    margin-top: 30px;
+    margin-right: 100px;
+    transition: 0.2s;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.botao-grade:hover {
+    transition: 0.2s;
+    background-color: #09ff5b;
+    color: #007226;
+}
+
+.message-grade-success{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-right: 88px;
+    margin-bottom: -10px;
+}
+
+.message-grade-error{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-right: 88px;
+    margin-bottom: -10px;
+}

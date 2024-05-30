@@ -131,7 +131,6 @@
 .logo-branca {
     width: 380px;
     margin: auto;
-    margin-top: 80px;
     margin-left: 158px;
     align-items: center;
     transform: rotate(10deg); 
@@ -142,7 +141,6 @@
     display: inline-block;
     text-align: justify;
     padding: 100px;
-    padding-top: 140px;
     color: white;
     margin-bottom: -120px;
     transform: rotate(10deg);
@@ -153,4 +151,8 @@
     margin-bottom: 30px;
     font-weight: bold;
     font-size: x-large;
+}
+
+.content-sobre {
+    margin-bottom: 10px;
 }

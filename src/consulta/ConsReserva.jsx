@@ -54,7 +54,7 @@ const ConsReserva = () => {
                                 <td className="colunas-body">Data F</td>
                                 <td className="colunas-body">Status</td>
                                 <td className="colunas-body">Observação</td>
-                                <td className="colunas-body" style={{background: "#003d99"}}><button className="btn-editar">editar</button></td>
+                                <td className="colunas-body" style={{background: "#003d99"}}><button className="btn-editar">Editar</button></td>
                             </tr>
                         </tbody>
                     </table>

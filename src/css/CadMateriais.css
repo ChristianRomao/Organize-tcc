@@ -267,7 +267,7 @@
     align-content: center;
 }
 
-.titulo-descricao {
+.titulo-descricao-materiais {
     position: relative;
     text-align: center;
     margin-top: -25%;
@@ -305,7 +305,7 @@
     font-weight: bolder;
 }
 
-.message-success{
+.message-materiais-success{
     color: #09ff5b;
     font-weight: bold;
     font-size: medium;
@@ -313,7 +313,7 @@
     margin-bottom: -10px;
 }
 
-.message-error{
+.message-materiais-error{
     color: #ff0000;
     font-weight: bold;
     font-size: medium;
