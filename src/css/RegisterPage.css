@@ -27,10 +27,9 @@
     color: #ffffff;
     font-size: xx-large;
     font-weight: 600;
-    text-align: justify;
+    text-align: center;
     padding-top: 50px;
     padding-bottom: 26px;
-    margin-left: 404px;
     animation: slide-in 1s ease forwards;
 }@keyframes slide-in {
     from {
@@ -56,7 +55,14 @@
 .titulo-inputs {
     font-weight: 600;
     color: #ffffff;
-    margin-left: 236px;
+    margin-left: 255px;
+    display: flex;
+}
+
+.titulo-inputs-error {
+    font-weight: 600;
+    color: #ff0000;
+    margin-left: 255px;
     display: flex;
 }
 
@@ -67,6 +73,10 @@
     margin: 6px 200px 18px 200px;
     border-radius: 10px;
     border-style: none;
+}
+
+.inputs-registro::placeholder {
+    color: #00183a;
 }
 
 .voltar {
@@ -96,6 +106,22 @@
     transition: 0.2s;
     background-color: #007226;
     color: #09ff5b;
+}
+
+.message-registro-success{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
+}
+
+.message-registro-error{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
 }
 
 .return-login-alert-overlay {
