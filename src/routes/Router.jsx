@@ -26,7 +26,7 @@ const Router = () => {
                 <Route
                     path={"/login"}
                     element={<LoginPage/>}>    
-                </Route>
+                </Route> 
                 {/* CADASTRO */}
                 <Route
                     path={"/registro"}

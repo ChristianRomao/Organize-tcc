@@ -103,64 +103,66 @@ const CadSala = () => {
   const handleSubmit = () => {}
 
   return (
-    <Layout title="Cadastro de Sala" icon={faDoorOpen} next="">
-      <form className="ajustes-sala">
-        <div>
-          <label className="titulo-inputs-sala">Bloco - Polo</label>
-          <select
-            className="select-sala"
-            id=""
-            name="id_bloco"
-            value={selectBloco}
-            onChange={handleSetBloco}
-          >
-            <option value="">Selecione um bloco</option>
-            {blocos.map((bloco) => (
-              <option key={bloco.id_bloco} value={bloco.id_bloco}>
-                {bloco.nm_bloco} - {bloco.polo.nm_polo}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="titulo-inputs-sala">Nome da Sala</label>
-          <input
-            className="inputs-sala"
-            type="text"
-            name="nm_sala"
-            value={nm_sala}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label className="titulo-inputs-sala">Capacidade Vigilância</label>
-          <input
-            className="inputs-sala"
-            type="text"
-            name="qt_capacvigilancia"
-            value={qt_capacvigilancia}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="grid">
-          <button
-            className="grava-sala"
-            type="button"
-            onClick={handleCadastroSala}
-          >
-            Gravar Sala
-          </button>
-          <button
-            className="materiais-sala"
-            type="button"
-            onClick={handleOpenModal}
-          >
-            Cadastro Materiais
-          </button>
-        </div>
-      </form>
+    <div>  
+      <Layout title="Cadastro de Sala" icon={faDoorOpen} next="">
+        <form className="ajustes-sala">
+          <div>
+            <label className="titulo-inputs-sala">Bloco - Polo</label>
+            <select
+              className="select-sala"
+              id=""
+              name="id_bloco"
+              value={selectBloco}
+              onChange={handleSetBloco}
+            >
+              <option value="">Selecione um bloco</option>
+              {blocos.map((bloco) => (
+                <option key={bloco.id_bloco} value={bloco.id_bloco}>
+                  {bloco.nm_bloco} - {bloco.polo.nm_polo}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="titulo-inputs-sala">Nome da Sala</label>
+            <input
+              className="inputs-sala"
+              type="text"
+              name="nm_sala"
+              value={nm_sala}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label className="titulo-inputs-sala">Capacidade Vigilância</label>
+            <input
+              className="inputs-sala"
+              type="text"
+              name="qt_capacvigilancia"
+              value={qt_capacvigilancia}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="grid">
+            <button
+              className="grava-sala"
+              type="button"
+              onClick={handleCadastroSala}
+            >
+              Gravar Sala
+            </button>
+            <button
+              className="materiais-sala"
+              type="button"
+              onClick={handleOpenModal}
+            >
+              Cadastro Materiais
+            </button>
+          </div>
+        </form>
+      </Layout>
       <ModalComponent
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -205,7 +207,7 @@ const CadSala = () => {
           </button>
         </form>
       </ModalComponent>
-    </Layout>
+    </div>
   );
 };
 
