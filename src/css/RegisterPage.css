@@ -74,7 +74,6 @@
     border-radius: 10px;
     border-style: none;
 }
-
 .inputs-registro::placeholder {
     color: #00183a;
 }
@@ -106,6 +105,21 @@
     transition: 0.2s;
     background-color: #007226;
     color: #09ff5b;
+}
+
+.div-showPassword{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-eye-registro {
+    position: absolute;
+    top: 46%;
+    right: 260px;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 .message-registro-success{
