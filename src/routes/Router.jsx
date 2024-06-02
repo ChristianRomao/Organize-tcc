@@ -14,6 +14,10 @@ import CadCursoTurma from "../pages/CadCursoTurma";
 import CadGrade from "../pages/CadGrade";
 import ConsInstituicao from "../consulta/ConsInstituicao";
 import CadMateriais from "../pages/CadMateriais";
+import ConsPolo from "../consulta/ConsPolo";
+import ConsBloco from "../consulta/ConsBloco";
+import ConsSala from "../consulta/ConsSala";
+import ConsMateriais from "../consulta/ConsMateriais";
 
 const Router = () => {
     return (
@@ -84,6 +88,26 @@ const Router = () => {
                 <Route
                     path={"/consulta-instituicao"}
                     element={<ConsInstituicao/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-polo"}
+                    element={<ConsPolo/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-bloco"}
+                    element={<ConsBloco/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-sala"}
+                    element={<ConsSala/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-material"}
+                    element={<ConsMateriais/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-polo"}
+                    element={<ConsPolo/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>
