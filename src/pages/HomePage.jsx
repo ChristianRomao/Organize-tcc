@@ -78,10 +78,10 @@ const HomePage = () => {
                             <p className='titulos-home'>Consulta</p>
                             <div className='btn-gerais scrollable'>
                                 <button className='btn' type="button" onClick={() => handleConsulta('instituicao')}>Instituição</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta()}>Polo</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta()}>Bloco</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta()}>Sala</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta()}>Materiais</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('polo')}>Polo</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('bloco')}>Bloco</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('sala')}>Sala</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('material')}>Materiais</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta()}>Usuários</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('')}>Curso</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('')}>Disciplina</button>

@@ -29,7 +29,7 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                             name="Tipo Filtro" 
                             id=""
                         >
-                            <option value="Tipos" disabled selected hidden>Selecione</option>
+                            <option value="Tipos" disabled selected hidden>Tipo</option>
                             {/* {tipoOptions.map((option, index) => (
                                 <option key={index} value={option}>{option}</option> 
                             ))}    ===Aqui foi o gpt que deu um exemplo de se usar, se tu achar alguma outra solução ta dale===  */}
@@ -38,7 +38,7 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                             className="inputs-consulta"
                             type="search" 
                             name="Buscar" 
-                            placeholder="Buscar"
+                            placeholder="Buscar pelo tipo"
                             id="" 
                         />
                         <button 
