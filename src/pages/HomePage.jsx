@@ -82,9 +82,8 @@ const HomePage = () => {
                                 <button className='btn' type="button" onClick={() => handleConsulta('sala')}>Sala</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('material')}>Materiais</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta()}>Usuários</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Curso</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('turma')}>Turma</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('')}>Disciplina</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Turma</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('')}>Grade</button>
                             </div>
                         </div>
@@ -96,7 +95,6 @@ const HomePage = () => {
                             <div className='btn-gerais'>
                                 <button className='btn' type="button" onClick={() => handleReserva('cadastro')}>Cadastrar</button>
                                 <button className='btn' type="button" onClick={() => handleReserva('consulta')}>Consultar</button>
-                                <button className='btn' type="button">Relatório</button>
                             </div>
                         </div>
                     </div>
