@@ -68,7 +68,12 @@ const CadSala = () => {
       );
       const data = response.data.materiais;
       console.log(data);
-      setMateriais(data);
+      if (Array.isArray(data)) {
+        setMateriais(data);
+    } else {
+        console.error("Formato inexperado do respose de materiais", data);
+        setMateriais([]);
+    }
     } catch (error) {
       console.log(error.response.data);
     }
@@ -103,7 +108,6 @@ const CadSala = () => {
   };
 
   const handleSetMaterial = (event) => {
-    console.log(event.target.value)
     setSelectMaterial(event.target.value);
     setErrorMaterial("");
   };
@@ -441,7 +445,7 @@ const CadSala = () => {
             className="grava-materiais"
             type="button"
             onClick={validaCadastroMaterial}>
-            Adicionar Materiais
+            Adicionar Material
           </button>
         </form>
         {showConfirmAlert &&(
