@@ -283,6 +283,7 @@ const CadSala = () => {
   };
 
   return (
+    <div>
     <Layout title="Cadastro de Sala" icon={faDoorOpen} next="">
       <form className="ajustes-sala">
         <div>
@@ -362,7 +363,7 @@ const CadSala = () => {
           )}
         </div>
       </form>
-
+      </Layout>
       <ModalComponent
         isOpen={isModalOpen && !error}
         onClose={handleCloseModal}
@@ -458,7 +459,7 @@ const CadSala = () => {
                 </div>
             )}
       </ModalComponent>
-    </Layout>
+    </div>
   );
 };
 
