@@ -27,6 +27,13 @@ router.get("/material", auth, async (req,res) => {
 });
 
 //Realiza consulta sem gravar log
+router.get("/consulta-material", auth, async (req,res) => {
+    const materiais = await listarMateriais()
+    res.json({
+        materiais,
+    });
+});
+
 router.get("/consulta-material/:ds_material?", auth, async (req,res) => {
     const ds_material = req.params.ds_material
     let materiais = ''

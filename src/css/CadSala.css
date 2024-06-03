@@ -26,6 +26,13 @@
     display: flex;
 }
 
+.titulo-inputs-sala-error {
+    color: #ff0000;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
 .ajustes-sala {
     width: 50%;
     margin-top: 80px;
@@ -69,7 +76,7 @@
     width: 120px;
     height: 40px;
     margin-top: 30px;
-    margin-left: 10px;
+    margin-left: 30px;
     transition: 0.2s;
     font-weight: bolder;
     cursor: pointer;
@@ -91,6 +98,15 @@
     display: flex;
 }
 
+.modal-titulo-sala-error {
+    font-size: medium;
+    font-weight: 600;
+    color: #ff0000;
+    margin-top: 10px;
+    padding-left: 40px;
+    display: flex;
+}
+
 .modal-input-sala {
     background-color: #d6e7ff;
     padding: 10px 10px;
@@ -101,6 +117,38 @@
     border: none;
     font-size: large;
     margin-left: 28px;
+}
+
+.modal-input-sala-error {
+    padding: 10px 10px;
+    width: 180%;
+    display: flex;
+    border-radius: 10px;
+    border: none;
+    font-size: large;
+    justify-content: center;
+    align-items: center;
+    margin-left: 28px;
+}
+
+.modal-input-sala::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 8px;
+    right: 10px;
+}
+
+.modal-input-sala::-webkit-scrollbar-track {
+    background: #d6e7ff;
+    border-radius: 10px;
+}
+
+.modal-input-sala::-webkit-scrollbar-thumb {
+    background: #d6e7ff;
+    border-radius: 10px;
+}
+
+.modal-input-sala::-webkit-scrollbar-thumb:hover {
+    background: #2a77e4;
 }
 
 .grava-materiais {
@@ -122,3 +170,124 @@
     color: #00581d;
 }
 
+  .grid .tooltiptext {
+    visibility: hidden;
+    width: 170px;
+    background-color: #002d6b;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #FFF;
+    z-index: 1;
+    bottom: 13%; 
+    left: 60%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .grid:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .message-success-sala{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    padding-block: 5px;
+    margin-bottom: -28px;
+    display: flex;
+    justify-content: center;
+    margin-right: 107.5px;
+}
+
+.message-error-sala{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-block: 5px;
+    margin-bottom: -28px;
+    display: flex;
+    justify-content: center;
+    margin-right: 107.5px;
+}
+
+.message-success-material{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    margin-bottom: -28px;
+    display: flex;
+    justify-content: center;
+}
+
+.message-error-material{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    margin-bottom: -28px;
+    display: flex;
+    justify-content: center;
+}
+
+.close-alert {
+    width: 300px;
+    background: #e2ad68;
+    border-radius: 25px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #ff9100;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.close-alert-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-alert-body {
+    text-align: center;
+}
+
+.close-alert-button-group {
+    margin-top: 20px;
+}
+
+.close-alert button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-alert button:nth-child(2) {
+    background-color: #b30000;
+    color: #fff;
+}
+
+.close-alert button:nth-child(2):hover {
+    background-color: #b30000c4;
+    color: #fff;
+}
+
+.close-alert button:nth-child(1) {
+    background-color: #e6e6e6;
+}
+
+.close-alert button:nth-child(1):hover {
+    background-color: #ffffff;
+}

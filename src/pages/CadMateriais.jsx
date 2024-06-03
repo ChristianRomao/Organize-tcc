@@ -81,7 +81,6 @@ const handleConfirmAlert = (confirm) => {
   if (confirm) {
     handleCadastroMaterial();
   } else {
-    console.log(qt_material)
       setShowAlert(false);
   }
 }
