@@ -18,6 +18,9 @@ const listarSalas = () =>{
               },
             },
           },
+          orderBy:{
+            nm_sala: "asc"
+          }
     })
 }
 

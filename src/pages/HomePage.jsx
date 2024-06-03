@@ -5,11 +5,10 @@ import HeaderComponents from '../components/HeaderComponents';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthProvider';
 import { useEffect, useState } from 'react';
-import ModalComponent from '../components/ModalComponent';
+import CadMaterialSala from './CadMaterialSala';
 
 const HomePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [nm_sala, setNm_sala] = useState("");
 
     const {isAuthenticated} = useAuth();
 
@@ -103,48 +102,9 @@ const HomePage = () => {
                     </div>
                 </div>
             </body>
-            <ModalComponent
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-                titleM={'Vincular Material'}
-            >
-                <form className="ajustes-sala">
-                    <div>
-                        <label className="modal-titulo-sala">Sala</label>
-                        <select     
-                            className="modal-input-sala"    
-                            name="Sala" 
-                            id=""
-                        >
-                            <option value="">Sala D7</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="modal-titulo-sala">Material/Estoque</label>
-                        <select     
-                            className="modal-input-sala"    
-                            name="Estoque" 
-                            id=""
-                        >
-                            <option value="">NoteBook - 10 un.</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="modal-titulo-sala">Quantidade</label>
-                        <input
-                            className="modal-input-sala"
-                            type="number"
-                            name="Quantidade"
-                        />
-                    </div>
-                    <button
-                        className="grava-materiais"
-                        type="submit"
-                    >
-                        Adicionar Materiais
-                    </button>
-                </form>
-            </ModalComponent>
+            {isModalOpen && (
+                <CadMaterialSala onClose={handleCloseModal} />
+            )}
         </div>
     );
 }

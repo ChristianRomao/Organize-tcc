@@ -23,7 +23,7 @@
     color: white;
     top: 10px;
     right: 10px;
-    background: none;
+    background: #6d0000;
     border: none;
     font-size: 1em;
     font-weight: 700;
@@ -31,12 +31,9 @@
     border-radius: 10px;
     cursor: pointer;
     transition: 0.2s;
-}.modal-close:hover {
-    background-color: black;
 }
-
 .modal-close:hover {
-    color: #FF0000;
+    background: #ff2929;
 }
 
 .titulo-modal {
