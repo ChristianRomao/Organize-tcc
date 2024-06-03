@@ -259,7 +259,7 @@ const RegisterPage = () => {
             <div className="div-showPassword"> 
               <input
                 className="inputs-registro"
-                placeholder="********"
+                placeholder={senhaVisivel ? "Exemplo123@" : "********"}
                 type={senhaVisivel ? "text" : "password"}
                 name="ds_senha"
                 onChange={handleChange}
@@ -310,7 +310,7 @@ const RegisterPage = () => {
             <div className="div-showPassword"> 
             <input
               className="inputs-registro"
-              placeholder="********"
+              placeholder={confirmaSenhaVisivel ? "Exemplo123@" : "********"}
               type={confirmaSenhaVisivel ? "text" : "password"}
               name="ds_senhaConfirm"
               onChange={handleChange}

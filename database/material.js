@@ -1,7 +1,11 @@
 const prisma = require ("./prisma");
 
 const listarMateriais = () =>{
-    return prisma.material.findMany()
+    return prisma.material.findMany({
+        orderBy:{
+            ds_material: 'asc',
+        }
+    })
 }
 
 const buscarMaterialId = (id) =>{
