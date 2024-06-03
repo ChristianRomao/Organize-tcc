@@ -232,6 +232,8 @@
     border-radius: 6px;
     border-style: none;
     width: 230px;
+    overflow-y: auto;
+
 }
 
 .selects-reserva:focus {
@@ -241,6 +243,26 @@
 
 .selects-reserva::placeholder {
     color: #00183a;
+}
+
+.selects-reserva::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 8px;
+    right: 10px;
+}
+
+.selects-reserva::-webkit-scrollbar-track {
+    background: #333ba7;
+    border-radius: 10px;
+}
+
+.selects-reserva::-webkit-scrollbar-thumb {
+    background: #333ba7;
+    border-radius: 10px;
+}
+
+.selects-reserva::-webkit-scrollbar-thumb:hover {
+    background: #2a77e4;
 }
 
 .inputs-reserva {

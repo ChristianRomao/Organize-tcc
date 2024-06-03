@@ -35,6 +35,10 @@
     background-color: black;
 }
 
+.modal-close:hover {
+    color: #FF0000;
+}
+
 .titulo-modal {
     font-size: x-large;
     font-weight: bold;

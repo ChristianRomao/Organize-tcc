@@ -76,6 +76,7 @@
 }
 .inputs-registro::placeholder {
     color: #00183a;
+    opacity: 0.49;
 }
 
 .voltar {
@@ -152,7 +153,7 @@
 
 .return-login-alert {
     width: 300px;
-    background: #fff;
+    background: #e2ad68;
     border-radius: 25px;
     border-width: 4px;
     border-style: solid;
@@ -178,19 +179,20 @@
 }
 
 .return-login-alert button:nth-child(2) {
-    background-color: #007bff;
+    background-color: #b40000;
     color: #fff;
 }
 
 .return-login-alert button:nth-child(2):hover {
-    background-color: #0057b4;
+    background-color: #ff0000;
     color: #fff;
 }
 
 .return-login-alert button:nth-child(1) {
-    background-color: #b8b8b8;
+    background-color: #e6e6e6;
+    
 }
 
 .return-login-alert button:nth-child(1):hover {
-    background-color: #808080;
+    background-color: #ffffff;
 }
