@@ -19,6 +19,24 @@ const { gravarLog } = require("../database/log");
 
 const numeroRegex = /^[0-9]+$/;
 
+const checkPermission = (requiredPermission) => {
+    return async (req, res, next) => {
+        try {
+            const decode = decodeJWT(req.headers.authorization);
+            const userPermissions = decode.ds_funcao; // Supondo que as permissões do usuário estão no token JWT
+
+            if (!userPermissions.includes(requiredPermission)) {
+                return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
+            }
+
+            next();
+        } catch (error) {
+            console.error("Erro ao verificar permissões:", error);
+            res.status(500).json({ message: "Erro interno do servidor" });
+        }
+    };
+};
+
 router.get("/usuario", auth, async (req,res) => {
     const usuarios = await listarUsuarios()
     res.json({
@@ -61,7 +79,7 @@ router.get("/usuario/:id", auth, async (req,res) => {
 
 router.post("/registro", async (req,res) => {
     try{
-        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
+        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === '' || req.body.ds_funcao === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
         }
 
@@ -135,79 +153,6 @@ router.post("/registro", async (req,res) => {
     }
 })
 
-router.post("/cadastro-usuario", auth, async (req,res) => {
-    try{
-        if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === ''){
-            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
-        }
-
-        const emailUtilizado = await buscarEmail(req.body.ds_email);
-        if(emailUtilizado){
-            return res.status(400).json({error:"E-mail já utilizado!"});
-        }
-
-        const senhaCriptografada = bcrypt.hashSync(req.body.ds_senha,10);
-
-        const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();
-
-        const cpfcnpj = req.body.cd_cpfcnpj
-
-        if(isNaN(cpfcnpj)){
-            return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
-        }
-
-        // if(cpfcnpj.length == 11){
-        //     const cpfValidado = cpf.validate(cpfcnpj);
-
-        //     if(!cpfValidado){
-        //         return res.status(404).json({error:"CPF inválido!"});
-        //     }
-        // }else if(cpfcnpj.length == 14){
-        //     const cnpjValidado = cnpj.validate(cpfcnpj);
-
-        //     if(!cnpjValidado){
-        //         return res.status(404).json({error:"CNPJ inválido!"});
-        //     }
-        // }else{
-        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-        // }
-
-        if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(req.body.nm_usuario)) {
-            return res.status(400).json({ error: "Nome não pode conter números/caracteres especiais!" });
-        }
-
-        const usuario = {
-            cd_cpfcnpj: cpfcnpj,
-            nm_usuario: req.body.nm_usuario,
-            dt_nascimento: dt_nascimentoForm,
-            ds_email: req.body.ds_email,
-            ds_senha: senhaCriptografada,
-            ds_funcao: req.body.ds_funcao
-        }
-        const usuarioSalvo = await gravarUsuario(usuario);
-
-        res.status(201).json({
-            usuario: usuarioSalvo,
-            message: 'Usuário gravado com sucesso!',
-        });
-        const acao = ('Gravação realizada na tabela Usuario');
-        const decode = await decodeJWT(req.headers.authorization);
-        const userLog = decode.id_usuario;
-        const ip = req.ip;
-        await gravarLog(userLog,ip,acao);
-    }catch (error) {
-        console.error("Erro ao alterar curso:", error);
-        if (error instanceof PrismaClientKnownRequestError) {
-            const errorMessage = error.message;
-            const constraintNameMatch = errorMessage.match(/`([^`]+)`$/);
-            const constraintName = constraintNameMatch ? constraintNameMatch[1] : "Unknown Constraint";
-            res.status(500).json({ message: "Server Error", constraintName });
-        } else {
-            res.status(500).json({ message: "Server Error", error });
-        }
-    }
-})
-
 router.post("/login", async (req,res) => {
     try{
         const email = req.body.ds_email;
@@ -222,13 +167,13 @@ router.post("/login", async (req,res) => {
         const token = jwt.sign({
             id_usuario: usuario.id_usuario,
             nm_usuario: usuario.nm_usuario,
+            ds_funcao: usuario.ds_funcao
         }, process.env.SECRET)
 
         res.json({
             sucess: true,
             token,
         });
-
         const acao = ('Login realizado com o e-mail: '+email);
         const userLog = usuario.id_usuario;
         const ip = req.ip;
@@ -240,7 +185,7 @@ router.post("/login", async (req,res) => {
 
 })
 
-router.put("/usuario/:id", auth, async (req,res) => {
+router.put("/usuario/:id", auth, checkPermission('admin'), async (req,res) => {
     try{
         const id = Number(req.params.id);
         if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
@@ -320,7 +265,7 @@ router.put("/usuario/:id", auth, async (req,res) => {
     }
     })
 
-router.delete("/usuario/:id", auth, async (req,res) => {
+router.delete("/usuario/:id", auth , checkPermission('admin'), async (req,res) => {
     try{
         const id = Number(req.params.id);
         if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });

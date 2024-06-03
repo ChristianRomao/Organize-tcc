@@ -98,6 +98,11 @@ const RegisterPage = () => {
     setConfirmaSenhaVisivel(!confirmaSenhaVisivel);
   };
 
+  const handleSetFuncao = (event) => {
+    setError("");
+    setDs_funcao(event.target.value)
+  }
+
   const handleCadastroUsuarioValida = () => {
     let possuiErro = false;
     setError("");
@@ -256,7 +261,7 @@ const RegisterPage = () => {
             >
               Insira sua Senha
             </label>
-            <div className="div-showPassword"> 
+            <div className="div-showPassword">
               <input
                 className="inputs-registro"
                 placeholder={senhaVisivel ? "Exemplo123@" : "********"}
@@ -307,16 +312,19 @@ const RegisterPage = () => {
             >
               Confirme sua Senha
             </label>
-            <div className="div-showPassword"> 
-            <input
-              className="inputs-registro"
-              placeholder={confirmaSenhaVisivel ? "Exemplo123@" : "********"}
-              type={confirmaSenhaVisivel ? "text" : "password"}
-              name="ds_senhaConfirm"
-              onChange={handleChange}
-              value={ds_senhaConfirm}
-            />
-              <span className="icon-eye-registro" onClick={mostrarConfirmaSenha}>
+            <div className="div-showPassword">
+              <input
+                className="inputs-registro"
+                placeholder={confirmaSenhaVisivel ? "Exemplo123@" : "********"}
+                type={confirmaSenhaVisivel ? "text" : "password"}
+                name="ds_senhaConfirm"
+                onChange={handleChange}
+                value={ds_senhaConfirm}
+              />
+              <span
+                className="icon-eye-registro"
+                onClick={mostrarConfirmaSenha}
+              >
                 {confirmaSenhaVisivel ? (
                   <svg
                     width="22"
@@ -347,8 +355,8 @@ const RegisterPage = () => {
                   </svg>
                 )}
               </span>
-              </div>
-            <label
+            </div>
+            {/* <label
               className={
                 error && !ds_funcao ? "titulo-inputs-error" : "titulo-inputs"
               }
@@ -362,8 +370,31 @@ const RegisterPage = () => {
               name="ds_funcao"
               onChange={handleChange}
               value={ds_funcao}
-            />
-            <div>
+            />*/}
+              <div>
+                <label
+                  className={
+                    error && !ds_funcao
+                      ? "titulo-inputs-error"
+                      : "titulo-inputs"
+                  }
+                >
+                  Selecione a Função
+                </label>
+                <select
+                  className="inputs-registro"
+                  name="ds_funcao"
+                  id=""
+                  value={ds_funcao}
+                  onChange={handleSetFuncao}
+                  required
+                >
+                  <option value="">Função</option>
+                  <option value="admin">Adminstrador</option>
+                  <option value="user">Usuário</option>
+                  
+                </select>
+              </div>
               <text
                 className={
                   error || errorEmail
@@ -375,7 +406,6 @@ const RegisterPage = () => {
               >
                 {"" || error || errorEmail || success}
               </text>
-            </div>
 
             <div>
               <button

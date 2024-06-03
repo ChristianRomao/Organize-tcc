@@ -168,7 +168,7 @@ model Usuario {
   dt_nascimento DateTime @db.Date()
   ds_email      String   @unique
   ds_senha      String
-  ds_funcao     String?
+  ds_funcao     String
   logs Log[]
   reservas Reserva[]
 }
