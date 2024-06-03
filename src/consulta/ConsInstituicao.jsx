@@ -1,6 +1,6 @@
 import { faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
 import LayoutConsulta from "../components/LayoutConsulta";
-import '../css/ConsInstituicao.css';
+import '../consCss/ConsInstituicao.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ConsInstituicao = () => {

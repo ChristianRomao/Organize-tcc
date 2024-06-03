@@ -1,5 +1,5 @@
 import Layout from "../components/Layout";
-import "../css/ConsReserva.css";
+import "../consCss/ConsReserva.css";
 
 const ConsReserva = () => {
     return (
