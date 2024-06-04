@@ -1,5 +1,4 @@
-
-###Sistema de Gestão de Ensalação e Infraestrutura
+<h1>Sistema de Gestão de Ensalação e Infraestrutura</h1>
 
 Este repositório contém o código fonte e a documentação do Sistema de Gestão de Ensalação e Infraestrutura desenvolvido para uma universidade.
 
