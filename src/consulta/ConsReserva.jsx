@@ -84,8 +84,8 @@ useEffect(() => {
                                 <td className="colunas-body"><button className="button-coluna-body">{reserva.sala.nm_sala}</button></td>
                                 <td className="colunas-body"><button className="button-coluna-body">{reserva.usuario.nm_usuario}</button></td>
                                 <td className="colunas-body"><button className="button-coluna-body">{reserva.grade.turma.ds_turma}</button></td>
-                                <td className="colunas-body">{new Date(reserva.dt_inicio).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'})}</td>
-                                <td className="colunas-body">{new Date(reserva.dt_fim).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'})}</td>
+                                <td className="colunas-body">{new Date(reserva.dt_inicio).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className="colunas-body">{new Date(reserva.dt_fim).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                 <td className="colunas-body">{reserva.status.ds_status}</td>
                                 <td className="colunas-body">{reserva.ds_observacao}</td>
                                 <td className="colunas-body" style={{background: "#003d99"}}><button className="btn-editar">Editar</button></td>
