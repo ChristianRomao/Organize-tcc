@@ -119,6 +119,13 @@
     padding: 6px;
 }
 
+.button-coluna-body{
+    background-color: #aeceff;
+}
+.button-coluna-body:hover{
+    cursor: pointer;
+}
+
 .btn-editar {
     background-color: rgb(255, 187, 0);
     cursor: pointer;
