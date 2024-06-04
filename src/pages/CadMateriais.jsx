@@ -157,9 +157,9 @@ const handleConfirmAlert = (confirm) => {
             <button className="vaiConsulta">
               <p
                 style={{ color: "#d6e7ff", margin: "0em 1em" }}
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/cadastro-curso-turma")}
               >
-                Ir para Consulta
+                Próximo
               </p>
             </button>
           </div>

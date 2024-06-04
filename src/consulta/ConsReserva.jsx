@@ -1,7 +1,40 @@
+import axios from "axios";
 import Layout from "../components/Layout";
 import "../consCss/ConsReserva.css";
+import { useAuth } from "../AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 
 const ConsReserva = () => {
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+
+    const [reservas, setReservas] = useState([]);
+
+const consultaReserva = useCallback(async () =>{
+    try{
+        const response = await axios.get("http://localhost:8080/reserva", {
+            headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data.reservas;
+        setReservas(data);
+    }catch(error){
+        console.error(error)
+    }
+}, [token]);
+
+useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login");
+    } else {
+      consultaReserva();
+    }
+  }, [isAuthenticated, navigate, consultaReserva]);
+
+
     return (
        <Layout title='Consulta da Reserva' noicon>
         <div className="ajustes-consulta-reserva">
@@ -45,17 +78,19 @@ const ConsReserva = () => {
                             </tr>
                         </thead>
                         <tbody className="contudo-tabela">
-                            <tr>
-                                <td className="colunas-body">Reserva</td>
-                                <td className="colunas-body">Sala</td>
-                                <td className="colunas-body">Usuário</td>
-                                <td className="colunas-body">Turma</td>
-                                <td className="colunas-body">Data I</td>
-                                <td className="colunas-body">Data F</td>
-                                <td className="colunas-body">Status</td>
-                                <td className="colunas-body">Observação</td>
+                            {reservas.map((reserva) => (
+                                <tr key={reserva.id_reserva}>
+                                <td className="colunas-body">{reserva.id_reserva}</td>
+                                <td className="colunas-body"><button className="button-coluna-body">{reserva.sala.nm_sala}</button></td>
+                                <td className="colunas-body"><button className="button-coluna-body">{reserva.usuario.nm_usuario}</button></td>
+                                <td className="colunas-body"><button className="button-coluna-body">{reserva.grade.turma.ds_turma}</button></td>
+                                <td className="colunas-body">{new Date(reserva.dt_inicio).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'})}</td>
+                                <td className="colunas-body">{new Date(reserva.dt_fim).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'})}</td>
+                                <td className="colunas-body">{reserva.status.ds_status}</td>
+                                <td className="colunas-body">{reserva.ds_observacao}</td>
                                 <td className="colunas-body" style={{background: "#003d99"}}><button className="btn-editar">Editar</button></td>
                             </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

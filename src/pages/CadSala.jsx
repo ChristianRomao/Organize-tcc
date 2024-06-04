@@ -90,7 +90,7 @@ const CadSala = () => {
   const handleMouseEnter = () => {
     hoverTimeout.current = setTimeout(() => {
       setShowToolTip(true);
-    }, 1000);
+    }, 500);
   };
 
   const handleMouseLeave = () => {
@@ -288,7 +288,7 @@ const CadSala = () => {
 
   return (
     <div>
-    <Layout title="Cadastro de Sala" icon={faDoorOpen} next="">
+    <Layout title="Cadastro de Sala" icon={faDoorOpen} next="materiais">
       <form className="ajustes-sala">
         <div>
           <label className={errorSala && !selectBloco ? "titulo-inputs-sala-error" : "titulo-inputs-sala"}>Bloco - Polo</label>
