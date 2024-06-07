@@ -4,6 +4,8 @@ import "../consCss/ConsReserva.css";
 import { useAuth } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
+import { faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ConsReserva = () => {
     const { isAuthenticated } = useAuth();
@@ -11,6 +13,10 @@ const ConsReserva = () => {
     const token = localStorage.getItem("token");
 
     const [reservas, setReservas] = useState([]);
+
+    const [tp_filtro, setTp_filtro] = useState("");
+    const [dt_filtro, setDt_filtro] = useState("");
+    const [ds_filtro, setDs_filtro] = useState("");
 
 const consultaReserva = useCallback(async () =>{
     try{
@@ -21,19 +27,42 @@ const consultaReserva = useCallback(async () =>{
         });
         const data = response.data.reservas;
         setReservas(data);
-    }catch(error){
-        console.error(error)
-    }
-}, [token]);
+        }catch(error){
+            console.error(error)
+        }
+    }, [token]);
 
-useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate("/login");
-    } else {
-      consultaReserva();
-    }
-  }, [isAuthenticated, navigate, consultaReserva]);
+    useEffect(() => {
+        if (!isAuthenticated()) {
+        navigate("/login");
+        } else {
+        consultaReserva();
+        }
+    }, [isAuthenticated, navigate, consultaReserva]);
 
+    const handleSetTipoFiltro = (event) =>{
+        setTp_filtro(event.target.value)
+    }
+
+    const handleClearFiltro = () => {
+        setTp_filtro("");
+        setDt_filtro("");
+        setDs_filtro("");
+    }
+
+    const handleChange = (event) =>{
+        const {name,value} = event.target
+        switch(name){
+            case "dt_filtro":
+                setDt_filtro(value);
+                break;
+            case "ds_filtro":
+                setDs_filtro(value);
+                break;
+            default:
+                break;
+        }
+    }
 
     return (
        <Layout title='Consulta da Reserva' noicon>
@@ -43,25 +72,39 @@ useEffect(() => {
                     <select 
                         className="select-consulta-reserva" 
                         name="Tipo Filtro" 
-                        id=""
+                        value={tp_filtro}
+                        onChange={handleSetTipoFiltro}
+                        id="tp_filtro"
                     >
-                        <option value="Tipos" disabled selected hidden>Selecione o tipo</option>
-                        <option value="Tipos" >AAA</option>
+                        <option value="Tipos" selected hidden>Selecione o tipo</option>
+                        <option value="tp_idReserva" >Nr Reserva</option>
+                        <option value="tp_nmSala" >Sala</option>
+                        <option value="tp_nmUsuario" >Usuário</option>
+                        <option value="tp_dsCurso" >Curso</option>
+                        <option value="tp_dtReserva" >Data</option>
+                        <option value="tp_stReserva" >Status</option>
                     </select>
                     <input 
+                        disabled={!tp_filtro || tp_filtro !== 'tp_dtReserva'}
                         className="inputs-data-reserva"
                         type="date"     
-                        name="Data Reserva"     
+                        name="dt_filtro"     
                         id=""
+                        value={dt_filtro}
+                        onChange={handleChange}
                     />
                     <input 
+                        disabled={!tp_filtro || tp_filtro === 'tp_dtReserva'}
                         className="inputs-consulta-reserva"
                         type="search" 
-                        name="" 
+                        name="ds_filtro" 
                         placeholder="Pesquise de acordo com o tipo"
+                        value={ds_filtro}
+                        onChange={handleChange}
                         id="" 
                     />
-                    <button className="botao-consulta-reserva" type="button">Pesquisar</button>
+                    <button disabled={!tp_filtro} className={`botao-consulta-reserva ${!tp_filtro ? 'disabled-hover' : ''}`} type="button">Pesquisar</button>
+                    <button className="botao-limpa-filtro" type="button" onClick={handleClearFiltro}><FontAwesomeIcon icon={faX} /></button>
                 </div>
                 <div className="tabela">
                     <table>
@@ -70,7 +113,7 @@ useEffect(() => {
                                 <th className="colunas-cabecalho">Nr Reserva</th>
                                 <th className="colunas-cabecalho">Sala</th>
                                 <th className="colunas-cabecalho">Usuário</th>
-                                <th className="colunas-cabecalho">Turma</th>
+                                <th className="colunas-cabecalho">Turma - Curso</th>
                                 <th className="colunas-cabecalho">Início</th>
                                 <th className="colunas-cabecalho">Fim</th>
                                 <th className="colunas-cabecalho">Status</th>
@@ -83,7 +126,7 @@ useEffect(() => {
                                 <td className="colunas-body">{reserva.id_reserva}</td>
                                 <td className="colunas-body"><button className="button-coluna-body">{reserva.sala.nm_sala}</button></td>
                                 <td className="colunas-body"><button className="button-coluna-body">{reserva.usuario.nm_usuario}</button></td>
-                                <td className="colunas-body"><button className="button-coluna-body">{reserva.grade.turma.ds_turma}</button></td>
+                                <td className="colunas-body"><button className="button-coluna-body">{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</button></td>
                                 <td className="colunas-body">{new Date(reserva.dt_inicio).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                 <td className="colunas-body">{new Date(reserva.dt_fim).toLocaleString('default', { dateStyle: 'short', timeStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                 <td className="colunas-body">{reserva.status.ds_status}</td>
