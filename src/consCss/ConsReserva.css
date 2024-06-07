@@ -58,6 +58,11 @@
     color: black;
     font-weight: 600;
 }
+.inputs-data-reserva:disabled{
+    color: #000000;
+    background-color: rgb(92, 92, 92);
+    font-weight: 600;
+}
 
 .inputs-consulta-reserva {
     background-color: #d6e7ff;
@@ -69,6 +74,11 @@
 }
 .inputs-consulta-reserva::placeholder {
     color: black;
+    font-weight: 600;
+}
+.inputs-consulta-reserva:disabled {
+    color: black;
+    background-color: rgb(92, 92, 92);
     font-weight: 600;
 }
 
@@ -87,6 +97,26 @@
     transition: 0.2s;
     background-color: #001636;
     color: #95bfff;
+}
+.botao-consulta-reserva.disabled-hover {
+    pointer-events: none;
+}
+
+.botao-limpa-filtro {
+    font-size: large;
+    background-color: #ff9595;
+    color: #990000;
+    border-radius: 10px;
+    width: 7em;
+    margin: 0px 0px 0px 18px;
+    transition: 0.2s;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.botao-limpa-filtro:hover {
+    transition: 0.2s;
+    background-color: #990000;
+    color: #ff9595;
 }
 
 .tabela {

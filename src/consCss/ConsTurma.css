@@ -1,0 +1,42 @@
+.informacoes-cursoturma {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    margin-top: 2em;
+    margin-inline: 12em;
+    border-radius: 20PX;
+    background-color: #7eb4ff;
+    box-shadow: 0px 0px 20px #000000;
+}
+
+.consulta-cursoturma {
+    flex-direction: row;
+    border-radius: 12px;
+    color: white;
+    background-color: #09264e;
+    margin-inline: 50px;
+    padding: 14px;
+}
+
+.botao-consulta-cursos {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.botao-aparece-cursos {
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: center;
+    background-color: #c56900;
+    color: white;
+    box-shadow: 0px 0px 20px #000000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}.botao-aparece-cursos:hover {
+    background-color: #ffc17b;
+    color: #000000;
+}
