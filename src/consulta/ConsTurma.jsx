@@ -13,11 +13,15 @@ const ConsTurma = () => {
                 <FontAwesomeIcon icon={faGraduationCap} size="3x" style={{color: "#001636"}}/>
                 <div className="consulta-cursoturma">
                     <h4>Curso:</h4>
-                    <p>TADS</p>
+                    <p>Direito</p>
+                </div>
+                <div className="consulta-cursoturma">
+                    <h4>Disciplina:</h4>
+                    <p>Direito Penal</p>
                 </div>
                 <div className="consulta-cursoturma">
                     <h4>Turma:</h4>
-                    <p>1º Periodo</p>
+                    <p>Turma 1 - 1º Periodo</p>
                 </div>
                 <div className="consulta-cursoturma">
                     <h4>Ano Letivo:</h4>
