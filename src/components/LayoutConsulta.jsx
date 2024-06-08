@@ -1,10 +1,13 @@
 import HeaderComponents from "./HeaderComponents";
 import '../css/LayoutConsulta.css';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
     
-    const navigate = useNavigate()
+    const location = useLocation();
+    const isGradePage = location.pathname === '/consulta-grade';
+
+    const navigate = useNavigate();
     
     return (
         <div>
@@ -49,7 +52,7 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                             Pesquisar
                         </button>
                     </div>
-                    <div className='area-consulta'>
+                    <div className={`area-consulta ${isGradePage ? 'grade-area-consulta' : ''}`}>
                         {children}
                     </div>
                 </div>

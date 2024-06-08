@@ -5,7 +5,7 @@ import '../consCss/ConsPolo.css';
 
 const ConsPolo = () => {
     return (
-        <LayoutConsulta titleCons='Consulta Polo'>
+        <LayoutConsulta titleCons='Consulta Polos'>
             <div className="informacoes-polo">
                 <FontAwesomeIcon icon={faLocationDot} size="3x" style={{color: "#001636"}}/>
                 <div className="consulta-polo">
