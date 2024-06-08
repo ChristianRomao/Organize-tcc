@@ -108,3 +108,13 @@
     box-shadow: 0px 0px 20px #006aff;
 }
 
+.grade-area-consulta {
+    background-color: #003175;
+    width: 90%;
+    margin-top: 40px;
+    border-radius: 20px;
+    height: 72vh;
+    gap: 18px;
+    box-shadow: 0px 0px 20px #006aff;
+}
+
