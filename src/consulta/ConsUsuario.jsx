@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const ConsUsuario = () => {
 
@@ -13,6 +14,7 @@ const ConsUsuario = () => {
     const { isAuthenticated } = useAuth();
     const token = localStorage.getItem("token");
     const [usuarios, setUsuarios] = useState([]);
+    const [idUserDecode, setIdUserDecode] = useState("");
 
     const consultaUsuarios = useCallback(async () => {
         try {
@@ -38,8 +40,12 @@ const ConsUsuario = () => {
             navigate("/login");
         } else {
             consultaUsuarios();
+            if(token){
+                const decode = jwtDecode(token);
+                setIdUserDecode(decode.id_usuario);
+            }
         }
-      }, [isAuthenticated, navigate, consultaUsuarios]);
+      }, [isAuthenticated, navigate, consultaUsuarios, token]);
 
     return (
         <LayoutConsulta titleCons='Consulta Usuários'>
@@ -59,7 +65,7 @@ const ConsUsuario = () => {
                         <p>{usuario.ds_funcao === 'admin' ? 'Administrador' : 'Usuário'}</p>
                     </div>
                     <div className="consulta-usuario">
-                        <FontAwesomeIcon icon={faSignal} size="2x"/>
+                        <FontAwesomeIcon icon={faSignal} size="2x" style={idUserDecode === usuario.id_usuario ? {color:"#0f0"}:""}/>
                     </div>
                 </div>
 
