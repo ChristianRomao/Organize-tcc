@@ -73,8 +73,8 @@
 .area-cadastro {
     background-color: #00183a;
     text-align: center;
-    width: 60%;
-    height: 74vh;
+    width: 70%;
+    height: 76vh;
     border-radius: 20px;
     display: flex;
     grid-template-columns: auto 1fr;

@@ -1,30 +1,40 @@
-:root {
-    --cor-fundo: #C6D7EE;
-}
 
 .body {
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
-    background-color: var(--cor-fundo);
+    background-color: #00183a;
+}
+
+.ponte {
+    display: flex;
+    flex-direction: row;
+    background-color: aliceblue;
+    border-radius: 20px;
+    align-items: center;
+    padding-inline: 50px;
+    height: 70vh;
 }
   
 .container-left {
-    width: 680px;
-    clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 100% 100%, 0% 100%);
-    background: linear-gradient(-10deg, #173154 46.28%, #004E8F 46.92%);
-    padding: 20px;
+    width: 500px;
+    height: 76vh;
+    border-radius: 20px;
+    margin-right: 160px;
+    background: #00398a;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-right: 120px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 30px;
 }
 
 .container-icon{
     position: fixed;
-    margin: 140px 80px 514px 80px;
+    margin: 140px 80px 460px 80px;
+    filter: drop-shadow(0px 0px 10px);
 }
 
 .error-login{
@@ -39,7 +49,7 @@
     flex-direction: column;
     align-items: center;
     gap: 18px;
-    margin-top: 240px;
+    margin-top: 280px;
 }
 
 .input-container {
@@ -48,7 +58,7 @@
   
 .icon-eye {
     position: absolute;
-    top: 50%;
+    top: 56%;
     right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
@@ -80,6 +90,7 @@
 .loginBT {
     background-color: #007CE3;
     color: white;
+    font-weight: 700;
     margin-top: 60px;
     margin-right: 20px;
     padding: 0.8rem 3rem 0.8rem 3rem;
@@ -95,6 +106,7 @@
 .registerBT {
     padding: 0.8rem 2.5rem 0.8rem 2.5rem;
     background-color: white;
+    font-weight: 700;
     border-radius: 20px;
     transition: 0.2s;
     cursor: pointer;
@@ -117,42 +129,42 @@
 }
 
 .container-right {
-    background-color: #0E1826;
-    margin-top: 108px;
-    margin-left: 190px;
-    width: 40vw;
+    background-color: #00398a;
+    width: 42vw;
     height: 76vh;
-    transform: rotate(-11deg);
     border-radius: 20px;
     box-shadow: 0px 0px 30px;
     flex-direction: row;
 }
 
 .logo-branca {
+    display: flex;
     width: 380px;
     margin: auto;
-    margin-left: 158px;
     align-items: center;
-    transform: rotate(10deg); 
+    justify-content: center;
+    filter: drop-shadow(0px 0px 20px);
 }
 
 
 .sobre {
     display: inline-block;
     text-align: justify;
+    align-items: center;
+    font-size:large;
     padding: 100px;
     color: white;
-    margin-bottom: -120px;
-    transform: rotate(10deg);
+    margin-bottom: -100px;
 }
 
 .titulo-sobre {
     text-align: center;
     margin-bottom: 30px;
+    margin-top: -40px;
     font-weight: bold;
     font-size: x-large;
 }
 
 .content-sobre {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
