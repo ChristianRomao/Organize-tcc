@@ -1,11 +1,8 @@
-:root {
-    --cor-fundo: #C6D7EE;
-}
 
 .body-home {
     width: 100%;
     height: 93.2vh;
-    background-color: var(--cor-fundo);
+    background-color: #C6D7EE;
     position: fixed;
     z-index: -1;
 }
