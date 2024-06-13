@@ -1,6 +1,11 @@
+:root{
+    --var-color-conteudo-consulta: #aeceff;
+}
+
 .ajustes-consulta-reserva {
     width: 100%;
-    margin-top: 80px;
+    height: 100%;
+    margin-top: 15rem;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -20,7 +25,7 @@
 .conteudo-consulta-reserva {
     display: flex;
     flex-direction: column;
-    margin-top: -18em;
+    margin-top: -10em;
     margin-inline: 10em;
 }
 
@@ -28,6 +33,7 @@
     display: flex;
     background-color: #003681;
     border-radius: 20px;
+    margin-top: 35px;
     padding: 10px 10px 9.4px 10px;
 }
 
@@ -122,11 +128,48 @@
 .tabela {
     background-color: #003d99;
     border-radius: 10px;
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
     display: flex;
+    /* width: 1024px; */
     flex-direction: column;
     margin-inline: -6em;
-    margin-top: 32px;
+    margin-top: 25px;
+    max-height: 450px;
+    overflow-y: auto;
+}
+.tabela thead{
+    /* position: fixed;
+    background-color: #003d99;
+    border-radius: 10px;
+    padding: 10px;
+    width: 920px; */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* margin-inline: -6em; */
+    /* margin-top: 25px; */
+    /* max-height: 450px;
+    overflow-y: auto; */
+}
+
+
+.tabela::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 8px;
+    right: 10px;
+}
+
+.tabela::-webkit-scrollbar-track {
+    background: #003d99;
+    border-radius: 10px;
+}
+
+.tabela::-webkit-scrollbar-thumb {
+    background: #89baff;
+    border-radius: 10px;
+}
+
+.tabela::-webkit-scrollbar-thumb:hover {
+    background: #4b4b4b;
 }
 
 .cabecalho {
@@ -140,13 +183,29 @@
     padding: 4px;
 }
 
-.contudo-tabela {
-    background-color: #aeceff;
+.conteudo-tabela {
+    /* background-color: #aeceff; */
 }
 
 .colunas-body {
     border-radius: 10px 10px 0px 0px;
     padding: 6px;
+    background-color: #aeceff;
+}
+.colunas-body-button {
+    border-radius: 10px 10px 0px 0px;
+    padding: 6px;
+    /* background-color: #003d99; */
+}
+
+.colunas-body-selection{
+    border-radius: 10px 10px 0px 0px;
+    padding: 6px;
+    background-color: #4dff6a;
+}
+
+.input-selection{
+    background-color: #4dff6a;
 }
 
 .button-coluna-body{
@@ -156,15 +215,128 @@
     cursor: pointer;
 }
 
-.btn-editar {
-    background-color: rgb(255, 187, 0);
+.button-coluna-body-selection{
+    background-color: #4dff6a;
+}
+.button-coluna-body-selection:hover{
+    cursor: pointer;
+}
+
+.btn-editar{
+    background-color: #ffbb00;
     cursor: pointer;
     border-radius: 10px;
+    width: 30px;
     font-weight: 600;
     font-size: medium;
     padding: 6px;
-    transition: 0.5s;
+    transition: 0.2s;
 }.btn-editar:hover {
-    transition: 0.5s;
     background-color: rgb(228, 156, 0);
+    color: #adffad;
+}
+
+.btn-salvar{
+    background-color: rgb(0, 255, 0);
+    cursor: pointer;
+    border-radius: 10px;
+    width: 30px;
+    font-weight: 600;
+    font-size: medium;
+    padding: 6px;
+    transition: 0.2s;
+}.btn-salvar:hover {
+    background-color: rgb(0, 180, 0);
+    color: #adffad;
+}
+
+.btn-cancelar-edicao{
+    background-color: rgb(255, 33, 33);
+    cursor: pointer;
+    border-radius: 10px;
+    width: 30px;
+    font-weight: 600;
+    font-size: medium;
+    padding: 6px;
+    transition: 0.2s;
+    margin-right: 5px;
+}.btn-cancelar-edicao:hover {
+    background-color: rgb(180, 0, 0);
+    color: #ffc1c1;
+}
+.btn-remover{
+    background-color: rgb(255, 33, 33);
+    cursor: pointer;
+    border-radius: 10px;
+    width: 30px;
+    font-weight: 600;
+    font-size: medium;
+    padding: 6px;
+    transition: 0.2s;
+    margin-left: 5px;
+}.btn-remover:hover {
+    background-color: rgb(180, 0, 0);
+    color: #ffc1c1;
+}
+
+.delete {
+    width: 300px;
+    background: #e26868;
+    border-radius: 25px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #ff0000;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.delete-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-body {
+    text-align: center;
+}
+
+.delete-button-group {
+    margin-top: 20px;
+}
+
+.delete button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete button:nth-child(2) {
+    background-color: #b30000;
+    color: #fff;
+}
+
+.delete button:nth-child(2):hover {
+    background-color: #b30000c4;
+    color: #fff;
+}
+
+.delete button:nth-child(1) {
+    background-color: #e6e6e6;
+}
+
+.delete button:nth-child(1):hover {
+    background-color: #ffffff;
+}
+
+.buttons-actions {
+    display: flex;
+    flex-direction: row;
 }

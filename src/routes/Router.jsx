@@ -18,8 +18,9 @@ import ConsPolo from "../consulta/ConsPolo";
 import ConsBloco from "../consulta/ConsBloco";
 import ConsSala from "../consulta/ConsSala";
 import ConsMateriais from "../consulta/ConsMateriais";
-import ConsCursoTurma from "../consulta/ConsTurma";
 import ConsTurma from "../consulta/ConsTurma";
+import ConsGrade from "../consulta/ConsGrade";
+import ConsUsuario from "../consulta/ConsUsuario";
 
 const Router = () => {
     return (
@@ -110,6 +111,14 @@ const Router = () => {
                 <Route
                     path={"/consulta-turma"}
                     element={<ConsTurma/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-usuario"}
+                    element={<ConsUsuario/>}>    
+                </Route>
+                <Route
+                    path={"/consulta-grade"}
+                    element={<ConsGrade/>}>    
                 </Route>
             </Routes>
         </BrowserRouter>

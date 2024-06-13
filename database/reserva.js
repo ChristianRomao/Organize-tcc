@@ -146,10 +146,10 @@ const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
       OR: [
         {
           dt_inicio: {
-            lte: dt_inicio, 
+            lte: dt_fim, 
           },
           dt_fim: {
-            gte: dt_fim, 
+            gte: dt_inicio, 
           },
         },
       ],

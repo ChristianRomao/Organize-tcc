@@ -5,7 +5,6 @@ import '../css/Header.css';
 import { useState } from 'react';
 import { useAuth } from '../AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
-import LayoutConsulta from './LayoutConsulta';
 
 const HeaderComponents = () => {
 

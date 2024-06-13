@@ -106,13 +106,6 @@ const CadBlocos = () => {
               onChange={handleChange}
               required
             />
-            <button
-              className="adiciona-polo"
-              type="button"
-              onClick={handleCadastroBloco}
-            >
-              Adicionar
-            </button>
           </div>
         </div>
         <button

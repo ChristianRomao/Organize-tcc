@@ -47,6 +47,7 @@ const HomePage = () => {
     const handleReserva = (acao) => {
         navigate(`/${acao}-reserva`)
     }
+
     return (
         <div>
             <HeaderComponents/>
@@ -76,15 +77,14 @@ const HomePage = () => {
                             <FontAwesomeIcon icon={faMagnifyingGlass} size='3x'/>
                             <p className='titulos-home'>Consulta</p>
                             <div className='btn-gerais scrollable'>
-                                <button className='btn' type="button" onClick={() => handleConsulta('instituicao')}>Instituição</button>
+                                {/* <button className='btn' type="button" onClick={() => handleConsulta('instituicao')}>Instituição</button> */}
                                 <button className='btn' type="button" onClick={() => handleConsulta('polo')}>Polo</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('bloco')}>Bloco</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('sala')}>Sala</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('material')}>Materiais</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta()}>Usuários</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('usuario')}>Usuários</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('turma')}>Turma</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Disciplina</button>
-                                <button className='btn' type="button" onClick={() => handleConsulta('')}>Grade</button>
+                                <button className='btn' type="button" onClick={() => handleConsulta('grade')}>Grade</button>
                             </div>
                         </div>
                     </div>
