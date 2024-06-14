@@ -11,7 +11,7 @@
 .ponte {
     display: flex;
     flex-direction: row;
-    background-color: aliceblue;
+    background-color: #C6D7EE;
     border-radius: 20px;
     align-items: center;
     padding-inline: 50px;
