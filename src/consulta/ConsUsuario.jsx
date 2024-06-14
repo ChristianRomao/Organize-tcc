@@ -68,7 +68,7 @@ const ConsUsuario = () => {
                     <div className="icon-conectado">
                         <FontAwesomeIcon icon={faSignal} size="2x"/>
 =======
-                    <div className="consulta-usuario">
+                    <div className="icon-conectado">
                         <FontAwesomeIcon icon={faSignal} size="2x" style={idUserDecode === usuario.id_usuario ? {color:"#0f0"}:""}/>
 >>>>>>> master
                     </div>
