@@ -64,13 +64,8 @@ const ConsUsuario = () => {
                         <h4>Função:</h4>
                         <p className="ajuste-textos">{usuario.ds_funcao === 'admin' ? 'Administrador' : 'Usuário'}</p>
                     </div>
-<<<<<<< feat/Mudanças-gerais
-                    <div className="icon-conectado">
-                        <FontAwesomeIcon icon={faSignal} size="2x"/>
-=======
                     <div className="icon-conectado">
                         <FontAwesomeIcon icon={faSignal} size="2x" style={idUserDecode === usuario.id_usuario ? {color:"#0f0"}:""}/>
->>>>>>> master
                     </div>
                 </div>
             ))}
