@@ -54,21 +54,25 @@ const ConsUsuario = () => {
                     <FontAwesomeIcon icon={faUser} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-usuario">
                         <h4>Usuário:</h4>
-                        <p>{usuario.nm_usuario}</p>
+                        <p className="ajuste-textos">{usuario.nm_usuario}</p>
                     </div>
                     <div className="consulta-usuario">
                         <h4>Email:</h4>
-                        <p>{usuario.ds_email}</p>
+                        <p className="ajuste-textos">{usuario.ds_email}</p>
                     </div>
                     <div className="consulta-usuario">
                         <h4>Função:</h4>
-                        <p>{usuario.ds_funcao === 'admin' ? 'Administrador' : 'Usuário'}</p>
+                        <p className="ajuste-textos">{usuario.ds_funcao === 'admin' ? 'Administrador' : 'Usuário'}</p>
                     </div>
+<<<<<<< feat/Mudanças-gerais
+                    <div className="icon-conectado">
+                        <FontAwesomeIcon icon={faSignal} size="2x"/>
+=======
                     <div className="consulta-usuario">
                         <FontAwesomeIcon icon={faSignal} size="2x" style={idUserDecode === usuario.id_usuario ? {color:"#0f0"}:""}/>
+>>>>>>> master
                     </div>
                 </div>
-
             ))}
         </LayoutConsulta>
     );

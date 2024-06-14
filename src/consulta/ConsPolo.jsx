@@ -48,19 +48,19 @@ const ConsPolo = () => {
                 <FontAwesomeIcon icon={faLocationDot} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-polo">
                         <h4>Instituição:</h4>
-                        <p>{polo.instituicao.nm_fantasia}</p>
+                        <p className="ajuste-textos">{polo.instituicao.nm_fantasia}</p>
                     </div>
                     <div className="consulta-polo">
                         <h4>Municipio:</h4>
-                        <p>{polo.municipio.nm_municipio} - {polo.municipio.estado_cd}</p>
+                        <p className="ajuste-textos">{polo.municipio.nm_municipio} - {polo.municipio.estado_cd}</p>
                     </div>
                     <div className="consulta-polo">
                         <h4>Polo:</h4>
-                        <p>{polo.nm_polo}</p>
+                        <p className="ajuste-textos">{polo.nm_polo}</p>
                     </div>
                     <div className="consulta-polo">
                         <h4>Endereço:</h4>
-                        <p>{polo.ds_endereco}</p>
+                        <p className="ajuste-textos">{polo.ds_endereco}</p>
                     </div>
                 </div>
             ))}

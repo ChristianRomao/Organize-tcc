@@ -9,3 +9,35 @@
 button {
   border: none;
 }
+
+.ajuste-textos {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+}
+
+.ajuste-textos::after {
+  content: attr(data-tooltip); /* Exibe o texto completo */
+  position: absolute; /* Posiciona o tooltip */
+  left: 50%; /* Centraliza o tooltip horizontalmente */
+  bottom: 100%; /* Posiciona o tooltip acima do elemento */
+  transform: translateX(-50%); /* Ajusta a posição horizontal do tooltip */
+  background-color: #333; /* Cor de fundo do tooltip */
+  color: #fff; /* Cor do texto do tooltip */
+  padding: 5px; /* Espaçamento interno do tooltip */
+  border-radius: 4px; /* Bordas arredondadas */
+  white-space: normal; /* Permite quebra de linha no tooltip */
+  z-index: 1000; /* Garante que o tooltip fique acima de outros elementos */
+  opacity: 0; /* Inicialmente invisível */
+  visibility: hidden; /* Inicialmente invisível */
+  transition: opacity 0.2s; /* Animação suave para a aparição do tooltip */
+  pointer-events: none; /* Faz com que o tooltip não interfira na interação do mouse */
+}
+
+.ajuste-textos:hover::after {
+  opacity: 1; /* Visível ao passar o mouse */
+  visibility: visible; /* Visível ao passar o mouse */
+}
