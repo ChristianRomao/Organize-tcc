@@ -17,7 +17,14 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                     <div>
                         <text className='titulo-consulta'>{titleCons}</text>
                     </div>
-                    <div className="grid-consulta">
+                    <button     
+                            className='volta-consulta'  
+                            style={{color: "#d6e7ff"}} 
+                            onClick={()=>navigate(-1)}
+                        >
+                        Voltar
+                    </button>
+                    {/* <div className="grid-consulta">
                         <div>
                             <button     
                                 className='volta-consulta'  
@@ -35,7 +42,7 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                             <option value="Tipos" disabled selected hidden>Tipo</option>
                             {/* {tipoOptions.map((option, index) => (
                                 <option key={index} value={option}>{option}</option> 
-                            ))}    ===Aqui foi o gpt que deu um exemplo de se usar, se tu achar alguma outra solução ta dale===  */}
+                            ))}    ===Aqui foi o gpt que deu um exemplo de se usar, se tu achar alguma outra solução ta dale===
                         </select>
                         <input 
                             className="inputs-consulta"
@@ -51,7 +58,7 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
                         >
                             Pesquisar
                         </button>
-                    </div>
+                    </div> */}
                     <div className={`area-consulta ${isGradePage ? 'grade-area-consulta' : ''}`}>
                         {children}
                     </div>

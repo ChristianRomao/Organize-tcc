@@ -39,8 +39,12 @@ const HeaderComponents = () => {
                 alt="Logo branca Organize"
                 onClick={handleLogoOrganizze}
             />
-            {!isLayoutConsulta && (
+            {!isLayoutConsulta ? (
                 <button className="menu-button" onClick={toggleMenu}>
+                    <FontAwesomeIcon icon={faRightFromBracket} size='2x'/>
+                </button>
+            ):(
+                <button className="menu-button" onClick={handleLogOut}>
                     <FontAwesomeIcon icon={faRightFromBracket} size='2x'/>
                 </button>
             )}
