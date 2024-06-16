@@ -42,14 +42,14 @@ const ConsGrade = () => {
       }, [isAuthenticated, navigate, consultaGrade]);
 
     return (
-        <LayoutConsulta titleCons='Consulta Grade'>
+        <LayoutConsulta titleCons='Consulta Turmas'>
             {grades.map((grade) => (
                 <div className="informacoes-grade">
                     <FontAwesomeIcon icon={faChalkboardUser} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-grade">
                         <h4>Turma:</h4>
                         <p className="ajuste-textos" data-tooltip={`${grade.disciplina.nm_disciplina} - ${grade.turma.curso.ds_curso}`}>
-                            {grade.disciplina.nm_disciplina} - {grade.turma.curso.ds_curso}
+                            {grade.turma.curso.ds_curso} - {grade.disciplina.nm_disciplina}
                         </p>
                     </div>
                     <div className="consulta-grade">
