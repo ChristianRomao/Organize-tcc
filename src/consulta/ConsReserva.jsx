@@ -34,7 +34,6 @@ const ConsReserva = () => {
     const [messageDelete, setMessageDelete] = useState("");
     
     const [alerta, setAlerta] = useState("");
-    const [error, setError] = useState("");
     const [messageSuccess, setMessageSuccess] = useState("");
 
 const consultaReserva = useCallback(async () =>{
