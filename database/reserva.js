@@ -90,8 +90,8 @@ const buscarReservaId = (id) => {
   });
 };
 
-const buscarReservaNome = (nome) => {
-  return prisma.reserva.findMany({
+const buscarReservaNome = async (nome) => {
+  const reservas = await prisma.reserva.findMany({
     where: {
       nm_reserva:{
         contains:nome
@@ -136,6 +136,316 @@ const buscarReservaNome = (nome) => {
       },
     },
   });
+  const groupedReservas = reservas.reduce((acc, reserva) => {
+    if (!acc[reserva.id_grupo]) {
+      acc[reserva.id_grupo] = {
+        id_grupo: reserva.id_grupo,
+        dt_inicio: reserva.dt_inicio,
+        dt_fim: reserva.dt_fim,
+        status: reserva.status,
+        sala: reserva.sala,
+        usuario: reserva.usuario,
+        grade: reserva.grade,
+        ds_observacao: reserva.ds_observacao,
+        nm_reserva: reserva.nm_reserva
+      };
+    } else {
+      acc[reserva.id_grupo].dt_inicio = new Date(Math.min(new Date(acc[reserva.id_grupo].dt_inicio), new Date(reserva.dt_inicio)));
+      acc[reserva.id_grupo].dt_fim = new Date(Math.max(new Date(acc[reserva.id_grupo].dt_fim), new Date(reserva.dt_fim)));
+    }
+    return acc;
+  }, {});
+
+  return Object.values(groupedReservas);
+
+};
+
+const buscarReservaSala = async (nome) => {
+  const reservas = await prisma.reserva.findMany({
+    where: {
+      sala:{
+        nm_sala:{
+          contains:nome
+        }
+      }
+    },
+    include: {
+      status: true,
+      sala: {
+        include: {
+          materiaisSala: {
+            include: {
+              material: true,
+            },
+          },
+        },
+        include: {
+          bloco: {
+            include: {
+              polo: {
+                include: {
+                  instituicao: true,
+                  municipio: {
+                    include: {
+                      estado: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      usuario: true,
+      grade: {
+        include: {
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  const groupedReservas = reservas.reduce((acc, reserva) => {
+    if (!acc[reserva.id_grupo]) {
+      acc[reserva.id_grupo] = {
+        id_grupo: reserva.id_grupo,
+        dt_inicio: reserva.dt_inicio,
+        dt_fim: reserva.dt_fim,
+        status: reserva.status,
+        sala: reserva.sala,
+        usuario: reserva.usuario,
+        grade: reserva.grade,
+        ds_observacao: reserva.ds_observacao,
+        nm_reserva: reserva.nm_reserva
+      };
+    } else {
+      acc[reserva.id_grupo].dt_inicio = new Date(Math.min(new Date(acc[reserva.id_grupo].dt_inicio), new Date(reserva.dt_inicio)));
+      acc[reserva.id_grupo].dt_fim = new Date(Math.max(new Date(acc[reserva.id_grupo].dt_fim), new Date(reserva.dt_fim)));
+    }
+    return acc;
+  }, {});
+
+  return Object.values(groupedReservas);
+
+};
+
+const buscarReservaUsuario = async (nome) => {
+  const reservas = await prisma.reserva.findMany({
+    where: {
+      usuario:{
+        nm_usuario:{
+          contains:nome
+        }
+      }
+    },
+    include: {
+      status: true,
+      sala: {
+        include: {
+          materiaisSala: {
+            include: {
+              material: true,
+            },
+          },
+        },
+        include: {
+          bloco: {
+            include: {
+              polo: {
+                include: {
+                  instituicao: true,
+                  municipio: {
+                    include: {
+                      estado: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      usuario: true,
+      grade: {
+        include: {
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  const groupedReservas = reservas.reduce((acc, reserva) => {
+    if (!acc[reserva.id_grupo]) {
+      acc[reserva.id_grupo] = {
+        id_grupo: reserva.id_grupo,
+        dt_inicio: reserva.dt_inicio,
+        dt_fim: reserva.dt_fim,
+        status: reserva.status,
+        sala: reserva.sala,
+        usuario: reserva.usuario,
+        grade: reserva.grade,
+        ds_observacao: reserva.ds_observacao,
+        nm_reserva: reserva.nm_reserva
+      };
+    } else {
+      acc[reserva.id_grupo].dt_inicio = new Date(Math.min(new Date(acc[reserva.id_grupo].dt_inicio), new Date(reserva.dt_inicio)));
+      acc[reserva.id_grupo].dt_fim = new Date(Math.max(new Date(acc[reserva.id_grupo].dt_fim), new Date(reserva.dt_fim)));
+    }
+    return acc;
+  }, {});
+
+  return Object.values(groupedReservas);
+
+};
+
+const buscarReservaCurso = async (nome) => {
+  const reservas = await prisma.reserva.findMany({
+    where: {
+      grade:{
+        turma:{
+          curso:{
+            ds_curso:{
+              contains: nome
+            }
+          }
+        }
+      }
+    },
+    include: {
+      status: true,
+      sala: {
+        include: {
+          materiaisSala: {
+            include: {
+              material: true,
+            },
+          },
+        },
+        include: {
+          bloco: {
+            include: {
+              polo: {
+                include: {
+                  instituicao: true,
+                  municipio: {
+                    include: {
+                      estado: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      usuario: true,
+      grade: {
+        include: {
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  const groupedReservas = reservas.reduce((acc, reserva) => {
+    if (!acc[reserva.id_grupo]) {
+      acc[reserva.id_grupo] = {
+        id_grupo: reserva.id_grupo,
+        dt_inicio: reserva.dt_inicio,
+        dt_fim: reserva.dt_fim,
+        status: reserva.status,
+        sala: reserva.sala,
+        usuario: reserva.usuario,
+        grade: reserva.grade,
+        ds_observacao: reserva.ds_observacao,
+        nm_reserva: reserva.nm_reserva
+      };
+    } else {
+      acc[reserva.id_grupo].dt_inicio = new Date(Math.min(new Date(acc[reserva.id_grupo].dt_inicio), new Date(reserva.dt_inicio)));
+      acc[reserva.id_grupo].dt_fim = new Date(Math.max(new Date(acc[reserva.id_grupo].dt_fim), new Date(reserva.dt_fim)));
+    }
+    return acc;
+  }, {});
+
+  return Object.values(groupedReservas);
+
+};
+
+const buscarReservaStatus = async (status) => {
+  const reservas = await prisma.reserva.findMany({
+    where: {
+      status_cd:status
+    },
+    include: {
+      status: true,
+      sala: {
+        include: {
+          materiaisSala: {
+            include: {
+              material: true,
+            },
+          },
+        },
+        include: {
+          bloco: {
+            include: {
+              polo: {
+                include: {
+                  instituicao: true,
+                  municipio: {
+                    include: {
+                      estado: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      usuario: true,
+      grade: {
+        include: {
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  const groupedReservas = reservas.reduce((acc, reserva) => {
+    if (!acc[reserva.id_grupo]) {
+      acc[reserva.id_grupo] = {
+        id_grupo: reserva.id_grupo,
+        dt_inicio: reserva.dt_inicio,
+        dt_fim: reserva.dt_fim,
+        status: reserva.status,
+        sala: reserva.sala,
+        usuario: reserva.usuario,
+        grade: reserva.grade,
+        ds_observacao: reserva.ds_observacao,
+        nm_reserva: reserva.nm_reserva
+      };
+    } else {
+      acc[reserva.id_grupo].dt_inicio = new Date(Math.min(new Date(acc[reserva.id_grupo].dt_inicio), new Date(reserva.dt_inicio)));
+      acc[reserva.id_grupo].dt_fim = new Date(Math.max(new Date(acc[reserva.id_grupo].dt_fim), new Date(reserva.dt_fim)));
+    }
+    return acc;
+  }, {});
+
+  return Object.values(groupedReservas);
+
 };
 
 const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
@@ -157,7 +467,7 @@ const buscarReservasPeriodoSala = async (id_sala, dt_inicio, dt_fim) => {
   });
 };
 
-const buscarReservaGrupo = (grupoId) => {
+/*const buscarReservaGrupo = (grupoId) => {
   return prisma.reserva.findMany({
     where: {
       id_grupo:grupoId
@@ -201,6 +511,140 @@ const buscarReservaGrupo = (grupoId) => {
       },
     },
   });
+};*/
+
+const buscarReservaGrupo = (grupoId) => {
+  return prisma.reserva.findMany({
+    where: {
+      id_grupo:grupoId
+    },
+    include: {
+      status: true,
+      sala: {
+        include: {
+          materiaisSala: {
+            include: {
+              material: true,
+            },
+          },
+          bloco: {
+            include: {
+              polo: {
+                include: {
+                  instituicao: true,
+                  municipio: {
+                    include: {
+                      estado: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      usuario: true,
+      grade: {
+        include: {
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  // if (reservas.length === 0) {
+  //   return null;
+  // }
+
+  // const groupedReserva = reservas.reduce((acc, reserva) => {
+  //   if (!acc) {
+  //     acc = {
+  //       id_grupo: reserva.id_grupo,
+  //       dt_inicio: reserva.dt_inicio,
+  //       dt_fim: reserva.dt_fim,
+  //       status: reserva.status,
+  //       sala: reserva.sala,
+  //       usuario: reserva.usuario,
+  //       grade: reserva.grade,
+  //       ds_observacao: reserva.ds_observacao,
+  //       nm_reserva: reserva.nm_reserva
+  //     };
+  //   } else {
+  //     acc.dt_inicio = new Date(Math.min(new Date(acc.dt_inicio), new Date(reserva.dt_inicio)));
+  //     acc.dt_fim = new Date(Math.max(new Date(acc.dt_fim), new Date(reserva.dt_fim)));
+  //   }
+  //   return acc;
+  // }, null);
+
+  // return groupedReserva;
+};
+
+
+const listarReservasGrupo = async () => {
+  const reservas = await prisma.reserva.findMany({
+    include: {
+      status: true,
+      sala: {
+        include: {
+          materiaisSala: {
+            include: {
+              material: true,
+            },
+          },
+          bloco: {
+            include: {
+              polo: {
+                include: {
+                  instituicao: true,
+                  municipio: {
+                    include: {
+                      estado: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      usuario: true,
+      grade: {
+        include: {
+          turma: {
+            include: {
+              curso: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const groupedReservas = reservas.reduce((acc, reserva) => {
+    if (!acc[reserva.id_grupo]) {
+      acc[reserva.id_grupo] = {
+        id_grupo: reserva.id_grupo,
+        dt_inicio: reserva.dt_inicio,
+        dt_fim: reserva.dt_fim,
+        status: reserva.status,
+        sala: reserva.sala,
+        usuario: reserva.usuario,
+        grade: reserva.grade,
+        ds_observacao: reserva.ds_observacao,
+        nm_reserva: reserva.nm_reserva
+      };
+    } else {
+      acc[reserva.id_grupo].dt_inicio = new Date(Math.min(new Date(acc[reserva.id_grupo].dt_inicio), new Date(reserva.dt_inicio)));
+      acc[reserva.id_grupo].dt_fim = new Date(Math.max(new Date(acc[reserva.id_grupo].dt_fim), new Date(reserva.dt_fim)));
+    }
+    return acc;
+  }, {});
+  const sortedReservas = Object.values(groupedReservas).sort((a, b) => new Date(a.dt_inicio) - new Date(b.dt_inicio));
+
+  return sortedReservas;
 };
 
 const gravarReserva = (reserva) => {
@@ -282,10 +726,15 @@ const deletarReserva = (id) => {
 
 module.exports = {
   listarReservas,
+  listarReservasGrupo,
   buscarReservaId,
   buscarReservasPeriodoSala,
   buscarReservaNome,
   buscarReservaGrupo,
+  buscarReservaSala,
+  buscarReservaUsuario,
+  buscarReservaCurso,
+  buscarReservaStatus,
   gravarReserva,
   alterarReserva,
   deletarReserva,

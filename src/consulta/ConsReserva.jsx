@@ -25,24 +25,38 @@ const ConsReserva = () => {
     const [selectStatus, setSelectStatus] = useState("");
 
     const [editRowId, setEditRowId] = useState(null);
+    const [nm_reservaDel, setNm_reservaDel] = useState("");
 
     const [selectStatusChange, setSelectStatusChange] = useState("");
     const [dsObservacaoChange, setDsObservacaoChange] = useState("");
 
     const [showConfirmAlert, setShowConfirmAlert] = useState(false);
     const [messageDelete, setMessageDelete] = useState("");
+    
+    const [alerta, setAlerta] = useState("");
+    const [error, setError] = useState("");
+    const [messageSuccess, setMessageSuccess] = useState("");
 
 const consultaReserva = useCallback(async () =>{
     try{
-        const response = await axios.get("http://localhost:8080/reserva", {
+        const response = await axios.get("http://localhost:8080/reservas/grupos", {
             headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response.data);
         const data = response.data.reservas;
         setReservas(data);
+        setDs_filtro("");
+        setDt_filtro("");
+        setSelectStatus("");
         }catch(error){
             console.error(error)
+            setMessageDelete(error.response.data.error);
+            setTimeout(() => {
+                setMessageDelete("");
+                setEditRowId(null);
+              }, 5000);
         }
     }, [token]);
 
@@ -58,7 +72,11 @@ const consultaReserva = useCallback(async () =>{
             setListStatus(data);
             }catch(error){
                 console.error(error)
-            }
+                setMessageDelete(error.response.data.error);
+                setTimeout(() => {
+                    setMessageDelete("");
+                    setEditRowId(null);
+                  }, 5000);            }
         }, [token]);
 
     useEffect(() => {
@@ -79,8 +97,8 @@ const consultaReserva = useCallback(async () =>{
         setTp_filtro(value)
         
         switch(value){
-            case "tp_idReserva":
-                setDs_placeholder(placeholderFixo+"o número da reserva");
+            case "tp_nmReserva":
+                setDs_placeholder(placeholderFixo+"o nome da reserva");
                 break;
             case "tp_nmSala":
                 setDs_placeholder(placeholderFixo+"o nome da sala reservada");
@@ -111,14 +129,16 @@ const consultaReserva = useCallback(async () =>{
 
     const handleDelete = (reserva) => {
         if (reserva.status.cd_status === 'C'){
-            setShowConfirmAlert(true)
-            setIdDelete(reserva.id_reserva)
+            setShowConfirmAlert(true);
+            setIdDelete(reserva.id_grupo);
+            setNm_reservaDel(reserva.nm_reserva);
         }else{
             setMessageDelete("Somente reservas com o status CANCELADO é permitida a exclusão!");
             setTimeout(() => {
                 setMessageDelete("");
-                setShowConfirmAlert(false)
+                setShowConfirmAlert(false);
                 setIdDelete(null);
+                setNm_reservaDel("");
               }, 5000);
               
         }
@@ -138,6 +158,7 @@ const consultaReserva = useCallback(async () =>{
         setDs_filtro("");
         setSelectStatus("");
         setDs_placeholder("");
+        consultaReserva();
     }
 
     const handleChangeEdit = (reserva) =>{
@@ -158,14 +179,13 @@ const consultaReserva = useCallback(async () =>{
             setSelectStatusChange(stReserva)
         }
 
-        setEditRowId(reserva.id_reserva);
+        setEditRowId(reserva.id_grupo);
 
     }
 
     const handleCancelEdit = () => {
         setEditRowId(null);
         setDsObservacaoChange("")
-        // setEditedValues({});
     };
 
     const handleChange = (event) =>{
@@ -185,11 +205,24 @@ const consultaReserva = useCallback(async () =>{
         }
     }
 
-    const searchComFiltro = () =>{
-        consultaReserva();
+    const searchComFiltro = (tp_filtro, ds_filtro, dt_filtro) =>{
+        if(tp_filtro === "tp_nmReserva"){
+            consultaReservaNome(ds_filtro)
+        }else if(tp_filtro === "tp_nmSala"){
+            consultaReservaSala(ds_filtro)
+        }else if(tp_filtro === "tp_nmUsuario"){
+            consultaReservaUsuario(ds_filtro)
+        }else if(tp_filtro === "tp_dsCurso"){
+            consultaReservaCurso(ds_filtro)
+        }else if(tp_filtro === "tp_stReserva"){
+            consultaReservaStatus(selectStatus)
+        }else{
+            consultaReserva();
+        }
     }
 
     const alterarReserva = async (id) =>{
+        console.log(id)
         if(!id){
             setMessageDelete("Necessário selecionar uma reserva!");
             setTimeout(() => {
@@ -211,13 +244,18 @@ const consultaReserva = useCallback(async () =>{
               },
             });
             consultaReserva();
-            setMessageDelete(response.data.message);
+            setMessageSuccess(response.data.message);
             setEditRowId(null);
             setTimeout(() => {
-                setMessageDelete("");
+                setMessageSuccess("");
               }, 2000);
           } catch (error) {
             console.log(error.response.data);
+            setEditRowId(null);
+            setAlerta(error.response.data.alert);
+            setTimeout(() => {
+                setAlerta("");
+              }, 5000);
             setMessageDelete(error.response.data.error);
             setTimeout(() => {
                 setMessageDelete("");
@@ -236,6 +274,7 @@ const consultaReserva = useCallback(async () =>{
             consultaReserva();
             setShowConfirmAlert(false);
             setMessageDelete(response.data.message);
+            setNm_reservaDel("");
             setTimeout(() => {
                 setMessageDelete("");
               }, 2000);
@@ -250,6 +289,101 @@ const consultaReserva = useCallback(async () =>{
         }
     }
 
+    const consultaReservaNome = useCallback(async (nome) =>{
+        try{
+            const response = await axios.get(`http://localhost:8080/reserva/nome/${nome}`, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            const data = response.data.reservas;
+            setReservas(data);
+            setDs_filtro("");
+            setDt_filtro("");
+            }catch(error){
+                setMessageDelete(error.response.data.error);
+                setTimeout(() => {
+                    setMessageDelete("");
+                    setEditRowId(null);
+                  }, 5000);            }
+        }, [token]);
+
+    const consultaReservaSala = useCallback(async (nome) =>{
+        try{
+            const response = await axios.get(`http://localhost:8080/reserva/sala/${nome}`, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data.reservas;
+            setReservas(data);
+            setDs_filtro("");
+            setDt_filtro("");
+            }catch(error){
+                setMessageDelete(error.response.data.error);
+                setTimeout(() => {
+                    setMessageDelete("");
+                    setEditRowId(null);
+                  }, 5000);            }
+        }, [token]);
+
+    const consultaReservaUsuario = useCallback(async (nome) =>{
+        try{
+            const response = await axios.get(`http://localhost:8080/reserva/usuario/${nome}`, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data.reservas;
+            setReservas(data);
+            setDs_filtro("");
+            setDt_filtro("");
+            }catch(error){
+                setMessageDelete(error.response.data.error);
+                setTimeout(() => {
+                    setMessageDelete("");
+                    setEditRowId(null);
+                  }, 5000);            }
+        }, [token]);
+
+    const consultaReservaCurso = useCallback(async (nome) =>{
+        try{
+            const response = await axios.get(`http://localhost:8080/reserva/curso/${nome}`, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data.reservas;
+            setReservas(data);
+            setDs_filtro("");
+            setDt_filtro("");
+            }catch(error){
+                setMessageDelete(error.response.data.error);
+                setTimeout(() => {
+                    setMessageDelete("");
+                    setEditRowId(null);
+                  }, 5000);            }
+        }, [token]);
+
+    const consultaReservaStatus = useCallback(async (nome) =>{
+        try{
+            const response = await axios.get(`http://localhost:8080/reserva/status/${nome}`, {
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data.reservas;
+            setReservas(data);
+            setDs_filtro("");
+            setDt_filtro("");
+            }catch(error){
+                setMessageDelete(error.response.data.error);
+                setTimeout(() => {
+                    setMessageDelete("");
+                    setEditRowId(null);
+                  }, 5000);            }
+        }, [token]);
+
     return (
        <Layout title='Consulta da Reserva' next="" noicon>
         <div className="ajustes-consulta-reserva">
@@ -263,14 +397,14 @@ const consultaReserva = useCallback(async () =>{
                         id="tp_filtro"
                     >
                         <option value="Tipos" selected hidden>Selecione o tipo</option>
-                        <option value="tp_idReserva" >Nr Reserva</option>
+                        <option value="tp_nmReserva" >Nome</option>
                         <option value="tp_nmSala" >Sala</option>
                         <option value="tp_nmUsuario" >Usuário</option>
                         <option value="tp_dsCurso" >Curso</option>
-                        <option value="tp_dtReserva" >Data</option>
+                        {/* <option value="tp_dtReserva" >Data</option> */}
                         <option value="tp_stReserva" >Status</option>
                     </select>
-                    <input 
+                    {/* <input 
                         disabled={!tp_filtro || tp_filtro !== "tp_dtReserva"}
                         className="inputs-data-reserva"
                         type="date"     
@@ -278,7 +412,7 @@ const consultaReserva = useCallback(async () =>{
                         id=""
                         value={dt_filtro}
                         onChange={handleChange}
-                    />
+                    /> */}
                     {tp_filtro === "tp_stReserva"?
                     <select 
                         className="select-consulta-reserva" 
@@ -309,7 +443,7 @@ const consultaReserva = useCallback(async () =>{
                         disabled={tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)} 
                         className={`botao-consulta-reserva ${tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)? 'disabled-hover' : ''}`} 
                         type="button"
-                        onClick={searchComFiltro}
+                        onClick={()=>searchComFiltro(tp_filtro,ds_filtro,dt_filtro)}
                     >
                         Pesquisar
                     </button>
@@ -319,7 +453,7 @@ const consultaReserva = useCallback(async () =>{
                     <table>
                         <thead className="cabecalho">
                             <tr>
-                                <th className="colunas-cabecalho">Nr Reserva</th>
+                                <th className="colunas-cabecalho">Nome</th>
                                 <th className="colunas-cabecalho">Sala</th>
                                 <th className="colunas-cabecalho">Usuário</th>
                                 <th className="colunas-cabecalho">Turma - Curso</th>
@@ -333,18 +467,18 @@ const consultaReserva = useCallback(async () =>{
                         <tbody className="contudo-tabela">
                             {reservas.map((reserva) => (
                                 <tr key={reserva.id_reserva}>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}>{reserva.id_reserva}</td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}><button className={editRowId === reserva.id_reserva?"button-coluna-body-selection":"button-coluna-body"}>{reserva.sala.nm_sala}</button></td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}><button className={editRowId === reserva.id_reserva?"button-coluna-body-selection":"button-coluna-body"}>{reserva.usuario.nm_usuario}</button></td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}><button className={editRowId === reserva.id_reserva?"button-coluna-body-selection":"button-coluna-body"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</button></td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.nm_reserva}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.sala.nm_sala}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.usuario.nm_usuario}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>
                                     
                                     {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
                                 </td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}>
-                                    {editRowId === reserva.id_reserva? (
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>
+                                    {editRowId === reserva.id_grupo? (
                                         <select 
                                             className="colunas-body-selection"
                                             name="cd_status" 
@@ -363,8 +497,8 @@ const consultaReserva = useCallback(async () =>{
                                         reserva.status.ds_status
                                     )}
                                 </td>
-                                <td className={editRowId === reserva.id_reserva?"colunas-body-selection":"colunas-body"}>
-                                    {editRowId === reserva.id_reserva? (
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>
+                                    {editRowId === reserva.id_grupo? (
                                         <input 
                                             className="input-selection"
                                             type="text" 
@@ -379,11 +513,11 @@ const consultaReserva = useCallback(async () =>{
                                     )}
                                 </td>
                                 <td className="colunas-body-button">
-                                    {editRowId === reserva.id_reserva? (
+                                    {editRowId === reserva.id_grupo? (
                                                 <div className="buttons-actions">
-                                                    {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_reserva)}>Salvar</button> */}
+                                                    {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_grupo)}>Salvar</button> */}
                                                     <button className="btn-cancelar-edicao" onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
-                                                    <button className="btn-salvar" onClick={()=>alterarReserva(Number(reserva.id_reserva))}><FontAwesomeIcon icon={faCheck}/></button>
+                                                    <button className="btn-salvar" onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
                                                 </div>
                                             ) : (
                                                 <div className="buttons-actions">
@@ -398,14 +532,17 @@ const consultaReserva = useCallback(async () =>{
                         </tbody>
                     </table>
                 </div>
-            </div>           
+            </div>
+                        {alerta ? <text className="message-alert-cons-reserva">{alerta}</text> : <></>}
+                        {/* <text className="message-alert-cons-reserva">testeeeee</text> */}
+           
         </div>
         {showConfirmAlert &&(
             <div className="delete-overlay">
                 <div className="delete">
                     <div className="delete-body">
                         <h1>ATENÇÃO!</h1>
-                        <p>Certeza que deseja deletar a reserva número {idDelete}?</p>
+                        <p>Certeza que deseja deletar a reserva {nm_reservaDel}?</p>
                         <div className="delete-button-group">
                             <button onClick={() => handleConfirmDelete(true)}>Sim</button>
                             <button onClick={() => handleConfirmDelete(false)}>Cancelar</button>
@@ -420,6 +557,16 @@ const consultaReserva = useCallback(async () =>{
                     <div className="delete">
                     <div className="delete-body">
                         <h3>{messageDelete}</h3>
+                    </div>
+                    </div>
+                </div>
+        )}
+        {messageSuccess &&(
+                    <div className="success-overlay">
+
+                    <div className="success">
+                    <div className="success-body">
+                        <h3>{messageSuccess}</h3>
                     </div>
                     </div>
                 </div>

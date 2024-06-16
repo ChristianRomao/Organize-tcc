@@ -1,10 +1,15 @@
 const express = require("express");
 const {
     listarReservas,
+    listarReservasGrupo,
     buscarReservaId,
     buscarReservasPeriodoSala,
     buscarReservaNome,
     buscarReservaGrupo,
+    buscarReservaSala,
+    buscarReservaUsuario,
+    buscarReservaCurso,
+    buscarReservaStatus,
     gravarReserva,
     alterarReserva,
     deletarReserva,
@@ -15,10 +20,11 @@ const {buscarUsuarioId} = require("../database/usuario");
 const {buscarStatusId} = require("../database/status");
 const router = express.Router();
 const {auth} = require("../middleware/auth");
-const {formatarDataISO} = require("../transformarData");
 const { decodeJWT } = require("./decode");
 const { gravarLog } = require("../database/log");
 const { v4: uuidv4 } = require('uuid');
+const { format } = require('date-fns');
+
 
 
 const moment = require('moment-timezone');
@@ -58,12 +64,25 @@ router.get("/reserva", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
-//Realiza consulta sem gravar log
-router.get("/consulta-reserva", auth, async (req,res) => {
-    const reservas = await listarReservas()
-    res.json({
-        reservas,
-    });
+router.get("/reservas/grupos", auth, async (req,res) => {
+  try {
+    const reservas = await listarReservasGrupo();
+
+    if (!reservas || Object.keys(reservas).length === 0) {
+      return res.status(404).json({ error: "Reservas não encontradas!" });
+    }
+
+    res.json({ reservas });
+
+    const acao = 'Consulta realizada na tabela reserva, agrupando por id_grupo';
+    const decode = decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog, ip, acao);
+  } catch (error) {
+    console.error('Erro ao listar reservas:', error);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 
 router.get("/reserva/:id", auth, async (req,res) => {
@@ -86,6 +105,7 @@ router.get("/reserva/:id", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
+//CONSULTA POR NOME - FUNCIONANDO
 router.get("/reserva/nome/:nome", auth, async (req,res) => {
   const nome = req.params.nome;
 
@@ -105,6 +125,87 @@ router.get("/reserva/nome/:nome", auth, async (req,res) => {
   await gravarLog(userLog,ip,acao);
 });
 
+///CONSULTA POR SALA - FUNCIONANDO
+router.get("/reserva/sala/:nome", auth, async (req,res) => {
+  const nome = req.params.nome;
+
+  if(nome === '') return res.status(404).json({ error: "Deverá ser fornecido o nome para consulta!" });
+
+  const reservas = await buscarReservaSala(nome);
+
+  if(!reservas || reservas === 0){
+      return res.status(404).json({error:"Reservas não encontradas!"});
+  }
+
+  res.json({reservas});
+  const acao = ('Consulta realizada na tabela reserva, com o nome: ' + nome);
+  const decode = decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
+});
+
+///CONSULTA POR USUÁRIO - FUNCIONANDO
+router.get("/reserva/usuario/:nome", auth, async (req,res) => {
+  const nome = req.params.nome;
+
+  if(nome === '') return res.status(404).json({ error: "Deverá ser fornecido o nome para consulta!" });
+
+  const reservas = await buscarReservaUsuario(nome);
+
+  if(!reservas || reservas === 0){
+      return res.status(404).json({error:"Reservas não encontradas!"});
+  }
+
+  res.json({reservas});
+  const acao = ('Consulta realizada na tabela reserva, com o usuário: ' + nome);
+  const decode = decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
+});
+
+///CONSULTA POR CURSO - FUNCIONANDO
+router.get("/reserva/curso/:nome", auth, async (req,res) => {
+  const nome = req.params.nome;
+
+  if(nome === '') return res.status(404).json({ error: "Deverá ser fornecido o nome para consulta!" });
+
+  const reservas = await buscarReservaCurso(nome);
+
+  if(!reservas || reservas === 0){
+      return res.status(404).json({error:"Reservas não encontradas!"});
+  }
+
+  res.json({reservas});
+  const acao = ('Consulta realizada na tabela reserva, com o curso: ' + nome);
+  const decode = decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
+});
+
+///CONSULTA POR CURSO - FUNCIONANDO
+router.get("/reserva/status/:status", auth, async (req,res) => {
+  const status = req.params.status;
+
+  if(status === '') return res.status(404).json({ error: "Deverá ser selecionado o status para a consulta!" });
+
+  const reservas = await buscarReservaStatus(status);
+
+  if(!reservas || reservas === 0){
+      return res.status(404).json({error:"Reservas não encontradas!"});
+  }
+
+  res.json({reservas});
+  const acao = ('Consulta realizada na tabela reserva, com o status: ' + status);
+  const decode = decodeJWT(req.headers.authorization);
+  const userLog = decode.id_usuario;
+  const ip = req.ip;
+  await gravarLog(userLog,ip,acao);
+});
+
+//CONSULTA ID_GRUPO - FUNCIONANDO
 router.get("/reservas/grupo/:idGrupo", auth, async (req,res) => {
   const idGrupo = req.params.idGrupo;
 
@@ -180,6 +281,14 @@ router.get("/reservas/grupos", auth, async (req, res) => {
   }
 });
 
+//Realiza consulta sem gravar log
+router.get("/consulta-reserva", auth, async (req,res) => {
+  const reservas = await listarReservas()
+  res.json({
+      reservas,
+  });
+});
+
 router.post("/reserva", auth, async (req, res) => {
   try {
     if (!req.body.dt_inicio || !req.body.dt_fim) {
@@ -214,68 +323,62 @@ router.post("/reserva", auth, async (req, res) => {
       return res.status(404).json({ error: "Status não encontrado!" });
     }
     
-    const dt_inicioForm = moment(req.body.dt_inicio).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-    const dt_fimForm = moment(req.body.dt_fim).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-
     const alunosVigilancia = salaExiste.qt_capacvigilancia;
     const alunosTurma = gradeExiste.qt_alunos;
-
+    
     if (alunosVigilancia < alunosTurma) {
       return res.status(406).json({ alert: `Quantidade de alunos da turma (${alunosTurma}) é maior que a capacidade permitida na sala! (${alunosVigilancia})` });
     }
-
-    const dataInicio = moment(dt_inicioForm).startOf('day');
-    const dataFim = moment(dt_fimForm).startOf('day');
+    
+    const dtInicio = moment(req.body.dt_inicio);
+    const dtFim = moment(req.body.dt_fim);
     const id_grupo = uuidv4();
+    const reservas = [];
 
-    for (let date = dataInicio; date.isSameOrBefore(dataFim); date.add(1, 'days')) {
+    for (let date = moment(dtInicio); date.isSameOrBefore(dtFim, 'day'); date.add(1, 'days')) {
+      // const dt_inicioDate = date.startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      // const dt_fimDate = date.endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
 
-      const currentDate = date.format('YYYY-MM-DD');
+      // const inicioMoment = moment(req.body.dt_inicio).add(1, 'seconds');
 
-      const inicioMoment = moment(req.body.dt_inicio).add(1, 'seconds');
+      // const dt_inicioDia = new Date(inicioMoment).toLocaleString('pt-BR');
+      // const dt_fimDia = new Date(req.body.dt_fim).toLocaleString('pt-BR');
+      
+      const horaInicio = moment(req.body.dt_inicio).format('HH:mm:ss');
+      const horaFim = moment(req.body.dt_fim).format('HH:mm:ss');
 
-      const dt_inicioDia = new Date(inicioMoment).toLocaleString('pt-BR');
-      const dt_fimDia = new Date(req.body.dt_fim).toLocaleString('pt-BR');
+      const dt_inicioDia = new Date(date).toLocaleString('pt-BR');
+      const dt_fimDia = new Date(date).toLocaleString('pt-BR');
   
       const [inicioDia, inicioHora] = dt_inicioDia.split(', ');
       const [fimDia, fimHora] = dt_fimDia.split(', ');
 
-      const dt_inicioDate = `${moment(inicioDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${inicioHora}.000Z`;
-      const dt_fimDate = `${moment(fimDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${fimHora}.000Z`;
+      const dt_inicioDate = `${moment(inicioDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${horaInicio}.000Z`;
+      const dt_fimDate = `${moment(fimDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${horaFim}.000Z`;
 
       const existeReserva = await buscarReservasPeriodoSala(sala.id_sala, dt_inicioDate, dt_fimDate);
 
       if (existeReserva.length > 0) {
-        return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} na data e hora informada (${currentDate})!` });
+        return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} na data e hora informada (${date.format('YYYY-MM-DD')})!` });
       }
+
+      reservas.push({
+        dt_inicio: dt_inicioDate,
+        dt_fim: dt_fimDate,
+        nm_reserva: req.body.nm_reserva,
+        ds_observacao: req.body.ds_observacao,
+        id_grupo: id_grupo,
+        status_cd: status.cd_status,
+        sala_id: sala.id_sala,
+        grade_id: grade.id_grade,
+        usuario_id: usuario.id_usuario,
+      });
     }
 
-    const inicioMoment = moment(req.body.dt_inicio).add(1, 'seconds');
+    await Promise.all(reservas.map(gravarReserva));
 
-    const dt_inicioDia = new Date(inicioMoment).toLocaleString('pt-BR');
-    const dt_fimDia = new Date(req.body.dt_fim).toLocaleString('pt-BR');
-
-    const [inicioDia, inicioHora] = dt_inicioDia.split(', ');
-    const [fimDia, fimHora] = dt_fimDia.split(', ');
-
-    const dt_inicioDate = `${moment(inicioDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${inicioHora}.000Z`;
-    const dt_fimDate = `${moment(fimDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${fimHora}.000Z`;
-
-    const reserva = {
-      dt_inicio: dt_inicioDate,
-      dt_fim: dt_fimDate,
-      nm_reserva: req.body.nm_reserva,
-      ds_observacao: req.body.ds_observacao,
-      id_grupo: id_grupo,
-      status_cd: status.cd_status,
-      sala_id: sala.id_sala,
-      grade_id: grade.id_grade,
-      usuario_id: usuario.id_usuario,
-    };
-
-    const reservaGravada = await gravarReserva(reserva);
     res.json({
-      reservas: reservaGravada,
+      reservas,
       message: 'Reserva(s) gravada(s) com sucesso!',
     });
 
@@ -291,24 +394,23 @@ router.post("/reserva", auth, async (req, res) => {
   }
 });
 
-//Não vai utilizar esse PUT
-router.put("/reserva/:id", auth , checkPermission('admin'), async (req,res) => {
-    try{
 
-        const id = Number(req.params.id);
-        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
-        if (!numeroRegex.test(id)) {
-            return res.status(400).json({ error: 'Id deve conter apenas números.' });
-        }
-        const reservaExiste = await buscarReservaId(id);
-        
-        if(!reservaExiste){
+router.put("/reserva/:id_grupo", auth , checkPermission('admin'), async (req,res) => {
+    try{
+      const id_grupo = req.params.id_grupo;
+
+      if (!id_grupo) {
+          return res.status(404).json({ error: "Id do grupo para consulta inválido!" });
+      }
+
+      const reservaExistentes = await buscarReservaGrupo(id_grupo);
+        if(!reservaExistentes){
             return res.status(404).json({error:"Reserva não encontrada!"});
         }
 
-        if(req.body.dt_inicio === '' || req.body.dt_fim === '' ){
-            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
-        }
+        // if(req.body.dt_inicio === '' || req.body.dt_fim === '' ){
+        //     return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
+        // }
 
         // const sala = req.body.sala;
         // const salaExiste = await buscarSalaId(sala.id_sala)
@@ -337,53 +439,59 @@ router.put("/reserva/:id", auth , checkPermission('admin'), async (req,res) => {
         if(!statusExiste){
           return res.status(404).json({ error: "Status não encontrado!" });
         }
+        const reservasAlteradas = [];
 
-        const dataInicio = moment(reservaExiste.dt_inicio).startOf('day');
-        const dataFim = moment(reservaExiste.dt_fim).startOf('day');
+        for(const reservaExiste of reservaExistentes) {
+          const dataInicio = moment(reservaExiste.dt_inicio).startOf('day');
+          const dataFim = moment(reservaExiste.dt_fim).startOf('day');
 
-        for (let date = dataInicio; date.isSameOrBefore(dataFim); date.add(1, 'days')) {
 
-          const currentDate = date.format('YYYY-MM-DD');
+          for (let date = dataInicio; date.isSameOrBefore(dataFim); date.add(1, 'days')) {
 
-          const dt_inicioDia = new Date(reservaExiste.dt_inicio).toLocaleString('default',{timeZone:"UTC"});
-          const dt_fimDia = new Date(reservaExiste.dt_fim).toLocaleString('default',{timeZone:"UTC"});
+            const currentDate = date.format('YYYY-MM-DD');
 
-          const [inicioDia, inicioHora] = dt_inicioDia.split(', ');
-          const [fimDia, fimHora] = dt_fimDia.split(', ');
+            const dt_inicioDia = new Date(reservaExiste.dt_inicio).toLocaleString('default',{timeZone:"UTC"});
+            const dt_fimDia = new Date(reservaExiste.dt_fim).toLocaleString('default',{timeZone:"UTC"});
 
-          const dt_inicioDate = `${moment(inicioDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${inicioHora}.000Z`;
-          const dt_fimDate = `${moment(fimDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${fimHora}.000Z`;
+            const [inicioDia, inicioHora] = dt_inicioDia.split(', ');
+            const [fimDia, fimHora] = dt_fimDia.split(', ');
 
-          const existeReserva = await buscarReservasPeriodoSala(reservaExiste.sala.id_sala, dt_inicioDate, dt_fimDate);
+            const dt_inicioDate = `${moment(inicioDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${inicioHora}.000Z`;
+            const dt_fimDate = `${moment(fimDia, 'DD/MM/YYYY').format('YYYY-MM-DD')}T${fimHora}.000Z`;
 
-          if (existeReserva.length > 0 && req.body.status.cd_status === "A") {
+            const existeReserva = await buscarReservasPeriodoSala(reservaExiste.sala.id_sala, dt_inicioDate, dt_fimDate);
 
-            const reservaConflitante = existeReserva.find(reserva => reserva.id_reserva !== id);
-            if(reservaConflitante){
-              return res.status(406).json({ alert: `Já possui reserva para a sala ${reservaExiste.sala.nm_sala} na data e hora informada (${currentDate})!` });
+            if (existeReserva.length > 0 && req.body.status.cd_status === "A") {
+
+            const [ano, mes, dia] = currentDate.split('-');
+
+              const reservaConflitante = existeReserva.find(reserva => reserva.id_grupo !== reservaExiste.id_grupo);
+              if(reservaConflitante){
+                return res.status(406).json({ alert: `Já possui reserva para a sala ${reservaExiste.sala.nm_sala} na data e hora informada (${dia}-${mes}-${ano})!` });
+              }
             }
+            reservasAlteradas.push({
+              id_reserva: reservaExiste.id_reserva,
+              ds_observacao: req.body.ds_observacao,
+              status_cd: status.cd_status,
+          });
           }
         }
-    
-        const reserva = {
-          // nm_reserva: req.body.nm_reserva,
-          // dt_inicio: dt_inicioForm,
-          // dt_fim: dt_fimForm,
-          ds_observacao: req.body.ds_observacao,
-          status_cd: status.cd_status,
-          // sala_id: sala.id_sala,
-          // grade_id: grade.id_grade,
-          // usuario_id: usuario.id_usuario,
-        };
-    
-        const reservaAlterada = await alterarReserva(id, reserva);
+
+        const alteracoes = await Promise.all(reservasAlteradas.map(async (reserva) => {
+          return await alterarReserva(reserva.id_reserva, {
+              ds_observacao: reserva.ds_observacao,
+              status_cd: reserva.status_cd,
+          });
+        }));
+
         res.json({
-          reserva: reservaAlterada,
+          reservas: alteracoes,
           message: 'Reserva(s) alterada(s) com sucesso!',
-        });
+      });
         
-        const acao = ('Alteração realizada na tabela reserva, com o id: ' + id);
-        const decode = await decodeJWT(req.headers.authorization);
+        const acao = ('Alteração realizada na tabela reserva, com o id: ' + id_grupo);
+        const decode = decodeJWT(req.headers.authorization);
         const userLog = decode.id_usuario;
         const ip = req.ip;
         await gravarLog(userLog,ip,acao);
@@ -393,7 +501,7 @@ router.put("/reserva/:id", auth , checkPermission('admin'), async (req,res) => {
     }
     })
     
-router.delete("/reserva/:id", auth , checkPermission('admin'), async (req,res) => {
+/*router.delete("/reserva/:id", auth , checkPermission('admin'), async (req,res) => {
     try{
         const id = Number(req.params.id);
         if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
@@ -417,21 +525,20 @@ router.delete("/reserva/:id", auth , checkPermission('admin'), async (req,res) =
         console.error("Erro ao deletar sala:" + error);
         res.status(500).json({ message: "Server Error" });
     }
-})
+})*/
 
 
-router.delete("/reservas/grupo/:idGrupo", auth , checkPermission('admin'), async (req, res) => {
+router.delete("/reserva/:idGrupo", auth , checkPermission('admin'), async (req, res) => {
   try {
     const idGrupo = req.params.idGrupo;
     if (idGrupo < 0) {
       return res.status(404).json({ error: "ID do grupo inválido!" });
     }
-
     const reservas = await buscarReservaGrupo(idGrupo);
     if (!reservas || reservas.length === 0) {
-      return res.status(404).json({ error: "Não há reservas encontradas para o grupo especificado!" });
+      return res.status(404).json({ error: "Não foram encontradas reservas!" });
     }
-
+console.log(reservas)
     for (const reserva of reservas) {
       await deletarReserva(reserva.id_reserva);
     }

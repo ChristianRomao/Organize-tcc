@@ -75,6 +75,7 @@
     padding: 10px 10px;
     width: 100%;
     margin: 1px 0px;
+    margin-left: 20px;
     border-radius: 10px;
     border-style: none;
 }
@@ -306,6 +307,33 @@
     text-align: center;
 }
 
+.success {
+    width: 300px;
+    background: #68e278;
+    border-radius: 25px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #00ff00;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.success-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success-body {
+    text-align: center;
+}
+
 .delete-button-group {
     margin-top: 20px;
 }
@@ -339,4 +367,20 @@
 .buttons-actions {
     display: flex;
     flex-direction: row;
+}
+
+.message-alert-cons-reserva{
+    color: #ff9100;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -28px;
+}
+
+.message-error-cons-reserva{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -28px;
 }
