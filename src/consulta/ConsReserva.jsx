@@ -387,68 +387,68 @@ const consultaReserva = useCallback(async () =>{
     return (
        <Layout title='Consulta da Reserva' next="" noicon>
         <div className="ajustes-consulta-reserva">
+            <div className="grid-cons-reserva">
+                <select 
+                    className="select-consulta-reserva" 
+                    name="Tipo Filtro" 
+                    value={tp_filtro}
+                    onChange={handleSetTipoFiltro}
+                    id="tp_filtro"
+                >
+                    <option value="Tipos" selected hidden>Selecione o tipo</option>
+                    <option value="tp_nmReserva" >Nome</option>
+                    <option value="tp_nmSala" >Sala</option>
+                    <option value="tp_nmUsuario" >Usuário</option>
+                    <option value="tp_dsCurso" >Curso</option>
+                    {/* <option value="tp_dtReserva" >Data</option> */}
+                    <option value="tp_stReserva" >Status</option>
+                </select>
+                {/* <input 
+                    disabled={!tp_filtro || tp_filtro !== "tp_dtReserva"}
+                    className="inputs-data-reserva"
+                    type="date"     
+                    name="dt_filtro"     
+                    id=""
+                    value={dt_filtro}
+                    onChange={handleChange}
+                /> */}
+                {tp_filtro === "tp_stReserva"?
+                <select 
+                    className="select-consulta-reserva" 
+                    name="cd_status" 
+                    value={selectStatus}
+                    onChange={handleSetStatus}
+                    id="cd_status"
+                >
+                    <option value="Tipos" selected hidden>Selecione o Status</option>
+                    {listStatus.map((status) => (
+                        <option key={status.cd_status} value={status.cd_status}>
+                            {status.ds_status}
+                        </option>
+                    ))}
+                </select>
+                :
+                <input 
+                    disabled={!tp_filtro || tp_filtro === "tp_dtReserva"}
+                    className="inputs-consulta-reserva"
+                    type="search" 
+                    name="ds_filtro" 
+                    placeholder={ds_placeholder?`${ds_placeholder}`:"Selecione o tipo de filtro"}
+                    value={ds_filtro}
+                    onChange={handleChange}
+                    id="" 
+                />}
+                <button 
+                    disabled={tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)} 
+                    className={`botao-consulta-reserva ${tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)? 'disabled-hover' : ''}`} 
+                    type="button"
+                    onClick={()=>searchComFiltro(tp_filtro,ds_filtro,dt_filtro)}
+                >
+                    Pesquisar
+                </button>
+                <button className="botao-limpa-filtro" type="button" onClick={handleClearFiltro}><FontAwesomeIcon icon={faX}/></button>
+            </div>
             <div className="conteudo-consulta-reserva">
-                <div className="grid-cons-reserva">
-                    <select 
-                        className="select-consulta-reserva" 
-                        name="Tipo Filtro" 
-                        value={tp_filtro}
-                        onChange={handleSetTipoFiltro}
-                        id="tp_filtro"
-                    >
-                        <option value="Tipos" selected hidden>Selecione o tipo</option>
-                        <option value="tp_nmReserva" >Nome</option>
-                        <option value="tp_nmSala" >Sala</option>
-                        <option value="tp_nmUsuario" >Usuário</option>
-                        <option value="tp_dsCurso" >Curso</option>
-                        {/* <option value="tp_dtReserva" >Data</option> */}
-                        <option value="tp_stReserva" >Status</option>
-                    </select>
-                    {/* <input 
-                        disabled={!tp_filtro || tp_filtro !== "tp_dtReserva"}
-                        className="inputs-data-reserva"
-                        type="date"     
-                        name="dt_filtro"     
-                        id=""
-                        value={dt_filtro}
-                        onChange={handleChange}
-                    /> */}
-                    {tp_filtro === "tp_stReserva"?
-                    <select 
-                        className="select-consulta-reserva" 
-                        name="cd_status" 
-                        value={selectStatus}
-                        onChange={handleSetStatus}
-                        id="cd_status"
-                    >
-                        <option value="Tipos" selected hidden>Selecione o Status</option>
-                        {listStatus.map((status) => (
-                            <option key={status.cd_status} value={status.cd_status}>
-                                {status.ds_status}
-                            </option>
-                        ))}
-                    </select>
-                    :
-                    <input 
-                        disabled={!tp_filtro || tp_filtro === "tp_dtReserva"}
-                        className="inputs-consulta-reserva"
-                        type="search" 
-                        name="ds_filtro" 
-                        placeholder={ds_placeholder?`${ds_placeholder}`:"Selecione o tipo de filtro"}
-                        value={ds_filtro}
-                        onChange={handleChange}
-                        id="" 
-                    />}
-                    <button 
-                        disabled={tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)} 
-                        className={`botao-consulta-reserva ${tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)? 'disabled-hover' : ''}`} 
-                        type="button"
-                        onClick={()=>searchComFiltro(tp_filtro,ds_filtro,dt_filtro)}
-                    >
-                        Pesquisar
-                    </button>
-                    <button className="botao-limpa-filtro" type="button" onClick={handleClearFiltro}><FontAwesomeIcon icon={faX}/></button>
-                </div>
                 <div className="tabela">
                     <table>
                         <thead className="cabecalho">
@@ -467,20 +467,20 @@ const consultaReserva = useCallback(async () =>{
                         <tbody className="contudo-tabela">
                             {reservas.map((reserva) => (
                                 <tr key={reserva.id_reserva}>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.nm_reserva}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.sala.nm_sala}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.usuario.nm_usuario}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.nm_reserva}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.sala.nm_sala}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.usuario.nm_usuario}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>
                                     
                                     {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
                                 </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body-status ajuste-textos"}>
                                     {editRowId === reserva.id_grupo? (
                                         <select 
-                                            className="colunas-body-selection"
+                                            className="dropdown-selection"
                                             name="cd_status" 
                                             value={selectStatusChange}
                                             onChange={handleSetStatusChange}
@@ -497,7 +497,7 @@ const consultaReserva = useCallback(async () =>{
                                         reserva.status.ds_status
                                     )}
                                 </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>
                                     {editRowId === reserva.id_grupo? (
                                         <input 
                                             className="input-selection"

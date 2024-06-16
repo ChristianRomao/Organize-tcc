@@ -5,7 +5,7 @@
 .ajustes-consulta-reserva {
     width: 100%;
     height: 100%;
-    margin-top: 15rem;
+    margin-top: 12rem;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -25,16 +25,18 @@
 .conteudo-consulta-reserva {
     display: flex;
     flex-direction: column;
-    margin-top: -10em;
+    margin-bottom: 4em;
     margin-inline: 10em;
 }
 
 .grid-cons-reserva {
     display: flex;
+    margin-inline: 14em;
+    margin-bottom: 38em;
     background-color: #003681;
     border-radius: 20px;
-    margin-top: 35px;
-    padding: 10px 10px 9.4px 10px;
+    position: fixed;
+    padding: 10px 10px 10px 10px;
 }
 
 .titulo-consulta-reserva {
@@ -130,16 +132,17 @@
 .tabela {
     background-color: #003d99;
     border-radius: 10px;
-    padding: 0px 10px 10px 10px;
+    padding: 6px 10px 10px 10px;
     display: flex;
     /* width: 1024px; */
     flex-direction: column;
-    margin-inline: -6em;
+    margin-inline: -8em;
     margin-top: 25px;
-    max-height: 450px;
+    max-height: 460px;
     overflow-y: auto;
 }
-.tabela thead{
+
+/* .tabela thead{
     /* position: fixed;
     background-color: #003d99;
     border-radius: 10px;
@@ -150,9 +153,8 @@
     /* margin-inline: -6em; */
     /* margin-top: 25px; */
     /* max-height: 450px;
-    overflow-y: auto; */
-}
-
+    overflow-y: auto;
+} */
 
 .tabela::-webkit-scrollbar {
     padding-left: 70px;
@@ -182,18 +184,21 @@
 
 .colunas-cabecalho {
     border-radius: 10px 10px 10px 10px;
-    padding: 4px;
-}
-
-.conteudo-tabela {
-    /* background-color: #aeceff; */
+    padding: 8px;
 }
 
 .colunas-body {
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px 10px 10px;
     padding: 6px;
     background-color: #aeceff;
 }
+
+.colunas-body-status {
+    border-radius: 10px 10px 10px 10px;
+    padding: 10px 28px 10px 28px;
+    background-color: #aeceff;
+}
+
 .colunas-body-button {
     border-radius: 10px 10px 0px 0px;
     padding: 6px;
@@ -201,13 +206,23 @@
 }
 
 .colunas-body-selection{
-    border-radius: 10px 10px 0px 0px;
-    padding: 6px;
+    border-radius: 10px 10px 10px 10px;
+    padding: 4px;
     background-color: #4dff6a;
 }
 
 .input-selection{
     background-color: #4dff6a;
+    padding: 10px;
+    font-size: small;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.dropdown-selection{
+    background-color: #4dff6a;
+    padding: 10px 0px;
+    font-size: small;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .button-coluna-body{
