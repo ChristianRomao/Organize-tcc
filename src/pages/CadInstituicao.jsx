@@ -30,7 +30,9 @@ const CadInstituicao = () => {
         setNm_razaosoc(value);
         break;
       case "cd_cpfcnpj":
-        setCd_cpfcnpj(value);
+        if (value.length <= 14 && /^\d*$/.test(value)) {
+          setCd_cpfcnpj(value);
+          }
         break;
       case "nm_fantasia":
         setNm_fantasia(value);

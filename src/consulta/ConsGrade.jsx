@@ -58,19 +58,19 @@ const ConsGrade = () => {
                     </div>
                     <div className="consulta-grade">
                         <h4>Disciplina:</h4>
-                        <p className="ajuste-textos">Java</p>
+                        <p className="ajuste-textos">{grade.disciplina.nm_disciplina}</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Professor:</h4>
-                        <p className="ajuste-textos">Jhonny</p>
+                        <p className="ajuste-textos">{grade.nm_professor}</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Carga Horária:</h4>
-                        <p className="ajuste-textos">40 horas</p>
+                        <p className="ajuste-textos">{grade.nr_cargaHr} hr</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Qt. Alunos:</h4>
-                        <p className="ajuste-textos">50 Alunos</p>
+                        <p className="ajuste-textos">{grade.qt_alunos} alunos</p>
                     </div>
                 </div>
             ))}
