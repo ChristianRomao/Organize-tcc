@@ -2,6 +2,7 @@ const express = require("express");
 const {
     listarMaterialSalas,
     buscarMaterialSalaId,
+    buscarMaterialPorSala,
     gravarMaterialSala,
     alterarMaterialSala,
     deletarMaterialSala
@@ -49,6 +50,27 @@ router.get("/materialSala/:id", auth, async (req,res) => {
 
     res.json({materialSala : materialSala});
     const acao = ('Consulta realizada na tabela MaterialSala, com o id: ' + id);
+    const decode = decodeJWT(req.headers.authorization);
+    const userLog = decode.id_usuario;
+    const ip = req.ip;
+    await gravarLog(userLog,ip,acao);
+});
+
+router.get("/materialSala/sala/:id", auth, async (req,res) => {
+    const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
+    const sala = await buscarSalaId(id);
+    const materialSala = await buscarMaterialPorSala(id)
+
+    if(!materialSala || materialSala.length === 0){
+        return res.status(404).json({error:"Não possui material vinculado na sala: "+sala.nm_sala});
+    }
+
+    res.json({materialSala : materialSala});
+    const acao = ('Consulta realizada na tabela MaterialSala, com o id da sala: ' + id);
     const decode = decodeJWT(req.headers.authorization);
     const userLog = decode.id_usuario;
     const ip = req.ip;
@@ -237,13 +259,27 @@ router.delete("/materialSala/:id", auth, async (req,res) => {
             return res.status(404).json({error:"MaterialSala não encontrado!"});
         }
 
+        const materialExiste = await buscarMaterialId(materialSalaExiste.material.id_material);
+
+        if (!materialExiste) {
+            return res.status(404).json({error:`Material com id ${materialSalaExiste.material.id_material} não encontrado!`});
+        }
+
+        const materialEstoque = materialExiste.qt_material + materialSalaExiste.qt_materialSala;
+
+        const material = {
+            qt_material: materialEstoque
+        }
+
+        await alterarMaterial(materialExiste.id_material,material);
+
         await deletarMaterialSala(id);
         const acao = ('Deletado MaterialSala com o id: ' + id);
         const decode = await decodeJWT(req.headers.authorization);
         const userLog = decode.id_usuario;
         const ip = req.ip;
         await gravarLog(userLog,ip,acao);
-        return res.status(200).json({ message: "Vínculo de material e sala deletado com sucesso!" });
+        return res.status(200).json({ message: "Vínculo de material e sala removido com sucesso!" });
     }catch (error) {
         console.error("Erro ao deletar MaterialSala:" + error);
         res.status(500).json({ message: "Server Error" });

@@ -22,3 +22,152 @@
     margin-inline: 50px;
     padding: 14px;
 }
+
+.button-materiais{
+    background-color: #09264e;
+    color: #FFFFFF;
+    font-size: 17px;
+    padding-block: 6px;
+}
+.button-materiais:hover{
+    cursor: pointer;
+}
+
+.body-modal-all{
+    display: flex;
+    flex-direction: column;
+    width: 1100px;
+    max-height: 740px;
+    overflow-y: auto;
+}
+
+.body-modal-all::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 8px;
+    right: 10px;
+}
+
+.body-modal-all::-webkit-scrollbar-track {
+    background: #002d6b;
+    border-radius: 10px;
+    margin-top: 35px;
+}
+
+.body-modal-all::-webkit-scrollbar-thumb {
+    background: #89baff;
+    border-radius: 10px;
+}
+
+.body-modal-all::-webkit-scrollbar-thumb:hover {
+    background: #4b4b4b;
+}
+
+.modal-body-consSala{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.info-modal-consSala {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    margin-top: 2em;
+    margin-inline: 6em;
+    border-radius: 20PX;
+    background-color: #7eb4ff;
+    box-shadow: 0px 0px 20px #000000;
+    transition: 0.2s;
+}.info-modal-consSala:hover {
+    background-color: #b8d6ff;
+}
+
+.item-row-consSala {
+    flex-direction: row;
+    border-radius: 12px;
+    color: white;
+    background-color: #09264e;
+    margin-inline: 40px;
+    padding: 14px;
+}
+
+.button-rem-vinc{
+    background-color: #bb0000;
+    color: #FFFFFF;
+    font-size: 15px;
+    border-radius: 12px;
+    margin-inline: 40px;
+    padding-inline: 14px;
+    height: 50px;
+}
+.button-rem-vinc:hover{
+    cursor: pointer;
+    background-color: #FF0000;
+}
+
+.delete-vinc {
+    width: 400px;
+    background: #e26868;
+    border-radius: 25px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #ff0000;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.delete-vinc-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-vinc-body {
+    text-align: center;
+}
+
+.delete-vinc-button-group {
+    margin-top: 20px;
+}
+
+.delete-vinc button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-vinc button:nth-child(2) {
+    background-color: #b30000;
+    color: #fff;
+}
+
+.delete-vinc button:nth-child(2):hover {
+    background-color: #b30000c4;
+    color: #fff;
+}
+
+.delete-vinc button:nth-child(1) {
+    background-color: #e6e6e6;
+}
+
+.delete-vinc button:nth-child(1):hover {
+    background-color: #ffffff;
+}
+
+.message-error-cons-sala{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -28px;
+}

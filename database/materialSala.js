@@ -4,7 +4,24 @@ const listarMaterialSalas = () =>{
     return prisma.materialSala.findMany({
         include: {
             material: true,    
-            sala: true,    
+            sala: {
+                include: {
+                    bloco: {
+                    include: {
+                        polo: {
+                        include: {
+                            instituicao: true,
+                            municipio: {
+                            include: {
+                                estado: true,
+                            },
+                            },
+                        },
+                        },
+                    },
+                    },
+                },
+            }     
         }
     })
 }
@@ -16,7 +33,55 @@ const buscarMaterialSalaId = (id) =>{
         },
         include: {
             material: true,    
-            sala: true,    
+            sala: {
+                include: {
+                    bloco: {
+                    include: {
+                        polo: {
+                        include: {
+                            instituicao: true,
+                            municipio: {
+                            include: {
+                                estado: true,
+                            },
+                            },
+                        },
+                        },
+                    },
+                    },
+                },
+            }   
+        }
+    });
+}
+
+const buscarMaterialPorSala = (id) =>{
+    return prisma.materialSala.findMany({
+        where:{
+            sala:{
+                id_sala:id
+            }
+        },
+        include: {
+            material: true,    
+            sala: {
+                include: {
+                    bloco: {
+                    include: {
+                        polo: {
+                        include: {
+                            instituicao: true,
+                            municipio: {
+                            include: {
+                                estado: true,
+                            },
+                            },
+                        },
+                        },
+                    },
+                    },
+                },
+            }       
         }
     });
 }
@@ -52,6 +117,7 @@ const deletarMaterialSala = (id) => {
 module.exports = {
     listarMaterialSalas,
     buscarMaterialSalaId,
+    buscarMaterialPorSala,
     gravarMaterialSala,
     alterarMaterialSala,
     deletarMaterialSala
