@@ -381,7 +381,7 @@ const CadReserva = () => {
   };
 
   const handleCadastrarReserva = async () => {
-    console.log(selectHoraInicio+'     '+selectHoraFim);
+    setAlerta("")
     if(!selectDataInicio || !selectDataFim || !selectHoraInicio || !selectHoraFim || !nmReserva || !selectSalaPolo || !selectUsuario || !selectGradeTurma){
       setError("Campos obrigatórios devem ser preenchidos!")
     }else{
