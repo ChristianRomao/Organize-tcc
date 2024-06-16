@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import ModalComponent from "../components/ModalComponent";
 
 const ConsSala = () => {
 
@@ -13,6 +14,16 @@ const ConsSala = () => {
     const { isAuthenticated } = useAuth();
     const token = localStorage.getItem("token");
     const [salas, setSalas] = useState([]);
+    const [materiaisSala, setMateriaisSala] = useState([]);
+    const [materiaisSalaDelete, setMateriaisSalaDelete] = useState([])
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [tituloModal, setTituloModal] = useState("");
+    const [showConfirmAlert, setShowConfirmAlert] = useState(false);
+
+    const [error, setError] = useState("");
+    const [messageSuccess, setMessageSuccess] = useState("");
 
     const consultaSalas = useCallback(async () => {
         try {
@@ -30,6 +41,28 @@ const ConsSala = () => {
             }
         } catch (error) {
           console.log(error.response.data);
+          setError(error.response.data.error);
+        }
+    }, [token]);
+
+    const consultaMaterialPorSala = useCallback(async (idSala) => {
+        setError("");
+        try {
+            const response = await axios.get(`http://localhost:8080/materialsala/sala/${idSala}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = response.data.materialSala;
+            if (Array.isArray(data)) {
+                setMateriaisSala(data);
+            } else {
+                console.error("Formato inexperado do respose de materialSala", data);
+                setMateriaisSala([]);
+            }
+        } catch (error) {
+          console.log(error.response.data);
+          setError(error.response.data.error);
         }
     }, [token]);
 
@@ -41,7 +74,62 @@ const ConsSala = () => {
         }
       }, [isAuthenticated, navigate, consultaSalas]);
 
+    const handleConfirmDelete = (confirm) => {
+    if (confirm) {
+        deletarVinculoMatSala(materiaisSalaDelete.id_materialSala);
+    } else {
+        setShowConfirmAlert(false)
+        setMateriaisSalaDelete([])
+    }
+    }
+
+    const handleOpenMateriais = async (sala) =>{
+        setMateriaisSala([]);
+        await consultaMaterialPorSala(sala.id_sala);
+        setIsModalOpen(true);
+        setTituloModal("Materiais - Sala "+sala.nm_sala+" - Bloco "+sala.bloco.nm_bloco+" - Polo "+sala.bloco.polo.nm_polo);
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setTituloModal("");
+        setError("");
+      };
+
+    const handleDeleteVinc = (materialSalaDel) =>{
+        setShowConfirmAlert(true);
+        setMateriaisSalaDelete(materialSalaDel)
+    }
+
+    const deletarVinculoMatSala = async (id) =>{
+        try{
+            const response = await axios.delete(`http://localhost:8080/materialSala/${id}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            consultaSalas();
+            setIsModalOpen(false);
+            setShowConfirmAlert(false);
+            setMateriaisSalaDelete([])
+            console.log(response.data)
+            setMessageSuccess(response.data.message);
+            setTimeout(() => {
+                setMessageSuccess("");
+              }, 2000);
+        }catch(error){
+            console.log(error.response.data);
+            // setShowConfirmAlert(false);
+            // setMessageDelete(error.response.data.error);
+            // setTimeout(() => {
+            //     setMessageDelete("");
+            //     setEditRowId(null);
+            //   }, 5000);
+        }
+    }
+
     return (
+        <div>
         <LayoutConsulta titleCons='Consulta Salas'>
             {salas.map((sala) => (
                 <div className="informacoes-sala" key={sala.id_sala }>
@@ -59,12 +147,66 @@ const ConsSala = () => {
                         <p>{sala.qt_capacvigilancia} Pessoas</p>
                     </div>
                     <div className="consulta-sala">
-                        <h4>Materiais em Sala:</h4>
-                        <p>4 Materiais</p>
+                        <button className="button-materiais" onClick={()=>handleOpenMateriais(sala)}>Materiais</button>
                     </div>
                 </div>
             ))}
         </LayoutConsulta>
+              <ModalComponent
+              isOpen={isModalOpen}
+              onClose={handleCloseModal}
+              titleM={tituloModal}
+            >
+            {error ? 
+                <text className="message-error-cons-sala">{error}</text>
+                 :( 
+                <div className="body-modal-all">
+                    {materiaisSala.map((materialSala) => ( 
+                    <div className="info-modal-consSala" key={materialSala.id_materialSala}>
+                        <div className="modal-body-consSala">
+                            <div className="item-row-consSala">
+                                <h4>Material:</h4>
+                            <p>{materialSala.material.ds_material}</p>
+                            </div>
+                            <div className="item-row-consSala">
+                                <h4>Quantidade na Sala:</h4>
+                            <p>{materialSala.qt_materialSala}</p>
+                            </div>
+                            <div className="item-row-consSala">
+                                <h4>Quantidade Total:</h4>
+                            <p>{materialSala.material.qt_material}</p>
+                            </div>
+                            <button className="button-rem-vinc" onClick={()=>handleDeleteVinc(materialSala)}>Remover<br></br>Vinculo</button>
+                        </div>
+                    </div>
+            ))}
+            </div>)}
+            {showConfirmAlert &&(
+            <div className="delete-overlay">
+                <div className="delete-vinc">
+                    <div className="delete-vinc-body">
+                        <h1>ATENÇÃO!</h1>
+                        <p>Certeza que deseja deletar o vinculo do material "{materiaisSalaDelete.material.ds_material}" com a sala "{materiaisSalaDelete.sala.nm_sala}"?</p>
+                        <div className="delete-vinc-button-group">
+                            <button onClick={() => handleConfirmDelete(true)}>Sim</button>
+                            <button onClick={() => handleConfirmDelete(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
+            </ModalComponent>
+            {messageSuccess &&(
+                    <div className="success-overlay">
+
+                    <div className="success">
+                    <div className="success-body">
+                        <h3>{messageSuccess}</h3>
+                    </div>
+                    </div>
+                </div>
+        )}
+            </div>
     );
 }
 
