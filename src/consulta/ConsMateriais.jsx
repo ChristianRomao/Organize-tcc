@@ -124,7 +124,7 @@ const ConsMateriais = () => {
                     <FontAwesomeIcon icon={faPencil} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-materiais">
                         <h4>Nome Material:</h4>
-                        <p>{material.ds_material}</p>
+                        <p className="ajuste-textos">{material.ds_material}</p>
                     </div>
                     <div className="consulta-materiais">
                         <h4>Quantidade:</h4>

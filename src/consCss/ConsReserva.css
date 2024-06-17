@@ -31,7 +31,7 @@
 
 .grid-cons-reserva {
     display: flex;
-    margin-inline: 14em;
+    margin-inline: 20em;
     margin-bottom: 38em;
     background-color: #003681;
     border-radius: 20px;
@@ -193,6 +193,10 @@
     background-color: #aeceff;
 }
 
+#info-cabecalho{
+    background-color: #003d99;
+}
+
 .colunas-body-status {
     border-radius: 10px 10px 10px 10px;
     padding: 10px 28px 10px 28px;
@@ -250,6 +254,21 @@
     transition: 0.2s;
 }.btn-editar:hover {
     background-color: rgb(228, 156, 0);
+    color: #adffad;
+}
+
+.btn-info{
+    background-color: #d5e2ff;
+    cursor: pointer;
+    border-radius: 14px;
+    width: 30px;
+    font-weight: 600;
+    font-size: medium;
+    padding: 6px;
+    margin-right: 2px;
+    transition: 0.2s;
+}.btn-info:hover {
+    background-color: #2b3f6b;
     color: #adffad;
 }
 
