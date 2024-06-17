@@ -33,10 +33,10 @@ const LoginPage = () => {
     const handleSenhaChange = (event) => {
         const senha = event.target.value
         setSenha(senha);
-        setSenhaInvalida(senha.trim() === '');
+        const senhaValida = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-        if(senha.length < 8){
-            setErro('Insira no mínimo 8 caracteres');
+        if(!senhaValida.test(senha)){
+            setErro('Formato de senha incorreto!');
         }else{
             setErro('');
         }
@@ -71,6 +71,9 @@ const LoginPage = () => {
     
     const mostraSenha = () => {
         setSenhaVisivel(!senhaVisivel)
+        setTimeout(() => {
+            setSenhaVisivel(false);
+          }, 6000);
     }
 
     return (

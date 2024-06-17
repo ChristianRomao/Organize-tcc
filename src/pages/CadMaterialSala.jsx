@@ -306,8 +306,8 @@ const CadMaterialSala = ({ onClose }) => {
                             <h1>ATENÇÃO!</h1>
                             <p>Possuem campos preenchidos!<br></br>Deseja voltar?</p>
                             <div className="close-alert-button-group">
-                                <button onClick={() => handleConfirmClose(true)}>Sim</button>
                                 <button onClick={() => handleConfirmClose(false)}>Cancelar</button>
+                                <button onClick={() => handleConfirmClose(true)}>Sim</button>
                             </div>
                         </div>
                     </div>

@@ -27,6 +27,13 @@
     display: flex;
 }
 
+.titulo-inputs-cursoturma-error {
+    color: #ff0000;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
 .titulo-inputs-cursoturma-title{
     color: #d6e7ff;
     font-size: 20px;
@@ -77,3 +84,4 @@
     color: #ff0000;
     font-style: oblique;
 }
+

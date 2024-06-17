@@ -15,6 +15,13 @@
     display: flex;
 }
 
+.titulo-inputs-municipio-error {
+    color: #FF0000;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
 .titulo-inst-municipio {
     color: #7c8ca3;
     margin-top: 10px;
@@ -24,6 +31,8 @@
 .ajustes-municipio {
     width: 50%;
     margin-top: 80px;
+    display: flex;
+    flex-direction: column;
     animation: slide-in 1s ease forwards;
 }
 @keyframes slide-in {
@@ -45,7 +54,6 @@
     width: 150px;
     height: 40px;
     margin-top: 30px;
-    margin-right: 110px;
     transition: 0.2s;
     font-weight: bolder;
     cursor: pointer;
@@ -54,4 +62,28 @@
     transition: 0.2s;
     background-color: #09ff5b;
     color: #007226;
+}
+
+.text-error-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.message-municipio-success{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
+}
+
+.message-municipio-error{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
 }

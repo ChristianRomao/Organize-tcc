@@ -299,7 +299,7 @@ const CadSala = () => {
             value={selectBloco}
             onChange={handleSetBloco}
           >
-            <option value="">Selecione um bloco</option>
+            <option value="" hidden>Selecione um bloco</option>
             {blocos.map((bloco) => (
               <option key={bloco.id_bloco} value={bloco.id_bloco}>
                 {bloco.nm_bloco} - {bloco.polo.nm_polo}
@@ -340,7 +340,7 @@ const CadSala = () => {
         >
           {"" || errorSala || successSala}
         </text>
-        <div className="grid">
+        <div className="grid-sala">
           <button
             disabled={!!errorSala}
             className="grava-sala"
@@ -455,8 +455,8 @@ const CadSala = () => {
                             <h1>ATENÇÃO!</h1>
                             <p>Deseja encerrar o cadastro de materiais para a sala {nm_SalaStored} ?</p>
                             <div className="close-alert-button-group">
-                                <button onClick={() => handleConfirmClose(true)}>Sim</button>
                                 <button onClick={() => handleConfirmClose(false)}>Cancelar</button>
+                                <button onClick={() => handleConfirmClose(true)}>Sim</button>
                             </div>
                         </div>
                     </div>

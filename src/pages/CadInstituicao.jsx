@@ -16,6 +16,9 @@ const CadInstituicao = () => {
 
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   useEffect(() => {
     if (!isAuthenticated()) {
       navigate("/login");
@@ -23,6 +26,7 @@ const CadInstituicao = () => {
   }, [isAuthenticated, navigate]);
 
   const handleChange = (event) => {
+    setError("");
     const { name, value } = event.target;
     console.log(name, value);
     switch (name) {
@@ -32,7 +36,7 @@ const CadInstituicao = () => {
       case "cd_cpfcnpj":
         if (value.length <= 14 && /^\d*$/.test(value)) {
           setCd_cpfcnpj(value);
-          }
+        }
         break;
       case "nm_fantasia":
         setNm_fantasia(value);
@@ -57,12 +61,24 @@ const CadInstituicao = () => {
     setCd_cpfcnpj('');
     setNm_fantasia('');
     setNm_razaosoc('');
-    console.log(response.data);
+    setError("")
+    setSuccess(response.data.message);
+    setTimeout(() =>{
+      setSuccess("");
+    },5000)
   }catch(error){
     console.log(error.response.data);
-
+    setError(error.response.data.error)
   }
 };
+
+const validaCadastroInstituicao = () =>{
+    if(!nm_razaosoc || !nm_fantasia || !cd_cpfcnpj){
+      setError("Campos obrigatórios devem ser preenchidos!")
+    }else{
+      handleCadastroInst();
+    }
+}
 
   return (
     <Layout
@@ -72,7 +88,7 @@ const CadInstituicao = () => {
     >
       <form className="Ajustes">
         <div>
-          <label className="titulo-inputs-inst">Razão Social</label>
+          <label className={error && !nm_razaosoc?"titulo-inputs-inst-error":"titulo-inputs-inst"}>Razão Social</label>
           <input
             className="inputs-inst"
             type="text"
@@ -83,7 +99,7 @@ const CadInstituicao = () => {
           />
         </div>
         <div>
-          <label className="titulo-inputs-inst">CPF/CNPJ</label>
+          <label className={error && !cd_cpfcnpj?"titulo-inputs-inst-error":"titulo-inputs-inst"}>CPF/CNPJ</label>
           <input
             className="inputs-inst"
             type="text"
@@ -94,7 +110,7 @@ const CadInstituicao = () => {
           />
         </div>
         <div>
-          <label className="titulo-inputs-inst">Nome Fantasia</label>
+          <label className={error && !nm_fantasia?"titulo-inputs-inst-error":"titulo-inputs-inst"}>Nome Fantasia</label>
           <input
             className="inputs-inst"
             type="text"
@@ -104,9 +120,12 @@ const CadInstituicao = () => {
             required
           />
         </div>
-        <button className="botao-inst" type="button" onClick={handleCadastroInst}>
-          Gravar
-        </button>
+        <div className="text-error-button">
+          <text className={error ? "message-instituicao-error" : success ? "message-instituicao-success" : ""}>{"" || error || success}</text>
+          <button className="botao-inst" type="button" onClick={validaCadastroInstituicao}>
+            Gravar
+          </button>
+        </div>
       </form>
     </Layout>
   );

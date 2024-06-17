@@ -15,6 +15,13 @@
     display: flex;
 }
 
+.titulo-inputs-inst-error {
+    color: #ff0000;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
 .Ajustes {
     width: 50%;
     margin-top: 80px;
@@ -39,7 +46,6 @@
     width: 150px;
     height: 40px;
     margin-top: 30px;
-    margin-right: 100px;
     transition: 0.2s;
     font-weight: bolder;
     cursor: pointer;
@@ -48,4 +54,20 @@
     transition: 0.2s;
     background-color: #09ff5b;
     color: #007226;
+}
+
+.message-instituicao-error{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
+}
+
+.message-instituicao-success{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
 }

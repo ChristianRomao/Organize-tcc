@@ -118,7 +118,7 @@
 .icon-eye-registro {
     position: absolute;
     top: 46%;
-    right: 240px;
+    right: 260px;
     transform: translateY(-50%);
     cursor: pointer;
 }
@@ -136,7 +136,7 @@
     font-weight: bold;
     font-size: medium;
     padding-top: 5px;
-    margin-bottom: -10px;
+    margin-bottom: -50px;
 }
 
 .return-login-alert-overlay {
@@ -178,21 +178,21 @@
     cursor: pointer;
 }
 
-.return-login-alert button:nth-child(2) {
+.return-login-alert button:nth-child(1) {
     background-color: #b40000;
     color: #fff;
 }
 
-.return-login-alert button:nth-child(2):hover {
+.return-login-alert button:nth-child(1):hover {
     background-color: #ff0000;
     color: #fff;
 }
 
-.return-login-alert button:nth-child(1) {
+.return-login-alert button:nth-child(2) {
     background-color: #e6e6e6;
     
 }
 
-.return-login-alert button:nth-child(1):hover {
+.return-login-alert button:nth-child(2):hover {
     background-color: #ffffff;
 }

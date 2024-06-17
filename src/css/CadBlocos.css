@@ -1,7 +1,7 @@
 .select-bloco {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 90%;
+    width: 70%;
     margin: 6px 0px;
     display: flex;
     border-radius: 10px;
@@ -12,7 +12,7 @@
 .input-bloco {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 19.6em;
+    width: 70%;
     margin: 6px 0px;
     display: flex;
     border-radius: 10px;
@@ -27,8 +27,16 @@
     display: flex;
 }
 
+.titulo-inputs-bloco-error {
+    color: #FF0000;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: flex;
+}
+
 .ajustes-bloco {
     margin-top: 80px;
+    width: 70%;
     animation: slide-in 1s ease forwards;
 }
 @keyframes slide-in {
@@ -42,9 +50,20 @@
     }
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: auto auto;
+.message-bloco-success{
+    color: #09ff5b;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
+}
+
+.message-bloco-error{
+    color: #ff0000;
+    font-weight: bold;
+    font-size: medium;
+    padding-top: 5px;
+    margin-bottom: -10px;
 }
 
 .botao-bloco {
@@ -55,7 +74,6 @@
     width: 150px;
     height: 40px;
     margin-top: 30px;
-    margin-right: 140px;
     transition: 0.2s;
     font-weight: bolder;
     cursor: pointer;
@@ -64,4 +82,12 @@
     transition: 0.2s;
     background-color: #09ff5b;
     color: #00581d;
+}
+
+.text-error-button-bloco{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
 }

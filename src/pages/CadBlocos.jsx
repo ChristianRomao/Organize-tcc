@@ -15,6 +15,9 @@ const CadBlocos = () => {
   const [selectPolo, setSelectPolo] = useState("");
   const [nm_bloco, setNm_bloco] = useState("");
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const buscarPolo = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:8080/consulta-polo", {
@@ -31,6 +34,8 @@ const CadBlocos = () => {
       }
     } catch (error) {
       console.log(error.response.data);
+      setError(error.response.data.error)
+
     }
   }, [token]);
 
@@ -43,10 +48,12 @@ const CadBlocos = () => {
   }, [isAuthenticated, navigate, buscarPolo]);
 
   const handleSetPolo = (event) => {
+    setError("");
     setSelectPolo(event.target.value);
   };
 
   const handleChange = (event) => {
+    setError("");
     setNm_bloco(event.target.value);
   };
 
@@ -65,17 +72,29 @@ const CadBlocos = () => {
       });
       setNm_bloco('');
       setSelectPolo('');
-      console.log(response.data);
+      setError("")
+      setSuccess(response.data.message);
+      setTimeout(() =>{
+        setSuccess("");
+      },5000)
     } catch (error) {
-      console.log(error.response.data);
+      setError(error.response.data.error)
     }
   };
+
+  const validaCadastroBloco = () =>{
+    if(!selectPolo || !nm_bloco){
+      setError("Campos obrigatórios devem ser preenchidos!")
+    }else{
+      handleCadastroBloco();
+    }
+  }
 
   return (
     <Layout title="Cadastro de Bloco" icon={faCube} next="sala">
       <form className="ajustes-bloco">
         <div>
-          <label className="titulo-inputs-bloco">Polo</label>
+          <label className={error && !selectPolo?"titulo-inputs-bloco-error":"titulo-inputs-bloco"}>Polo</label>
           <select
             className="select-bloco"
             id=""
@@ -84,7 +103,7 @@ const CadBlocos = () => {
             onChange={handleSetPolo}
             required
           >
-            <option value="">Selecione um polo</option>
+            <option value="" hidden>Selecione um polo</option>
             {polos.map((polo) => (
                 <option
                   key={polo.id_polo}
@@ -96,8 +115,8 @@ const CadBlocos = () => {
           </select>
         </div>
         <div>
-          <label className="titulo-inputs-bloco">Nome do Bloco</label>
-          <div className="grid">
+          <label className={error && !nm_bloco?"titulo-inputs-bloco-error":"titulo-inputs-bloco"}>Nome do Bloco</label>
+          <div>
             <input
               className="input-bloco"
               type="text"
@@ -108,13 +127,16 @@ const CadBlocos = () => {
             />
           </div>
         </div>
-        <button
-          className="botao-bloco"
-          type="button"
-          onClick={handleCadastroBloco}
-        >
-          Gravar
-        </button>
+        <div className="text-error-button-bloco">
+          <text className={error ? "message-bloco-error" : success ? "message-bloco-success" : ""}>{"" || error || success}</text>
+          <button
+            className="botao-bloco"
+            type="button"
+            onClick={validaCadastroBloco}
+          >
+            Gravar
+          </button>
+        </div>
       </form>
     </Layout>
   );

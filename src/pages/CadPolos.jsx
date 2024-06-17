@@ -18,6 +18,9 @@ const CadPolos = () => {
   const [nm_polo, setNm_polo] = useState("");
   const [ds_endereco, setDs_endereco] = useState("");
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const buscarInstituicao = useCallback(async () => {
     try {
       const response = await axios.get("http://localhost:8080/consulta-instituicao", {
@@ -33,7 +36,7 @@ const CadPolos = () => {
         setInstituicoes([]);
       }
     } catch (error) {
-      console.log(error.response.data);
+      setError(error.response.data.error);
     }
   }, [token]);
 
@@ -52,7 +55,8 @@ const CadPolos = () => {
         setMunicipios([]);
       }
     } catch (error) {
-      console.log(error.response.data);
+      setError(error.response.data.error);
+
     }
   }, [token]);
 
@@ -67,14 +71,17 @@ const CadPolos = () => {
 
 
   const handleSetInstituicao = (event) => {
+    setError("");
     setSelectInstituicao(event.target.value);
   };
 
   const handleSetMunicipio = (event) => {
+    setError("");
     setSelectMunicipio(event.target.value);
   };
 
   const handleChange = (event) => {
+    setError("");
     const { name, value } = event.target;
     switch (name) {
       case "nm_polo":
@@ -109,18 +116,30 @@ const CadPolos = () => {
       setDs_endereco('');
       setSelectInstituicao('');
       setSelectMunicipio('');
+      setError("")
+      setSuccess(response.data.message);
+      setTimeout(() =>{
+        setSuccess("");
+      },5000)
       console.log(response.data);
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
+  const validaCadastroPolo = () =>{
+    if(!selectInstituicao || !selectMunicipio || !nm_polo || !ds_endereco){
+      setError("Campos obrigatórios devem ser preenchidos!")
+    }
+      handleCadastroPolo()
+  }
+
   return (
     <Layout title="Cadastro de Polo" icon={faLocationDot} next="bloco">
       <form className="ajustes-polo">
         <div>
           <div>
-            <label className="titulo-inputs-polo">Instituição</label>
+            <label className={error && !selectInstituicao?"titulo-inputs-polo-error":"titulo-inputs-polo"}>Instituição</label>
             <select
               className="inputs-polo"
               id=""
@@ -129,7 +148,7 @@ const CadPolos = () => {
               onChange={handleSetInstituicao}
               required
             >
-              <option value="">Selecione uma Instituição</option>
+              <option value="" hidden>Selecione uma Instituição</option>
               {instituicoes.map((instituicao) => (
                 <option
                   key={instituicao.id_instituicao}
@@ -142,7 +161,7 @@ const CadPolos = () => {
           </div>
         </div>
         <div>
-          <label className="titulo-inputs-polo">Município</label>
+          <label className={error && !selectMunicipio?"titulo-inputs-polo-error":"titulo-inputs-polo"}>Município</label>
           <select
             className="inputs-polo"
             id=""
@@ -151,7 +170,7 @@ const CadPolos = () => {
             onChange={handleSetMunicipio}
             required
           >
-            <option value="">Selecione um Município</option>
+            <option value="" hidden>Selecione um Município</option>
             {municipios.map((municipio) => (
               <option
                 key={municipio.id_municipio}
@@ -163,7 +182,7 @@ const CadPolos = () => {
           </select>
         </div>
         <div>
-          <label className="titulo-inputs-polo">Nome do Polo</label>
+          <label className={error && !nm_polo?"titulo-inputs-polo-error":"titulo-inputs-polo"}>Nome do Polo</label>
           <input
             className="inputs-polo"
             type="text"
@@ -174,7 +193,7 @@ const CadPolos = () => {
           />
         </div>
         <div>
-          <label className="titulo-inputs-polo">Endereço do Local</label>
+          <label className={error && !ds_endereco?"titulo-inputs-polo-error":"titulo-inputs-polo"}>Endereço do Local</label>
           <input
             className="inputs-polo"
             type="text"
@@ -184,13 +203,16 @@ const CadPolos = () => {
             required
           />
         </div>
-        <button
-          className="botao-polo"
-          type="button"
-          onClick={handleCadastroPolo}
-        >
-          Gravar
-        </button>
+        <div className="text-error-button">
+          <text className={error ? "message-polo-error" : success ? "message-polo-success" : ""}>{"" || error || success}</text>
+          <button
+            className="botao-polo"
+            type="button"
+            onClick={validaCadastroPolo}
+          >
+            Gravar
+          </button>
+          </div>
       </form>
     </Layout>
   );

@@ -14,6 +14,9 @@ const CadDisciplina = () => {
 
   const [nm_disciplina, setNm_disciplina] = useState('');
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   useEffect(() => {
     if (!isAuthenticated()) {
       navigate("/login");
@@ -22,6 +25,7 @@ const CadDisciplina = () => {
 
 
   const handleChange = (event) => {
+    setError("");
     setNm_disciplina(event.target.value)
   };
 
@@ -41,11 +45,24 @@ const CadDisciplina = () => {
         }
       );
       setNm_disciplina("");
-      console.log(response.data);
+      setError("")
+        setSuccess(response.data.message);
+        setTimeout(() =>{
+          setSuccess("");
+        },5000)
     } catch (error) {
       console.log(error.response.data);
+      setError(error.response.data.error)
     }
   };
+
+const validaCadastroDisciplina = () =>{
+  if(!nm_disciplina){
+    setError("Campos obrigatórios devem ser preenchidos!")
+  }else{
+  handleCadastroDisciplina();
+  }
+}
 
   return (
     <Layout
@@ -55,7 +72,7 @@ const CadDisciplina = () => {
     >
       <form className="Ajustes">
         <div>
-          <label className="titulo-inputs-disciplina">Nome da Disciplina</label>
+          <label className={error && !nm_disciplina ? "titulo-inputs-disciplina-error":"titulo-inputs-disciplina"}>Nome da Disciplina</label>
           <input
             className="inputs-disciplina"
             type="text"
@@ -65,13 +82,17 @@ const CadDisciplina = () => {
             required
           />
         </div>
-        <button
-          className="botao-disciplina"
-          type="button"
-          onClick={handleCadastroDisciplina}
-        >
-          Gravar
-        </button>
+        <div className="text-error-button-disciplina">
+          <text className={error ? "message-disciplina-error" : success ? "message-disciplina-success" : ""}>{"" || error || success}</text>
+          
+          <button
+            className="botao-disciplina"
+            type="button"
+            onClick={validaCadastroDisciplina}
+          >
+            Gravar
+          </button>
+        </div>
       </form>
     </Layout>
   );
