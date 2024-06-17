@@ -344,12 +344,12 @@ router.post("/reserva", auth, async (req, res) => {
       // const dt_inicioDia = new Date(inicioMoment).toLocaleString('pt-BR');
       // const dt_fimDia = new Date(req.body.dt_fim).toLocaleString('pt-BR');
       
-      const horaInicio = moment(req.body.dt_inicio).format('HH:mm:ss');
+      const horaInicio = moment(req.body.dt_inicio).add(1, 'seconds').format('HH:mm:ss');
       const horaFim = moment(req.body.dt_fim).format('HH:mm:ss');
 
       const dt_inicioDia = new Date(date).toLocaleString('pt-BR');
       const dt_fimDia = new Date(date).toLocaleString('pt-BR');
-  
+
       const [inicioDia, inicioHora] = dt_inicioDia.split(', ');
       const [fimDia, fimHora] = dt_fimDia.split(', ');
 
@@ -359,7 +359,7 @@ router.post("/reserva", auth, async (req, res) => {
       const existeReserva = await buscarReservasPeriodoSala(sala.id_sala, dt_inicioDate, dt_fimDate);
 
       if (existeReserva.length > 0) {
-        return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} na data e hora informada (${date.format('YYYY-MM-DD')})!` });
+        return res.status(406).json({ alert: `Já possui reserva para a sala ${salaExiste.nm_sala} na data e hora informada (${inicioDia})!` });
       }
 
       reservas.push({

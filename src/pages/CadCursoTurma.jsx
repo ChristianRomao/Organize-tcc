@@ -15,9 +15,13 @@ const CadCursoTurma = () => {
     const [selectCurso, setSelectCurso] = useState("");
     const [ds_curso, setDs_curso] = useState("");
     const [ds_turma, setDs_turma] = useState("");
-    const [error, setError] = useState(false);
     const [nr_anoletivo, setNr_anoletivo] = useState("");
-  
+    
+    const [error, setError] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const [isCurso, setIsCurso] = useState(null);
+
     const buscarCurso = useCallback(async () => {
       try {
         const response = await axios.get("http://localhost:8080/consulta-curso", {
@@ -47,14 +51,17 @@ const CadCursoTurma = () => {
     }, [isAuthenticated, navigate, buscarCurso]);
   
     const handleSetCurso = (event) => {
+      setError("");
       setSelectCurso(event.target.value);
     };
   
     const handleChangeCurso = (event) => {
+      setError("")
         setDs_curso(event.target.value);
     };
 
     const handleChangeTurma = (event) => {
+        setError("");
         const {name,value} = event.target
         switch (name) {
           case "ds_turma":
@@ -90,11 +97,17 @@ const CadCursoTurma = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        setIsCurso(null);
         setDs_curso('');
-        window.location.reload();
-        console.log(response.data);
+        buscarCurso();
+        setError("")
+        setSuccess(response.data.message);
+        setTimeout(() =>{
+          setSuccess("");
+        },5000)
       } catch (error) {
         console.log(error.response.data);
+        setError(error.response.data.error)
       }
     };
   
@@ -112,21 +125,47 @@ const CadCursoTurma = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        setIsCurso(null);
         setDs_turma('');
         setNr_anoletivo('');
         setSelectCurso('');
-        console.log(response.data);
+        setError("")
+        setSuccess(response.data.message);
+        setTimeout(() =>{
+          setSuccess("");
+        },5000)
       } catch (error) {
         console.log(error.response.data);
+        setError(error.response.data.error)
       }
     };
   
+    const validaCadastroCurso = () =>{
+      setError("");
+      setIsCurso(true);
+      if(!ds_curso){
+        setError("Campos obrigatórios devem ser preenchidos!")
+      }else{
+        handleCadastroCurso();
+      }
+    }
+    
+    const validaCadastroTurma = () =>{
+      setError("");
+      setIsCurso(false);
+      if(!selectCurso || !nr_anoletivo || !ds_turma){
+        setError("Campos obrigatórios devem ser preenchidos!")
+      }else{
+        handleCadastroTurma();
+      }
+    }
+
     return (
       <Layout title="Cadastro de Curso/Turma" icon={faGraduationCap} next="disciplina">
         <form className="ajustes-cursoturma">
             <div>
                 <label className="titulo-inputs-cursoturma-title">Curso</label>
-                <label className="titulo-inputs-cursoturma">Nome do Curso</label>
+                <label className={error && !ds_curso && isCurso?"titulo-inputs-cursoturma-error":"titulo-inputs-cursoturma"}>Nome do Curso</label>
                 <div className="grid_cursoturma">
                 <input
                     className="input-cursoturma"
@@ -137,9 +176,10 @@ const CadCursoTurma = () => {
                     required
                 />
                 <button
+                    disabled={error && isCurso}
                     className="adiciona-cursoturma"
                     type="button"
-                    onClick={handleCadastroCurso}
+                    onClick={validaCadastroCurso}
                 >
                     Gravar
                 </button>
@@ -148,7 +188,7 @@ const CadCursoTurma = () => {
           <div>
             <div>
                 <label className="titulo-inputs-cursoturma-title">Turma</label>
-                <label className="titulo-inputs-cursoturma">Curso</label>
+                <label className={error && !selectCurso && !isCurso?"titulo-inputs-cursoturma-error":"titulo-inputs-cursoturma"}>Curso</label>
                 <select
                 className="select-cursoturma"
                 id=""
@@ -169,7 +209,7 @@ const CadCursoTurma = () => {
                 </select>
             </div>
             <div>
-                <label className="titulo-inputs-cursoturma">Ano Letivo</label>
+                <label className={error && !nr_anoletivo && !isCurso?"titulo-inputs-cursoturma-error":"titulo-inputs-cursoturma"}>Ano Letivo</label>
                 <div className="grid_cursoturma">
                 <input
                     className="input-cursoturma"
@@ -182,7 +222,7 @@ const CadCursoTurma = () => {
                 </div>
             </div>
             <div>
-                <label className="titulo-inputs-cursoturma">Descrição da Turma</label>
+                <label className={error && !ds_turma && !isCurso?"titulo-inputs-cursoturma-error":"titulo-inputs-cursoturma"}>Nome da Turma</label>
                 <div className="grid_cursoturma">
                 <input
                     className="input-cursoturma"
@@ -195,13 +235,13 @@ const CadCursoTurma = () => {
                 <button
                     className="adiciona-cursoturma"
                     type="button"
-                    onClick={handleCadastroTurma}
+                    onClick={validaCadastroTurma}
                 >
                     Gravar
                 </button>
                 </div>
-                <text className="error-cursoturma">{error}</text>
-            </div>
+                <text className={error ? "message-municipio-error" : success ? "message-municipio-success" : ""}>{"" || error || success}</text>
+                </div>
            </div>
         </form>
       </Layout>

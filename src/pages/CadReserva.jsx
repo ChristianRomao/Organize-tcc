@@ -382,7 +382,7 @@ const CadReserva = () => {
 
   const handleCadastrarReserva = async () => {
     setAlerta("")
-    if(!selectDataInicio || !selectDataFim || !selectHoraInicio || !selectHoraFim || !nmReserva || !selectSalaPolo || !selectUsuario || !selectGradeTurma){
+    if(!selectDataInicio || !selectDataFim || !selectHoraInicio || !selectHoraFim || !nmReserva || nmReserva.length === 0 || !selectSalaPolo || !selectUsuario || !selectGradeTurma){
       setError("Campos obrigatórios devem ser preenchidos!")
     }else{
       setError("")

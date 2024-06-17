@@ -92,10 +92,16 @@ const RegisterPage = () => {
 
   const mostrarSenha = () => {
     setSenhaVisivel(!senhaVisivel);
+    setTimeout(() => {
+      setSenhaVisivel(false);
+    }, 6000);
   };
 
   const mostrarConfirmaSenha = () => {
     setConfirmaSenhaVisivel(!confirmaSenhaVisivel);
+    setTimeout(() => {
+      setConfirmaSenhaVisivel(false);
+    }, 6000);
   };
 
   const handleSetFuncao = (event) => {
@@ -106,6 +112,8 @@ const RegisterPage = () => {
   const handleCadastroUsuarioValida = () => {
     let possuiErro = false;
     setError("");
+
+    const senhaValida = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (
       !nm_usuario ||
@@ -125,9 +133,9 @@ const RegisterPage = () => {
       possuiErro = true;
     }
 
-    if (ds_senha.length < 8 || ds_senhaConfirm.length < 8) {
-      setError("Senha deve conter no mínimo 8 caracteres");
-      possuiErro = true;
+    if(!senhaValida.test(ds_senha)){
+      setError("Senha com no mínimo 8 caracteres, sendo letra maiúscula e minúscula, um número e um caractere especial.");
+      possuiErro = true;  
     }
 
     if (errorEmail) {
@@ -314,6 +322,7 @@ const RegisterPage = () => {
             </label>
             <div className="div-showPassword">
               <input
+              onPaste={(e) => e.preventDefault()}
                 className="inputs-registro"
                 placeholder={confirmaSenhaVisivel ? "Exemplo123@" : "********"}
                 type={confirmaSenhaVisivel ? "text" : "password"}
@@ -356,21 +365,6 @@ const RegisterPage = () => {
                 )}
               </span>
             </div>
-            {/* <label
-              className={
-                error && !ds_funcao ? "titulo-inputs-error" : "titulo-inputs"
-              }
-            >
-              Função do usuário
-            </label>
-            <input
-              className="inputs-registro"
-              placeholder="Função Usuário"
-              type="text"
-              name="ds_funcao"
-              onChange={handleChange}
-              value={ds_funcao}
-            />*/}
               <div>
                 <label
                   className={
@@ -389,7 +383,7 @@ const RegisterPage = () => {
                   onChange={handleSetFuncao}
                   required
                 >
-                  <option value="">Função</option>
+                  <option value="" hidden>Função</option>
                   <option value="admin">Adminstrador</option>
                   <option value="user">Usuário</option>
                   
@@ -438,8 +432,8 @@ const RegisterPage = () => {
                 Deseja voltar?
               </p>
               <div className="return-login-alert-button-group">
-                <button onClick={() => handleConfirmAlert(true)}>Sim</button>
                 <button onClick={() => handleConfirmAlert(false)}>Não</button>
+                <button onClick={() => handleConfirmAlert(true)}>Sim</button>
               </div>
             </div>
           </div>

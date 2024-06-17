@@ -15,6 +15,9 @@ const CadMunicipio = () => {
   const [selectEstado, setSelectEstado] = useState("");
   const [nm_municipio, setNm_municipio] = useState("");
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const buscarEstado = useCallback(async () => {
     try {
       const response = await axios.get(
@@ -33,7 +36,7 @@ const CadMunicipio = () => {
         setEstados([]);
       }
     } catch (error) {
-      console.log(error.response.data);
+      setError(error.response.data.error);
     }
   }, [token]);
 
@@ -46,10 +49,12 @@ const CadMunicipio = () => {
   }, [isAuthenticated, navigate, buscarEstado]);
 
   const handleSetEstado = (event) => {
+    setError("");
     setSelectEstado(event.target.value);
   }
 
   const handleChange = (event) => {
+    setError("");
     setNm_municipio(event.target.value)
   }
 
@@ -70,10 +75,22 @@ const CadMunicipio = () => {
         });
         setNm_municipio('');
         setSelectEstado('');
-        console.log(response.data);
+        setError("")
+        setSuccess(response.data.message);
+        setTimeout(() =>{
+          setSuccess("");
+        },5000)
     }catch(error){
         console.log(error.response.data);
+        setError(error.response.data.error)
+    }
+  }
 
+  const validaCadastroMunicipio = () =>{
+    if(!selectEstado || !nm_municipio){
+      setError("Campos obrigatórios devem ser preenchidos!")
+    }else{
+    handleCadastrarMunicipio();
     }
   }
 
@@ -86,7 +103,7 @@ const CadMunicipio = () => {
       <form className="ajustes-municipio">
         <div>
           <div>
-            <label className="titulo-inputs-municipio">Estado</label>
+            <label className={error && !selectEstado?"titulo-inputs-municipio-error":"titulo-inputs-municipio"}>Estado</label>
             <select
               className="inputs-municipio"
               id=""
@@ -95,7 +112,7 @@ const CadMunicipio = () => {
               onChange={handleSetEstado}
               required
             >
-              <option value="">Selecione uma Estado</option>
+              <option value="" hidden>Selecione uma Estado</option>
               {estados.map((estado) => (
                 <option key={estado.id_estado} value={estado.id_estado}>
                   {estado.cd_estado} - {estado.nm_estado}
@@ -105,7 +122,7 @@ const CadMunicipio = () => {
           </div>
         </div>
         <div>
-          <label className="titulo-inputs-municipio">Nome Município</label>
+          <label className={error && !nm_municipio?"titulo-inputs-municipio-error":"titulo-inputs-municipio"}>Nome Município</label>
           <input
             className="inputs-municipio"
             type="text"
@@ -115,9 +132,13 @@ const CadMunicipio = () => {
             required
           />
         </div>
-        <button className="botao-municipio" type="button" onClick={handleCadastrarMunicipio}>
+        <div className="text-error-button">
+          
+        <text className={error ? "message-municipio-error" : success ? "message-municipio-success" : ""}>{"" || error || success}</text>
+        <button className="botao-municipio" type="button" onClick={validaCadastroMunicipio}>
           Gravar
         </button>
+        </div>
       </form>
     </Layout>
   );

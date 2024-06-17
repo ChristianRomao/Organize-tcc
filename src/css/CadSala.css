@@ -33,6 +33,11 @@
     display: flex;
 }
 
+.grid-sala {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .ajustes-sala {
     width: 50%;
     margin-top: 80px;
@@ -76,7 +81,7 @@
     width: 120px;
     height: 40px;
     margin-top: 30px;
-    margin-left: 30px;
+    margin-left: 70px;
     transition: 0.2s;
     font-weight: bolder;
     cursor: pointer;
@@ -274,20 +279,20 @@
     cursor: pointer;
 }
 
-.close-alert button:nth-child(2) {
+.close-alert button:nth-child(1) {
     background-color: #b30000;
     color: #fff;
 }
 
-.close-alert button:nth-child(2):hover {
+.close-alert button:nth-child(1):hover {
     background-color: #b30000c4;
     color: #fff;
 }
 
-.close-alert button:nth-child(1) {
+.close-alert button:nth-child(2) {
     background-color: #e6e6e6;
 }
 
-.close-alert button:nth-child(1):hover {
+.close-alert button:nth-child(2):hover {
     background-color: #ffffff;
 }
