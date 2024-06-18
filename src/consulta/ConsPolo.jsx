@@ -52,7 +52,7 @@ const ConsPolo = () => {
                     </div>
                     <div className="consulta-polo">
                         <h4>Municipio:</h4>
-                        <p className="ajuste-textos">{polo.municipio.nm_municipio} - {polo.municipio.estado_cd}</p>
+                        <p className="ajuste-textos" data-tooltip={`${polo.municipio.nm_municipio} - ${polo.municipio.estado_cd}`}>{polo.municipio.nm_municipio} - {polo.municipio.estado_cd}</p>
                     </div>
                     <div className="consulta-polo">
                         <h4>Polo:</h4>

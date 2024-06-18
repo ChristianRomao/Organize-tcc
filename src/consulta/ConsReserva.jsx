@@ -450,7 +450,7 @@ const consultaReserva = useCallback(async () =>{
             <div className="conteudo-consulta-reserva">
                 <div className="tabela">
                     <table>
-                        <thead className="cabecalho">
+                        <thead>
                             <tr>
                                 <th id="info-cabecalho"></th>
                                 <th className="colunas-cabecalho">Nome</th>
@@ -478,7 +478,7 @@ const consultaReserva = useCallback(async () =>{
                                     
                                     {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
                                 </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body-status ajuste-textos"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body-status"}>
                                     {editRowId === reserva.id_grupo? (
                                         <select 
                                             className="dropdown-selection"
