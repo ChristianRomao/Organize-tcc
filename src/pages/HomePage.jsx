@@ -35,11 +35,11 @@ const HomePage = () => {
         try {
             
             await new Promise(resolve => setTimeout(resolve, 1000));
-            navigate(route); // Navega para a rota especificada
+            navigate(route);
         } catch (error) {
             console.error('Erro ao navegar:', error);
         } finally {
-            setIsLoading(false); // Conclui o estado de carregamento
+            setIsLoading(false);
         }
     };
 
@@ -112,7 +112,6 @@ const HomePage = () => {
             {isModalOpen && (
                 <CadMaterialSala onClose={handleCloseModal} />
             )}
-            {/* Exibir o ícone de loading condicionalmente */}
             {isLoading && <LoadingIcon />}
         </div>
     );
