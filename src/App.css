@@ -15,7 +15,7 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .ajuste-textos::after {
