@@ -86,6 +86,41 @@ const buscarMaterialPorSala = (id) =>{
     });
 }
 
+const buscarMaterialPorPolo = (id) =>{
+    return prisma.materialSala.findMany({
+        where:{
+            sala:{
+                bloco:{
+                    polo:{
+                        id_polo:id
+                    }
+                }
+            }
+        },
+        include: {
+            material: true,    
+            sala: {
+                include: {
+                    bloco: {
+                    include: {
+                        polo: {
+                        include: {
+                            instituicao: true,
+                            municipio: {
+                            include: {
+                                estado: true,
+                            },
+                            },
+                        },
+                        },
+                    },
+                    },
+                },
+            }       
+        }
+    });
+}
+
 const gravarMaterialSala = (materialSala) => {
     return prisma.materialSala.create({
         data:{
@@ -118,6 +153,7 @@ module.exports = {
     listarMaterialSalas,
     buscarMaterialSalaId,
     buscarMaterialPorSala,
+    buscarMaterialPorPolo,
     gravarMaterialSala,
     alterarMaterialSala,
     deletarMaterialSala

@@ -152,6 +152,31 @@
     text-align: center;
 }
 
+.time-reserva:focus {
+    background-color: #333ba7;
+    color:#ffffff;
+}
+
+.time-reserva::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 4px;
+    right: 4px;
+}
+
+.time-reserva::-webkit-scrollbar-track {
+    background: #333ba7;
+    border-radius: 10px;
+}
+
+.time-reserva::-webkit-scrollbar-thumb {
+    background: #333ba7;
+    border-radius: 10px;
+}
+
+.time-reserva::-webkit-scrollbar-thumb:hover {
+    background: #7075bd;
+}
+
 .time-reserva-error {
     margin-block: 2px;
     background-color: #d6e7ff;
@@ -162,9 +187,24 @@
     text-align: center;
 }
 
-.time-reserva:focus {
-    background-color: #333ba7;
-    color:#ffffff;
+.time-reserva-error::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 4px;
+    right: 4px;
+}
+
+.time-reserva-error::-webkit-scrollbar-track {
+    background: #d6e7ff;
+    border-radius: 10px;
+}
+
+.time-reserva-error::-webkit-scrollbar-thumb {
+    background: #d6e7ff;
+    border-radius: 10px;
+}
+
+.time-reserva-error::-webkit-scrollbar-thumb:hover {
+    background: #ff7b7b;
 }
 
 .ajustes-reserva {
@@ -388,4 +428,120 @@
     font-size: medium;
     padding-top: 5px;
     margin-bottom: -28px;
+}
+
+.descricao-reserva {
+    background-color: #00183a;
+    width: 510px;
+    height: 68vh;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px;
+    flex-direction: column;
+    grid-column: span 2;
+}
+@keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(-25px);
+    }
+}
+
+.header-reserva{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 105px;
+    animation: slide-in 1s ease forwards;
+}
+
+.content-descricao-reserva{
+    display: flex;
+    flex-direction: column;
+    width: 470px;
+    align-items: center;
+    height: 60vh;
+    max-height: 55vh;
+    overflow-y: auto;
+    animation: slide-in 1s ease forwards;
+    padding-right: 5px;
+    margin-right: 7px;
+}
+
+.content-descricao-reserva::-webkit-scrollbar {
+    padding-left: 70px;
+    width: 8px;
+    right: 10px;
+}
+
+.content-descricao-reserva::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.content-descricao-reserva::-webkit-scrollbar-thumb {
+    background: #2a77e4;
+    border-radius: 10px;
+}
+
+.content-descricao-reserva::-webkit-scrollbar-thumb:hover {
+    background: #0000009f;
+}
+.titulo-descricao-reserva {
+    text-align: center;
+    font-size: x-large;
+    color: white;
+    font-weight: bold;
+}
+
+.titulo-descricao-reserva-item {
+    text-align: center;
+    font-size: x-large;
+    color: #98c3ff;
+
+}
+
+.material-item-reserva{
+    color: white;
+    border-color: #98c3ff52;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    width: 80%;
+    padding-block: 8px;
+    margin-bottom: 10px;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.box-text-descricao-header{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-header-descricao-reserva{
+    background-color: #00183a;
+    color: #FFF;
+    font-size: medium;
+}
+.button-header-descricao-reserva:hover{
+    cursor: pointer;
+}
+
+.button-visibility-hidden{
+    visibility: hidden;
 }

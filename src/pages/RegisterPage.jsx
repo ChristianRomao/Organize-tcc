@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/RegisterPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-
+  const token = localStorage.getItem("token");
+  
   const [ds_email, setDs_email] = useState("");
   const [ds_senha, setDs_senha] = useState("");
   const [ds_senhaConfirm, setDs_senhaConfirm] = useState("");
@@ -16,6 +18,8 @@ const RegisterPage = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [confirmaSenhaVisivel, setConfirmaSenhaVisivel] = useState(false);
+
+  const [isAdm, setIsAdm] = useState(false);
 
   const [error, setError] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
@@ -133,7 +137,7 @@ const RegisterPage = () => {
       possuiErro = true;
     }
 
-    if(!senhaValida.test(ds_senha)){
+    if(!senhaValida.test(ds_senha) && ds_senha){
       setError("Senha com no mínimo 8 caracteres, sendo letra maiúscula e minúscula, um número e um caractere especial.");
       possuiErro = true;  
     }
@@ -187,6 +191,16 @@ const RegisterPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const decode = jwtDecode(token);
+
+    if(decode.ds_funcao === 'admin'){
+      setIsAdm(true);
+    }else{
+      setIsAdm(false);
+    }
+  },[token]);
 
   return (
     <div>
@@ -384,7 +398,7 @@ const RegisterPage = () => {
                   required
                 >
                   <option value="" hidden>Função</option>
-                  <option value="admin">Adminstrador</option>
+                  <option value="admin" hidden={!isAdm}>Adminstrador</option>
                   <option value="user">Usuário</option>
                   
                 </select>

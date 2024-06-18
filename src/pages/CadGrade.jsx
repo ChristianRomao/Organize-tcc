@@ -235,6 +235,7 @@ const CadGrade = () => {
             required
           />
         </div>
+        <div className="text-error-button-disciplina">
         <text className={error ? "message-grade-error" : success ? "message-grade-success" : ""}>{"" || error || success}</text>
         <button
         disabled={!!error}
@@ -244,6 +245,7 @@ const CadGrade = () => {
         >
           Gravar
         </button>
+        </div>
       </form>
     </Layout>
   );

@@ -538,7 +538,7 @@ router.delete("/reserva/:idGrupo", auth , checkPermission('admin'), async (req, 
     if (!reservas || reservas.length === 0) {
       return res.status(404).json({ error: "Não foram encontradas reservas!" });
     }
-console.log(reservas)
+    
     for (const reserva of reservas) {
       await deletarReserva(reserva.id_reserva);
     }
