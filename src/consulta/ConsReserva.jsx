@@ -4,7 +4,7 @@ import "../consCss/ConsReserva.css";
 import { useAuth } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
-import { faCheck, faX, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faX, faPen, faTrash, faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ConsReserva = () => {
@@ -452,6 +452,7 @@ const consultaReserva = useCallback(async () =>{
                     <table>
                         <thead className="cabecalho">
                             <tr>
+                                <th id="info-cabecalho"></th>
                                 <th className="colunas-cabecalho">Nome</th>
                                 <th className="colunas-cabecalho">Sala</th>
                                 <th className="colunas-cabecalho">Usuário</th>
@@ -465,18 +466,19 @@ const consultaReserva = useCallback(async () =>{
                         </thead>
                         <tbody className="contudo-tabela">
                             {reservas.map((reserva) => (
-                                <tr key={reserva.id_reserva}>
+                            <tr key={reserva.id_reserva}>
+                                <td><button className="btn-info"><FontAwesomeIcon icon={faInfo}/></button></td>
                                 <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.nm_reserva}</td>
                                 <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.sala.nm_sala}</td>
                                 <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.usuario.nm_usuario}</td>
                                 <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>
                                     
                                     {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
                                 </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body-status ajuste-textos"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body-status ajuste-textos"}>
                                     {editRowId === reserva.id_grupo? (
                                         <select 
                                             className="dropdown-selection"
@@ -496,7 +498,7 @@ const consultaReserva = useCallback(async () =>{
                                         reserva.status.ds_status
                                     )}
                                 </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body ajuste-textos"}>
+                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>
                                     {editRowId === reserva.id_grupo? (
                                         <input 
                                             className="input-selection"
@@ -513,18 +515,18 @@ const consultaReserva = useCallback(async () =>{
                                 </td>
                                 <td className="colunas-body-button">
                                     {editRowId === reserva.id_grupo? (
-                                                <div className="buttons-actions">
-                                                    {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_grupo)}>Salvar</button> */}
-                                                    <button className="btn-cancelar-edicao" onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
-                                                    <button className="btn-salvar" onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
-                                                </div>
-                                            ) : (
-                                                <div className="buttons-actions">
-                                                    <button className="btn-editar" onClick={() => handleChangeEdit(reserva)}><FontAwesomeIcon icon={faPen}/></button>
-                                                    <button className="btn-remover" onClick={() => handleDelete(reserva)}><FontAwesomeIcon icon={faTrash}/></button>
-                                                </div>
+                                        <div className="buttons-actions">
+                                            {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_grupo)}>Salvar</button> */}
+                                            <button className="btn-cancelar-edicao" onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
+                                            <button className="btn-salvar" onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
+                                        </div>
+                                    ) : (
+                                        <div className="buttons-actions">
+                                            <button className="btn-editar" onClick={() => handleChangeEdit(reserva)}><FontAwesomeIcon icon={faPen}/></button>
+                                            <button className="btn-remover" onClick={() => handleDelete(reserva)}><FontAwesomeIcon icon={faTrash}/></button>
+                                        </div>
 
-                                            )}
+                                    )}
                                 </td>
                             </tr>
                             ))}

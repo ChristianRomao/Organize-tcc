@@ -27,7 +27,7 @@ flex-direction: row;
     border: none;
     color: #001430; /* Cor do texto do botão */
     cursor: pointer;
-    margin: 18px;
+    margin: 16px;
     margin-right: 20px;
     padding: 12px 28px;
     border-radius: 50px 50px;
@@ -45,7 +45,7 @@ flex-direction: row;
 
 .menu {
     position: absolute;
-    top: 8%;
+    top: 71px;
     right: 0;
     background-color: #001531;
     transform: translateY(10%) translateX(-10px);
@@ -88,7 +88,7 @@ ul li {
     background-color: #ffffff;
     border: none;
     color: #001430;
-    margin: 18px;
+    margin: 13.2px;
     margin-right: 150px;
     padding: 12px 28px;
     border-radius: 50px 50px;
@@ -105,7 +105,7 @@ ul li {
     background-color: #a8ffa0;
     border: none;
     color: #001430;
-    margin: 18px;
+    margin: 13.2px;
     margin-right: 150px;
     padding: 12px 28px;
     border-radius: 50px 50px;

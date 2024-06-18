@@ -1,7 +1,7 @@
 .select-cursoturma {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 90%;
+    width: 98%;
     margin: 6px 0px;
     display: flex;
     border-radius: 10px;
@@ -12,7 +12,7 @@
 .input-cursoturma {
     background-color: #d6e7ff;
     padding: 10px 10px;
-    width: 90%;
+    width: 130%;
     margin: 6px 0px;
     display: flex;
     border-radius: 10px;
@@ -36,7 +36,7 @@
 
 .titulo-inputs-cursoturma-title{
     color: #d6e7ff;
-    font-size: 20px;
+    font-size: x-large;
 }
 
 .ajustes-cursoturma {
@@ -69,6 +69,7 @@
     border-radius: 8px;
     width: 100px;
     height: 30px;
+    margin-left: 90px;
     margin-top: 10px;
     transition: 0.2s;
     font-weight: bolder;

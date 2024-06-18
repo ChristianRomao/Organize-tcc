@@ -193,14 +193,14 @@
     margin-left: -60px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
+}
   
   .grid-sala:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
-  }
+}
   
-  .message-success-sala{
+.message-success-sala{
     color: #09ff5b;
     font-weight: bold;
     font-size: medium;
