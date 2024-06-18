@@ -1,18 +1,20 @@
-import '../css/HomePage.css';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faFloppyDisk, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import HeaderComponents from '../components/HeaderComponents';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthProvider';
-import { useEffect, useState } from 'react';
 import CadMaterialSala from './CadMaterialSala';
+import LoadingIcon from '../components/LoadingIcon';
+import '../css/HomePage.css';
+
 
 const HomePage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const {isAuthenticated} = useAuth();
-
-    const navigate = useNavigate()
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -23,39 +25,48 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        if(!isAuthenticated()){
-            navigate('/login')
+        if (!isAuthenticated()) {
+            navigate('/login');
         }
-    },[isAuthenticated, navigate])
+    }, [isAuthenticated, navigate]);
+
+    const handleNavigation = async (route) => {
+        setIsLoading(true);
+        try {
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            navigate(route); // Navega para a rota especificada
+        } catch (error) {
+            console.error('Erro ao navegar:', error);
+        } finally {
+            setIsLoading(false); // Conclui o estado de carregamento
+        }
+    };
 
     const handleCadastro = (cadastros) => {
-        if(cadastros === 'usuarios'){
-            navigate(`/registro`)
+        if(cadastros === "usuarios"){
+            handleNavigation(`/registro`);
         }else{
-            navigate(`/cadastro-${cadastros}`)
+            handleNavigation(`/cadastro-${cadastros}`);
         }
-    }
+    };
 
     const handleConsulta = (consulta) => {
-        if(consulta === 'usuarios'){
-            navigate(`/consulta`)
-        }else{
-            navigate(`/consulta-${consulta}`)
-        }
-    }
+        handleNavigation(`/consulta-${consulta}`);
+    };
 
     const handleReserva = (acao) => {
-        navigate(`/${acao}-reserva`)
-    }
+        handleNavigation(`/${acao}-reserva`);
+    };
 
     return (
         <div>
-            <HeaderComponents/>
+            <HeaderComponents />
             <body className='body-home'>
                 <div className='grid-principal'>
                     <div className='item-da-grid'>
                         <div className='interior'>
-                            <FontAwesomeIcon icon={faFloppyDisk} style={{color: "#ffffff",}} size='3x'/>
+                            <FontAwesomeIcon icon={faFloppyDisk} style={{ color: "#ffffff" }} size='3x' />
                             <p className='titulos-home'>Cadastro</p>
                             <div className='btn-gerais scrollable'>
                                 <button className='btn' type="button" onClick={() => handleCadastro('municipio')}>Município</button>
@@ -73,24 +84,22 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className='item-da-grid'>
-                        <div className='interior'>  
-                            <FontAwesomeIcon icon={faMagnifyingGlass} size='3x'/>
+                        <div className='interior'>
+                            <FontAwesomeIcon icon={faMagnifyingGlass} size='3x' />
                             <p className='titulos-home'>Consulta</p>
                             <div className='btn-gerais scrollable'>
-                                {/* <button className='btn' type="button" onClick={() => handleConsulta('instituicao')}>Instituição</button> */}
                                 <button className='btn' type="button" onClick={() => handleConsulta('polo')}>Polo</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('bloco')}>Bloco</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('sala')}>Sala</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('material')}>Materiais</button>
                                 <button className='btn' type="button" onClick={() => handleConsulta('usuario')}>Usuários</button>
-                                {/* <button className='btn' type="button" onClick={() => handleConsulta('turma')}>Turma</button> */}
                                 <button className='btn' type="button" onClick={() => handleConsulta('grade')}>Turmas</button>
                             </div>
                         </div>
                     </div>
                     <div className='item-da-grid'>
                         <div className='interior'>
-                            <FontAwesomeIcon icon={faCalendarDays} size='3x'/>
+                            <FontAwesomeIcon icon={faCalendarDays} size='3x' />
                             <p className='titulos-home'>Reserva</p>
                             <div className='btn-gerais'>
                                 <button className='btn' type="button" onClick={() => handleReserva('cadastro')}>Cadastrar</button>
@@ -103,8 +112,10 @@ const HomePage = () => {
             {isModalOpen && (
                 <CadMaterialSala onClose={handleCloseModal} />
             )}
+            {/* Exibir o ícone de loading condicionalmente */}
+            {isLoading && <LoadingIcon />}
         </div>
     );
-}
+};
 
 export default HomePage;

@@ -7,7 +7,6 @@ import axios from "axios";
 import {
   faArrowLeft,
   faArrowRight,
-  faLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from 'date-fns';
@@ -446,6 +445,10 @@ const CadReserva = () => {
       setSelectDataInicio(dataFixa);
       setSelectDataFim(dataFixa);
       setInAllDay(false);
+      setPage(1);
+      buscarCurso();
+      buscarSalaPolo();
+      buscarUsuario();
       setSuccess(response.data.message);
       setTimeout(() => {
         setSuccess("");
@@ -869,45 +872,46 @@ const CadReserva = () => {
               <div className="content-descricao-reserva">
                 {showDetailSala && page === 1 ? (
                   salaPolos.map((salaPolo) => (
-                    <div
+                    <ul
                       key={salaPolo.id_sala}
                       className="material-item-reserva"
                     >
-                      <h3>Sala: {salaPolo.nm_sala}</h3>
-                      <p>Bloco: {salaPolo.bloco.nm_bloco}</p>
-                      <p>Capacidade Permitida: {salaPolo.qt_capacvigilancia}</p>
-                    </div>
+                      <li style={{marginBlock:"-10px"}}><h3>{salaPolo.nm_sala}</h3></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Bloco: {salaPolo.bloco.nm_bloco}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Polo: {salaPolo.bloco.polo.nm_polo}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Capacidade Permitida: {salaPolo.qt_capacvigilancia}</p></li>
+                    </ul>
                   ))
                 ) : (
                   <></>
                 )}
                 {showDetailCurso && page === 2 ? (
                   gradeTurmas.map((gradeTurma) => (
-                    <div
+                    <ul
                       key={gradeTurma.id_grade}
                       className="material-item-reserva"
                     >
-                      <h3>Curso: {gradeTurma.turma.curso.ds_curso}</h3>
-                      <p>Qt. Alunos: {gradeTurma.qt_alunos}</p>
-                      <p>Disciplina: {gradeTurma.disciplina.nm_disciplina}</p>
-                      <p>Turma: {gradeTurma.turma.ds_turma}</p>
-                      <p>Ano Letivo: {gradeTurma.turma.nr_anoletivo}</p>
-                    </div>
+                      <li style={{marginBlock:"-10px"}}><h3>{gradeTurma.turma.curso.ds_curso}</h3></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Qt. Alunos: {gradeTurma.qt_alunos}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Disciplina: {gradeTurma.disciplina.nm_disciplina}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Turma: {gradeTurma.turma.ds_turma}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Ano Letivo: {gradeTurma.turma.nr_anoletivo}</p></li>
+                    </ul>
                   ))
                 ) : (
                   <></>
                 )}
                 {showDetailUser && page === 3 ? (
                   usuarios.map((usuario) => (
-                    <div
+                    <ul
                       key={usuario.id_usuario}
                       className="material-item-reserva"
                     >
-                      <h3>{usuario.nm_usuario}</h3>
-                      <p>Dt. Nascimento: {format(usuario.dt_nascimento, 'dd/MM/yyyy')}</p>
-                      <p>E-mail: {usuario.ds_email}</p>
-                      <p>Função: {usuario.ds_funcao === 'admin' ? "Administrador" : "Usuário"}</p>
-                    </div>
+                      <li style={{marginBlock:"-10px"}}><h3>{usuario.nm_usuario}</h3></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Dt. Nascimento: {format(usuario.dt_nascimento, 'dd/MM/yyyy')}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>E-mail: {usuario.ds_email}</p></li>
+                      <li style={{listStyleType:"circle", marginBlock:"-10px"}}><p>Função: {usuario.ds_funcao === 'admin' ? "Administrador" : "Usuário"}</p></li>
+                    </ul>
                   ))
                 ) : (
                   <></>

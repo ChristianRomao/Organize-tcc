@@ -137,7 +137,7 @@ const RegisterPage = () => {
       possuiErro = true;
     }
 
-    if(!senhaValida.test(ds_senha)){
+    if(!senhaValida.test(ds_senha) && ds_senha){
       setError("Senha com no mínimo 8 caracteres, sendo letra maiúscula e minúscula, um número e um caractere especial.");
       possuiErro = true;  
     }
