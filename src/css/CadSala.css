@@ -175,7 +175,7 @@
     color: #00581d;
 }
 
-  .grid .tooltiptext {
+  .grid-sala .tooltiptext {
     visibility: hidden;
     width: 170px;
     background-color: #002d6b;
@@ -195,7 +195,7 @@
     transition: opacity 0.3s;
   }
   
-  .grid:hover .tooltiptext {
+  .grid-sala:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
   }

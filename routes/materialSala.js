@@ -3,6 +3,7 @@ const {
     listarMaterialSalas,
     buscarMaterialSalaId,
     buscarMaterialPorSala,
+    buscarMaterialPorPolo,
     gravarMaterialSala,
     alterarMaterialSala,
     deletarMaterialSala
@@ -75,6 +76,18 @@ router.get("/materialSala/sala/:id", auth, async (req,res) => {
     const userLog = decode.id_usuario;
     const ip = req.ip;
     await gravarLog(userLog,ip,acao);
+});
+
+router.get("/materialSala/polo/:id", auth, async (req,res) => {
+    const id = Number(req.params.id);
+    if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
+    if (!numeroRegex.test(id)) {
+      return res.status(400).json({ error: 'Id deve conter apenas números.' });
+    }
+    const sala = await buscarSalaId(id);
+    const materialSala = await buscarMaterialPorPolo(id)
+
+    res.json({materialSala : materialSala});
 });
 
 /*router.post("/materialSala", auth, async (req, res) => {
