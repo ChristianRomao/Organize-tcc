@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { faCheck, faX, faPen, faTrash, faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalComponent from "../components/ModalComponent";
 
 const ConsReserva = () => {
     const { isAuthenticated } = useAuth();
@@ -35,6 +36,7 @@ const ConsReserva = () => {
     
     const [alerta, setAlerta] = useState("");
     const [messageSuccess, setMessageSuccess] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
 const consultaReserva = useCallback(async () =>{
     try{
@@ -380,199 +382,213 @@ const consultaReserva = useCallback(async () =>{
                 setTimeout(() => {
                     setMessageDelete("");
                     setEditRowId(null);
-                  }, 5000);            }
+                }, 5000);}
         }, [token]);
 
-    return (
-       <Layout title='Consulta da Reserva' next="" noicon>
-        <div className="ajustes-consulta-reserva">
-            <div className="grid-cons-reserva">
-                <select 
-                    className="select-consulta-reserva" 
-                    name="Tipo Filtro" 
-                    value={tp_filtro}
-                    onChange={handleSetTipoFiltro}
-                    id="tp_filtro"
-                >
-                    <option value="Tipos" selected hidden>Selecione o tipo</option>
-                    <option value="tp_nmReserva" >Nome</option>
-                    <option value="tp_nmSala" >Sala</option>
-                    <option value="tp_nmUsuario" >Usuário</option>
-                    <option value="tp_dsCurso" >Curso</option>
-                    {/* <option value="tp_dtReserva" >Data</option> */}
-                    <option value="tp_stReserva" >Status</option>
-                </select>
-                {/* <input 
-                    disabled={!tp_filtro || tp_filtro !== "tp_dtReserva"}
-                    className="inputs-data-reserva"
-                    type="date"     
-                    name="dt_filtro"     
-                    id=""
-                    value={dt_filtro}
-                    onChange={handleChange}
-                /> */}
-                {tp_filtro === "tp_stReserva"?
-                <select 
-                    className="select-consulta-reserva" 
-                    name="cd_status" 
-                    value={selectStatus}
-                    onChange={handleSetStatus}
-                    id="cd_status"
-                >
-                    <option value="Tipos" selected hidden>Selecione o Status</option>
-                    {listStatus.map((status) => (
-                        <option key={status.cd_status} value={status.cd_status}>
-                            {status.ds_status}
-                        </option>
-                    ))}
-                </select>
-                :
-                <input 
-                    disabled={!tp_filtro || tp_filtro === "tp_dtReserva"}
-                    className="inputs-consulta-reserva"
-                    type="search" 
-                    name="ds_filtro" 
-                    placeholder={ds_placeholder?`${ds_placeholder}`:"Selecione o tipo de filtro"}
-                    value={ds_filtro}
-                    onChange={handleChange}
-                    id="" 
-                />}
-                <button 
-                    disabled={tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)} 
-                    className={`botao-consulta-reserva ${tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)? 'disabled-hover' : ''}`} 
-                    type="button"
-                    onClick={()=>searchComFiltro(tp_filtro,ds_filtro,dt_filtro)}
-                >
-                    Pesquisar
-                </button>
-                <button className="botao-limpa-filtro" type="button" onClick={handleClearFiltro}><FontAwesomeIcon icon={faX}/></button>
-            </div>
-            <div className="conteudo-consulta-reserva">
-                <div className="tabela">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th id="info-cabecalho"></th>
-                                <th className="colunas-cabecalho">Nome</th>
-                                <th className="colunas-cabecalho">Sala</th>
-                                <th className="colunas-cabecalho">Usuário</th>
-                                <th className="colunas-cabecalho">Turma - Curso</th>
-                                <th className="colunas-cabecalho">Início</th>
-                                <th className="colunas-cabecalho">Fim</th>
-                                <th className="colunas-cabecalho">Hr Inicio - Hr Fim</th>
-                                <th className="colunas-cabecalho">Status</th>
-                                <th className="colunas-cabecalho">Observação</th>
-                            </tr>
-                        </thead>
-                        <tbody className="contudo-tabela">
-                            {reservas.map((reserva) => (
-                            <tr key={reserva.id_reserva}>
-                                <td><button className="btn-info"><FontAwesomeIcon icon={faInfo}/></button></td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.nm_reserva}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.sala.nm_sala}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.usuario.nm_usuario}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>
-                                    
-                                    {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
-                                </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body-status"}>
-                                    {editRowId === reserva.id_grupo? (
-                                        <select 
-                                            className="dropdown-selection"
-                                            name="cd_status" 
-                                            value={selectStatusChange}
-                                            onChange={handleSetStatusChange}
-                                            id="cd_status"
-                                            >
-                                            <option value="" selected hidden>Status</option>
-                                            {listStatus.map((status) => (
-                                                <option key={status.cd_status} value={status.cd_status}>
-                                                    {status.ds_status}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    ) : (
-                                        reserva.status.ds_status
-                                    )}
-                                </td>
-                                <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>
-                                    {editRowId === reserva.id_grupo? (
-                                        <input 
-                                            className="input-selection"
-                                            type="text" 
-                                            name="ds_observacaoChange" 
-                                            placeholder=""
-                                            value={dsObservacaoChange}
-                                            onChange={handleChange}
-                                            id="" 
-                                        />
-                                    ):(
-                                        reserva.ds_observacao
-                                    )}
-                                </td>
-                                <td className="colunas-body-button">
-                                    {editRowId === reserva.id_grupo? (
-                                        <div className="buttons-actions">
-                                            {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_grupo)}>Salvar</button> */}
-                                            <button className="btn-cancelar-edicao" onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
-                                            <button className="btn-salvar" onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
-                                        </div>
-                                    ) : (
-                                        <div className="buttons-actions">
-                                            <button className="btn-editar" onClick={() => handleChangeEdit(reserva)}><FontAwesomeIcon icon={faPen}/></button>
-                                            <button className="btn-remover" onClick={() => handleDelete(reserva)}><FontAwesomeIcon icon={faTrash}/></button>
-                                        </div>
+    const handleOpenInfos = async () =>{
+        setIsModalOpen(true);
+    }
 
-                                    )}
-                                </td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    return (
+        <div>
+        <Layout title='Consulta da Reserva' next="" noicon>
+            <div className="ajustes-consulta-reserva">
+                <div className="grid-cons-reserva">
+                    <select 
+                        className="select-consulta-reserva" 
+                        name="Tipo Filtro" 
+                        value={tp_filtro}
+                        onChange={handleSetTipoFiltro}
+                        id="tp_filtro"
+                    >
+                        <option value="Tipos" selected hidden>Selecione o tipo</option>
+                        <option value="tp_nmReserva" >Nome</option>
+                        <option value="tp_nmSala" >Sala</option>
+                        <option value="tp_nmUsuario" >Usuário</option>
+                        <option value="tp_dsCurso" >Curso</option>
+                        {/* <option value="tp_dtReserva" >Data</option> */}
+                        <option value="tp_stReserva" >Status</option>
+                    </select>
+                    {/* <input 
+                        disabled={!tp_filtro || tp_filtro !== "tp_dtReserva"}
+                        className="inputs-data-reserva"
+                        type="date"     
+                        name="dt_filtro"     
+                        id=""
+                        value={dt_filtro}
+                        onChange={handleChange}
+                    /> */}
+                    {tp_filtro === "tp_stReserva"?
+                    <select 
+                        className="select-consulta-reserva" 
+                        name="cd_status" 
+                        value={selectStatus}
+                        onChange={handleSetStatus}
+                        id="cd_status"
+                    >
+                        <option value="Tipos" selected hidden>Selecione o Status</option>
+                        {listStatus.map((status) => (
+                            <option key={status.cd_status} value={status.cd_status}>
+                                {status.ds_status}
+                            </option>
+                        ))}
+                    </select>
+                    :
+                    <input 
+                        disabled={!tp_filtro || tp_filtro === "tp_dtReserva"}
+                        className="inputs-consulta-reserva"
+                        type="search" 
+                        name="ds_filtro" 
+                        placeholder={ds_placeholder?`${ds_placeholder}`:"Selecione o tipo de filtro"}
+                        value={ds_filtro}
+                        onChange={handleChange}
+                        id="" 
+                    />}
+                    <button 
+                        disabled={tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)} 
+                        className={`botao-consulta-reserva ${tp_filtro && (!dt_filtro && !ds_filtro && !selectStatus)? 'disabled-hover' : ''}`} 
+                        type="button"
+                        onClick={()=>searchComFiltro(tp_filtro,ds_filtro,dt_filtro)}
+                    >
+                        Pesquisar
+                    </button>
+                    <button className="botao-limpa-filtro" type="button" onClick={handleClearFiltro}><FontAwesomeIcon icon={faX}/></button>
                 </div>
+                <div className="conteudo-consulta-reserva">
+                    <div className="tabela">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th id="info-cabecalho"></th>
+                                    <th className="colunas-cabecalho">Nome</th>
+                                    <th className="colunas-cabecalho">Sala</th>
+                                    <th className="colunas-cabecalho">Usuário</th>
+                                    <th className="colunas-cabecalho">Turma - Curso</th>
+                                    <th className="colunas-cabecalho">Início</th>
+                                    <th className="colunas-cabecalho">Fim</th>
+                                    <th className="colunas-cabecalho">Hr Inicio - Hr Fim</th>
+                                    <th className="colunas-cabecalho">Status</th>
+                                    <th className="colunas-cabecalho">Observação</th>
+                                </tr>
+                            </thead>
+                            <tbody className="contudo-tabela">
+                                {reservas.map((reserva) => (
+                                <tr key={reserva.id_reserva}>
+                                    <td><button className="btn-info" onClick={()=>handleOpenInfos()}><FontAwesomeIcon icon={faInfo}/></button></td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.nm_reserva}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.sala.nm_sala}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"} data-tooltip={reserva.usuario.nm_usuario}>{reserva.usuario.nm_usuario}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}> 
+                                        {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
+                                    </td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body-status"}>
+                                        {editRowId === reserva.id_grupo? (
+                                            <select 
+                                                className="dropdown-selection"
+                                                name="cd_status" 
+                                                value={selectStatusChange}
+                                                onChange={handleSetStatusChange}
+                                                id="cd_status"
+                                                >
+                                                <option value="" selected hidden>Status</option>
+                                                {listStatus.map((status) => (
+                                                    <option key={status.cd_status} value={status.cd_status}>
+                                                        {status.ds_status}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        ) : (
+                                            reserva.status.ds_status
+                                        )}
+                                    </td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"} data-tooltip={reserva.ds_observacao}>
+                                        {editRowId === reserva.id_grupo? (
+                                            <input 
+                                                className="input-selection"
+                                                type="text" 
+                                                name="ds_observacaoChange" 
+                                                placeholder=""
+                                                value={dsObservacaoChange}
+                                                onChange={handleChange}
+                                                id="" 
+                                            />
+                                        ):(
+                                            reserva.ds_observacao
+                                        )}
+                                    </td>
+                                    <td className="colunas-body-button">
+                                        {editRowId === reserva.id_grupo? (
+                                            <div className="buttons-actions">
+                                                {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_grupo)}>Salvar</button> */}
+                                                <button className="btn-cancelar-edicao" onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
+                                                <button className="btn-salvar" onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
+                                            </div>
+                                        ) : (
+                                            <div className="buttons-actions">
+                                                <button className="btn-editar" onClick={() => handleChangeEdit(reserva)}><FontAwesomeIcon icon={faPen}/></button>
+                                                <button className="btn-remover" onClick={() => handleDelete(reserva)}><FontAwesomeIcon icon={faTrash}/></button>
+                                            </div>
+
+                                        )}
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                {alerta ? <text className="message-alert-cons-reserva">{alerta}</text> : <></>}
+                {/* <text className="message-alert-cons-reserva">testeeeee</text> */}     
             </div>
-                        {alerta ? <text className="message-alert-cons-reserva">{alerta}</text> : <></>}
-                        {/* <text className="message-alert-cons-reserva">testeeeee</text> */}
-           
-        </div>
-        {showConfirmAlert &&(
-            <div className="delete-overlay">
-                <div className="delete">
-                    <div className="delete-body">
-                        <h1>ATENÇÃO!</h1>
-                        <p>Certeza que deseja deletar a reserva {nm_reservaDel}?</p>
-                        <div className="delete-button-group">
-                            <button onClick={() => handleConfirmDelete(true)}>Sim</button>
-                            <button onClick={() => handleConfirmDelete(false)}>Cancelar</button>
+            {showConfirmAlert &&(
+                <div className="delete-overlay">
+                    <div className="delete">
+                        <div className="delete-body">
+                            <h1>ATENÇÃO!</h1>
+                            <p>Certeza que deseja deletar a reserva {nm_reservaDel}?</p>
+                            <div className="delete-button-group">
+                                <button onClick={() => handleConfirmDelete(true)}>Sim</button>
+                                <button onClick={() => handleConfirmDelete(false)}>Cancelar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )}
-                {messageDelete &&(
-                    <div className="delete-overlay">
-
+            )}
+            {messageDelete &&(
+                <div className="delete-overlay">
                     <div className="delete">
-                    <div className="delete-body">
-                        <h3>{messageDelete}</h3>
-                    </div>
+                        <div className="delete-body">
+                            <h3>{messageDelete}</h3>
+                        </div>
                     </div>
                 </div>
-        )}
-        {messageSuccess &&(
-                    <div className="success-overlay">
-
+            )}
+            {messageSuccess &&(
+                <div className="success-overlay">
                     <div className="success">
-                    <div className="success-body">
-                        <h3>{messageSuccess}</h3>
-                    </div>
+                        <div className="success-body">
+                            <h3>{messageSuccess}</h3>
+                        </div>
                     </div>
                 </div>
-        )}
-       </Layout>
+            )}
+        </Layout>
+        <ModalComponent 
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            titleM={'Informações Gerais'}
+        >
+
+        </ModalComponent>
+        </div>
     );
 }
 

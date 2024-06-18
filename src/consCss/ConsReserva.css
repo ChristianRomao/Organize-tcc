@@ -137,7 +137,7 @@
     flex-direction: column;
     margin-inline: -8em;
     margin-top: 25px;
-    max-height: 460px;
+    max-height: 500px;
     overflow-y: auto;
 }
 
@@ -176,7 +176,9 @@
 }
 
 .tabela thead th {
-    background-color: #003077;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    background: #003077a9;
     color: white;
     position: sticky;
     top: 0;
@@ -204,6 +206,8 @@
 
 #info-cabecalho{
     background-color: #003d9900;
+    border-radius: 10px 10px 10px 10px;
+    backdrop-filter: none;
 }
 
 .colunas-body-status {
@@ -428,3 +432,5 @@
     padding-top: 5px;
     margin-bottom: -28px;
 }
+
+

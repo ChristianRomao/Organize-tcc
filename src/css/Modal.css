@@ -10,8 +10,10 @@
 }
   
 .modal-content {
-    background-color: #002d6b;
-    padding: 20px;
+    background-color: #002d6ba9;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(30px);
+    padding: 50px;
     border-radius: 20px;
     position: relative;
     min-width: 600px;

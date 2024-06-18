@@ -94,7 +94,7 @@ const ConsSala = () => {
         setIsModalOpen(false);
         setTituloModal("");
         setError("");
-      };
+    };
 
     const handleDeleteVinc = (materialSalaDel) =>{
         setShowConfirmAlert(true);
@@ -129,7 +129,7 @@ const ConsSala = () => {
     }
 
     return (
-        <div>
+    <div>
         <LayoutConsulta titleCons='Consulta Salas'>
             {salas.map((sala) => (
                 <div className="informacoes-sala" key={sala.id_sala }>
@@ -152,34 +152,34 @@ const ConsSala = () => {
                 </div>
             ))}
         </LayoutConsulta>
-              <ModalComponent
-              isOpen={isModalOpen}
-              onClose={handleCloseModal}
-              titleM={tituloModal}
-            >
+        <ModalComponent
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            titleM={tituloModal}
+        >
             {error ? 
-                <text className="message-error-cons-sala">{error}</text>
-                 :( 
-                <div className="body-modal-all">
-                    {materiaisSala.map((materialSala) => ( 
-                    <div className="info-modal-consSala" key={materialSala.id_materialSala}>
-                        <div className="modal-body-consSala">
-                            <div className="item-row-consSala">
-                                <h4>Material:</h4>
+            <text className="message-error-cons-sala">{error}</text>
+            :( 
+            <div className="body-modal-all">
+                {materiaisSala.map((materialSala) => ( 
+                <div key={materialSala.id_materialSala}>
+                    <div className="modal-body-consSala">
+                        <div className="item-row-consSala ajuste-textos">
+                            <h4>Material:</h4>
                             <p>{materialSala.material.ds_material}</p>
-                            </div>
-                            <div className="item-row-consSala">
-                                <h4>Quantidade na Sala:</h4>
-                            <p>{materialSala.qt_materialSala}</p>
-                            </div>
-                            <div className="item-row-consSala">
-                                <h4>Quantidade Total:</h4>
-                            <p>{materialSala.material.qt_material}</p>
-                            </div>
-                            <button className="button-rem-vinc" onClick={()=>handleDeleteVinc(materialSala)}>Remover<br></br>Vinculo</button>
                         </div>
+                        <div className="item-row-consSala">
+                            <h4>Quantidade na Sala:</h4>
+                            <p>{materialSala.qt_materialSala}</p>
+                        </div>
+                        <div className="item-row-consSala">
+                            <h4>Em Estoque:</h4>
+                            <p>{materialSala.material.qt_material}</p>
+                        </div>
+                        <button className="button-rem-vinc" onClick={()=>handleDeleteVinc(materialSala)}>Remover<br></br>Vinculo</button>
                     </div>
-            ))}
+                </div>
+                ))}
             </div>)}
             {showConfirmAlert &&(
             <div className="delete-overlay">
@@ -195,18 +195,17 @@ const ConsSala = () => {
                 </div>
             </div>
         )}
-            </ModalComponent>
-            {messageSuccess &&(
-                    <div className="success-overlay">
-
-                    <div className="success">
+        </ModalComponent>
+        {messageSuccess &&(
+            <div className="success-overlay">
+                <div className="success">
                     <div className="success-body">
                         <h3>{messageSuccess}</h3>
                     </div>
-                    </div>
                 </div>
-        )}
             </div>
+        )}
+    </div>
     );
 }
 
