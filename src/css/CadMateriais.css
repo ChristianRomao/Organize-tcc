@@ -239,7 +239,7 @@
     max-height: 50vh;
     overflow-y: auto;
     animation: slide-in 1s ease forwards;
-    padding-right: 5px; /* Adicione um padding para o conteúdo não ser cortado pela barra de rolagem */
+    padding-right: 5px;
     margin-right: 7px;
 }
 

@@ -4,6 +4,14 @@ import HeaderComponents from "../components/HeaderComponents";
 import { useAuth } from "../AuthProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { format } from 'date-fns';
+
 
 const CadReserva = () => {
   const { isAuthenticated } = useAuth();
@@ -37,6 +45,12 @@ const CadReserva = () => {
   const [selectHoraFim, setSelectHoraFim] = useState("");
   const [dataFixa, setDataFixa] = useState("");
   const [horaMinuto, setHoraMinuto] = useState([]);
+
+  const [showDetailSala, setShowDetailSala] = useState(false);
+  const [showDetailCurso, setShowDetailCurso] = useState(false);
+  const [showDetailUser, setShowDetailUser] = useState(false);
+
+  const [page, setPage] = useState(1);
 
   const buscarPolo = useCallback(async () => {
     try {
@@ -86,32 +100,29 @@ const CadReserva = () => {
     [token]
   );
 
-  const buscarUsuario = useCallback(
-    async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/consulta-usuario",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = response.data.usuarios;
-        if (Array.isArray(data)) {
-          setUsuarios(data);
-          setError("");
-        } else {
-          console.error("Formato inexperado do respose de Usuario", data);
-          setUsuarios([]);
+  const buscarUsuario = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/consulta-usuario",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        console.log(error.response.data);
-        setError(error.response.data.error);
+      );
+      const data = response.data.usuarios;
+      if (Array.isArray(data)) {
+        setUsuarios(data);
+        setError("");
+      } else {
+        console.error("Formato inexperado do respose de Usuario", data);
+        setUsuarios([]);
       }
-    },
-    [token]
-  );
+    } catch (error) {
+      console.log(error.response.data);
+      setError(error.response.data.error);
+    }
+  }, [token]);
 
   const buscarCurso = useCallback(
     async (id) => {
@@ -214,6 +225,9 @@ const CadReserva = () => {
       buscarUsuario();
       buscarCurso();
       buscarGradeCursoAno("", "");
+      setShowDetailCurso(true);
+      setShowDetailSala(true);
+      setShowDetailUser(true);
     }
   }, [
     isAuthenticated,
@@ -349,21 +363,21 @@ const CadReserva = () => {
     }
   };
 
-  const handleChangeCheckBox = (event) =>{
+  const handleChangeCheckBox = (event) => {
     setSuccess("");
     setAlerta("");
     setError("");
     const inCheck = event.target.checked;
-    if(inCheck){
-      setSelectHoraInicio('00:00');
-      setSelectHoraFim('23:30');
-      setInAllDay(true)
-    }else{
-      setSelectHoraInicio('');
-      setSelectHoraFim('');
+    if (inCheck) {
+      setSelectHoraInicio("00:00");
+      setSelectHoraFim("23:30");
+      setInAllDay(true);
+    } else {
+      setSelectHoraInicio("");
+      setSelectHoraFim("");
       setInAllDay(false);
     }
-  }
+  };
 
   const getDistinctAnoTurmas = (turmas) => {
     if (!turmas) return [];
@@ -381,37 +395,32 @@ const CadReserva = () => {
   };
 
   const handleCadastrarReserva = async () => {
-    setAlerta("")
-    if(!selectDataInicio || !selectDataFim || !selectHoraInicio || !selectHoraFim || !nmReserva || nmReserva.length === 0 || !selectSalaPolo || !selectUsuario || !selectGradeTurma){
-      setError("Campos obrigatórios devem ser preenchidos!")
-    }else{
-      setError("")
-    }
-    
-    let dataIniCompleta = ''
-    let dataFimCompleta = ''
+    setAlerta("");
 
-    if(selectHoraInicio && selectHoraFim){
-      dataIniCompleta = selectDataInicio+' '+selectHoraInicio+':00';
-      dataFimCompleta = selectDataFim+' '+selectHoraFim+':00';
+    let dataIniCompleta = "";
+    let dataFimCompleta = "";
+
+    if (selectHoraInicio && selectHoraFim) {
+      dataIniCompleta = selectDataInicio + " " + selectHoraInicio + ":00";
+      dataFimCompleta = selectDataFim + " " + selectHoraFim + ":00";
     }
     const payload = {
-      nm_reserva : nmReserva,
+      nm_reserva: nmReserva,
       dt_inicio: dataIniCompleta,
       dt_fim: dataFimCompleta,
       ds_observacao: dsObservacao,
-      sala:{
-        id_sala: Number(selectSalaPolo)
+      sala: {
+        id_sala: Number(selectSalaPolo),
       },
-      usuario:{
-        id_usuario: Number(selectUsuario)
+      usuario: {
+        id_usuario: Number(selectUsuario),
       },
-      grade:{
-        id_grade: Number(selectGradeTurma)
+      grade: {
+        id_grade: Number(selectGradeTurma),
       },
-      status:{
-        cd_status: 'A'
-      }
+      status: {
+        cd_status: "A",
+      },
     };
     try {
       const response = await axios.post(
@@ -423,28 +432,55 @@ const CadReserva = () => {
           },
         }
       );
-      setNmReserva('');
-      setSelectPolo('');
-      setSelectGradeTurma('');
-      setSelectUsuario('');
-      setSelectCurso('');
-      setSelectAnoTurma('');
-      setSelectSalaPolo('');
-      setSelectGradeTurma('');
-      setDsObservacao('');
-      setSelectHoraInicio('');
-      setSelectHoraFim('');
+      setNmReserva("");
+      setSelectPolo("");
+      setSelectGradeTurma("");
+      setSelectUsuario("");
+      setSelectCurso("");
+      setSelectAnoTurma("");
+      setSelectSalaPolo("");
+      setSelectGradeTurma("");
+      setDsObservacao("");
+      setSelectHoraInicio("");
+      setSelectHoraFim("");
       setSelectDataInicio(dataFixa);
       setSelectDataFim(dataFixa);
       setInAllDay(false);
-      setSuccess(response.data.message)
-      setTimeout(() =>{
-        setSuccess('');
-      },5000)
+      setSuccess(response.data.message);
+      setTimeout(() => {
+        setSuccess("");
+      }, 5000);
     } catch (error) {
       console.log(error.response.data);
       setSuccess("");
       setAlerta(error.response.data.alert);
+    }
+  };
+
+  const validaCadastroReserva = () => {
+    if (
+      !selectDataInicio ||
+      !selectDataFim ||
+      !selectHoraInicio ||
+      !selectHoraFim ||
+      !nmReserva ||
+      nmReserva.length === 0 ||
+      !selectSalaPolo ||
+      !selectUsuario ||
+      !selectGradeTurma
+    ) {
+      setError("Campos obrigatórios devem ser preenchidos!");
+    } else {
+      handleCadastrarReserva();
+      setError("");
+    }
+  };
+
+  const handleChangePage = (valuePage) => {
+    const currentPage = Number(page) + Number(valuePage);
+
+    if (currentPage > 0 && currentPage <= 3) {
+      setPage(currentPage);
     }
   };
 
@@ -483,7 +519,11 @@ const CadReserva = () => {
                   </label>
                   <div className="input-individual">
                     <input
-                      className={error && !selectDataInicio ?"date-reserva-error":"date-reserva"}
+                      className={
+                        error && !selectDataInicio
+                          ? "date-reserva-error"
+                          : "date-reserva"
+                      }
                       name="dt_inicio"
                       type="date"
                       value={selectDataInicio}
@@ -492,7 +532,11 @@ const CadReserva = () => {
                       required
                     />
                     <input
-                      className={error && !selectDataFim ?"date-reserva-error":"date-reserva"}
+                      className={
+                        error && !selectDataFim
+                          ? "date-reserva-error"
+                          : "date-reserva"
+                      }
                       name="dt_fim"
                       type="date"
                       value={selectDataFim}
@@ -504,13 +548,19 @@ const CadReserva = () => {
                   <div className="input-individual">
                     <select
                       disabled={inAllDay}
-                      className={error && !selectHoraInicio ?"time-reserva-error":"time-reserva"}
+                      className={
+                        error && !selectHoraInicio
+                          ? "time-reserva-error"
+                          : "time-reserva"
+                      }
                       name="hr_inicio"
                       onChange={handleChangeSelect}
                       value={selectHoraInicio}
                       required
                     >
-                      <option value="">hh:mm</option>
+                      <option value="" hidden>
+                        hh:mm
+                      </option>
                       {horaMinuto.map((time, index) => (
                         <option key={index} value={time}>
                           {time}
@@ -519,13 +569,19 @@ const CadReserva = () => {
                     </select>
                     <select
                       disabled={inAllDay}
-                      className={error && !selectHoraFim ?"time-reserva-error":"time-reserva"}
+                      className={
+                        error && !selectHoraFim
+                          ? "time-reserva-error"
+                          : "time-reserva"
+                      }
                       name="hr_fim"
                       onChange={handleChangeSelect}
                       value={selectHoraFim}
                       required
                     >
-                      <option value="">hh:mm</option>
+                      <option value="" hidden>
+                        hh:mm
+                      </option>
                       {horaMinuto.map((time, index) => (
                         <option
                           key={index}
@@ -551,7 +607,13 @@ const CadReserva = () => {
                 <div className="divider"></div>
                 <div className="inputs-reserva">
                   <div className="select-individual">
-                    <label className={error && !nmReserva ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
+                    <label
+                      className={
+                        error && !nmReserva
+                          ? "titulo-selects-reserva-error"
+                          : "titulo-selects-reserva"
+                      }
+                    >
                       Nome da reserva:
                     </label>
                     <input
@@ -574,7 +636,9 @@ const CadReserva = () => {
                       value={selectPolo}
                       onChange={handleSetPolo}
                     >
-                      <option value="">Selecione um polo</option>
+                      <option value="" hidden>
+                        Selecione um polo
+                      </option>
                       {polos.map((polo) => (
                         <option key={polo.id_polo} value={polo.id_polo}>
                           {polo.nm_polo}
@@ -583,7 +647,13 @@ const CadReserva = () => {
                     </select>
                   </div>
                   <div className="select-individual">
-                  <label className={error && !selectSalaPolo ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
+                    <label
+                      className={
+                        error && !selectSalaPolo
+                          ? "titulo-selects-reserva-error"
+                          : "titulo-selects-reserva"
+                      }
+                    >
                       Escolha a Sala:
                     </label>
                     <select
@@ -593,7 +663,9 @@ const CadReserva = () => {
                       value={selectSalaPolo}
                       onChange={handleSetSalaPolo}
                     >
-                      <option value="">Selecione uma sala</option>
+                      <option value="" hidden>
+                        Selecione uma sala
+                      </option>
                       {salaPolos.map((salaPolo) => (
                         <option key={salaPolo.id_sala} value={salaPolo.id_sala}>
                           {salaPolo.nm_sala} - {salaPolo.bloco.nm_bloco} -{" "}
@@ -603,7 +675,13 @@ const CadReserva = () => {
                     </select>
                   </div>
                   <div className="select-individual">
-                  <label className={error && !selectUsuario ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
+                    <label
+                      className={
+                        error && !selectUsuario
+                          ? "titulo-selects-reserva-error"
+                          : "titulo-selects-reserva"
+                      }
+                    >
                       Responsavel pela Sala:
                     </label>
                     <select
@@ -613,7 +691,9 @@ const CadReserva = () => {
                       value={selectUsuario}
                       onChange={handleSetUsuario}
                     >
-                      <option value="">Selecione o responsável</option>
+                      <option value="" hidden>
+                        Selecione o responsável
+                      </option>
                       {usuarios.map((usuario) => (
                         <option
                           key={usuario.id_usuario}
@@ -635,7 +715,9 @@ const CadReserva = () => {
                       value={selectCurso}
                       onChange={handleSetCurso}
                     >
-                      <option value="">Selecione o curso</option>
+                      <option value="" hidden>
+                        Selecione o curso
+                      </option>
                       {cursos.map((curso) => (
                         <option key={curso.id_curso} value={curso.id_curso}>
                           {curso.ds_curso}
@@ -648,7 +730,9 @@ const CadReserva = () => {
                       Selecione o Ano:
                     </label>
                     <select
-                      disabled={!selectCurso || (!!errorGrade && !selectAnoTurma)}
+                      disabled={
+                        !selectCurso || (!!errorGrade && !selectAnoTurma)
+                      }
                       className="selects-reserva"
                       id=""
                       name="id_curso"
@@ -671,7 +755,13 @@ const CadReserva = () => {
                     </select>
                   </div>
                   <div className="select-individual">
-                  <label className={error && !selectGradeTurma ?"titulo-selects-reserva-error":"titulo-selects-reserva"}>
+                    <label
+                      className={
+                        error && !selectGradeTurma
+                          ? "titulo-selects-reserva-error"
+                          : "titulo-selects-reserva"
+                      }
+                    >
                       Selecione a Grade/Turma:
                     </label>
                     <select
@@ -682,7 +772,9 @@ const CadReserva = () => {
                       value={selectGradeTurma}
                       onChange={handleSetGradeTurma}
                     >
-                      <option value="">Selecione a grade</option>
+                      <option value="" hidden>
+                        Selecione a grade
+                      </option>
                       {gradeTurmas.map((gradeTurma) => (
                         <option
                           key={gradeTurma.id_grade}
@@ -709,21 +801,117 @@ const CadReserva = () => {
                     />
                   </div>
                 </div>
-                <text className={success ? "message-success" : alerta ? "message-alert" : error ? "message-error" : ""}>{"" || alerta || error || success}</text>
+                <text
+                  className={
+                    success
+                      ? "message-success"
+                      : alerta
+                      ? "message-alert"
+                      : error
+                      ? "message-error"
+                      : ""
+                  }
+                >
+                  {"" || alerta || error || success}
+                </text>
                 <button
                   disabled={!!errorGrade || !!error}
                   className={errorGrade ? "error-reserva" : "botao-reserva"}
                   type="button"
-                  onClick={handleCadastrarReserva}
+                  onClick={validaCadastroReserva}
                 >
                   {errorGrade ? errorGrade : "Fazer Reserva"}
                 </button>
               </form>
             </div>
             <div className="descricao-reserva">
-              <text className="titulo-descricao">Detalhes</text>
-              <div>
-                {/* aqui da bom coloca as infos, mas ai só ajustar o css e boa. */}
+              <div className="header-reserva">
+                <button
+                  onClick={() => handleChangePage(-1)}
+                  className={
+                    page === 1
+                      ? "button-visibility-hidden"
+                      : "button-header-descricao-reserva"
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faArrowLeft}
+                    style={{ marginRight: "10px" }}
+                  />{page === 2 ? "Salas" : page === 3 ? "Cursos" : "Default"}
+                </button>
+                <div className="box-text-descricao-header">
+                  <text className="titulo-descricao-reserva">Detalhes</text>
+                  <h4 className="titulo-descricao-reserva-item">
+                    {page === 1
+                      ? "SALAS"
+                      : page === 2
+                      ? "CURSOS"
+                      : page === 3
+                      ? "USUÁRIOS"
+                      : ""}
+                  </h4>
+                </div>
+                <button
+                  onClick={() => handleChangePage(1)}
+                  className={
+                    page === 3
+                      ? "button-visibility-hidden"
+                      : "button-header-descricao-reserva"
+                  }
+                >
+                  {page === 2 ? "Usuários" : page === 1 ? "Cursos" : "Default"}
+                  <FontAwesomeIcon
+                    icon={faArrowRight}
+                    style={{ marginLeft: "10px" }}
+                  />
+                </button>
+              </div>
+              <div className="content-descricao-reserva">
+                {showDetailSala && page === 1 ? (
+                  salaPolos.map((salaPolo) => (
+                    <div
+                      key={salaPolo.id_sala}
+                      className="material-item-reserva"
+                    >
+                      <h3>Sala: {salaPolo.nm_sala}</h3>
+                      <p>Bloco: {salaPolo.bloco.nm_bloco}</p>
+                      <p>Capacidade Permitida: {salaPolo.qt_capacvigilancia}</p>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
+                {showDetailCurso && page === 2 ? (
+                  gradeTurmas.map((gradeTurma) => (
+                    <div
+                      key={gradeTurma.id_grade}
+                      className="material-item-reserva"
+                    >
+                      <h3>Curso: {gradeTurma.turma.curso.ds_curso}</h3>
+                      <p>Qt. Alunos: {gradeTurma.qt_alunos}</p>
+                      <p>Disciplina: {gradeTurma.disciplina.nm_disciplina}</p>
+                      <p>Turma: {gradeTurma.turma.ds_turma}</p>
+                      <p>Ano Letivo: {gradeTurma.turma.nr_anoletivo}</p>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
+                {showDetailUser && page === 3 ? (
+                  usuarios.map((usuario) => (
+                    <div
+                      key={usuario.id_usuario}
+                      className="material-item-reserva"
+                    >
+                      <h3>{usuario.nm_usuario}</h3>
+                      <p>Dt. Nascimento: {format(usuario.dt_nascimento, 'dd/MM/yyyy')}</p>
+                      <p>E-mail: {usuario.ds_email}</p>
+                      <p>Função: {usuario.ds_funcao === 'admin' ? "Administrador" : "Usuário"}</p>
+                    </div>
+                  ))
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
