@@ -38,7 +38,7 @@ const checkPermission = (requiredPermission) => {
   return async (req, res, next) => {
       try {
           const decode = decodeJWT(req.headers.authorization);
-          const userPermissions = decode.ds_funcao; // Supondo que as permissões do usuário estão no token JWT
+          const userPermissions = decode.ds_funcao;
 
           if (!userPermissions.includes(requiredPermission)) {
               return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
@@ -238,7 +238,7 @@ router.get("/reservas/grupos", auth, async (req, res) => {
 
     const grupos = {};
     reservas.forEach(reserva => {
-      const grupoId = reserva.id_grupo || reserva.id_reserva; // Se não houver id_grupo, usa o ID da reserva como identificador único
+      const grupoId = reserva.id_grupo || reserva.id_reserva;
       if (!grupos[grupoId]) {
         grupos[grupoId] = {
           grupo_id: grupoId,
@@ -336,13 +336,6 @@ router.post("/reserva", auth, async (req, res) => {
     const reservas = [];
 
     for (let date = moment(dtInicio); date.isSameOrBefore(dtFim, 'day'); date.add(1, 'days')) {
-      // const dt_inicioDate = date.startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-      // const dt_fimDate = date.endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
-
-      // const inicioMoment = moment(req.body.dt_inicio).add(1, 'seconds');
-
-      // const dt_inicioDia = new Date(inicioMoment).toLocaleString('pt-BR');
-      // const dt_fimDia = new Date(req.body.dt_fim).toLocaleString('pt-BR');
       
       const horaInicio = moment(req.body.dt_inicio).add(1, 'seconds').format('HH:mm:ss');
       const horaFim = moment(req.body.dt_fim).format('HH:mm:ss');

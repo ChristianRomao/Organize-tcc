@@ -14,6 +14,25 @@ const { gravarLog } = require("../database/log");
 
 const numeroRegex = /^[0-9]+$/;
 
+const checkPermission = (requiredPermission) => {
+  return async (req, res, next) => {
+      try {
+          const decode = decodeJWT(req.headers.authorization);
+          const userPermissions = decode.ds_funcao;
+
+          if (!userPermissions.includes(requiredPermission)) {
+              return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
+          }
+
+          next();
+      } catch (error) {
+          console.error("Erro ao verificar permissões:", error);
+          res.status(500).json({ message: "Erro interno do servidor" });
+      }
+  };
+};
+
+
 router.get("/bloco", auth, async (req, res) => {
   const blocos = await listarBlocos();
   res.json({
@@ -55,7 +74,7 @@ router.get("/bloco/:id", auth, async (req, res) => {
   await gravarLog(userLog,ip,acao)
 });
 
-router.post("/bloco", auth, async (req, res) => {
+router.post("/bloco", auth, checkPermission('admin'), async (req, res) => {
   try {
     if(req.body.nm_bloco === ''){
       return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });

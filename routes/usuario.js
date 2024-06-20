@@ -23,7 +23,7 @@ const checkPermission = (requiredPermission) => {
     return async (req, res, next) => {
         try {
             const decode = decodeJWT(req.headers.authorization);
-            const userPermissions = decode.ds_funcao; // Supondo que as permissões do usuário estão no token JWT
+            const userPermissions = decode.ds_funcao;
 
             if (!userPermissions.includes(requiredPermission)) {
                 return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });

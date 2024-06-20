@@ -453,7 +453,7 @@ const CadReserva = () => {
       setInAllDay(false);
       setPage(1);
       buscarCurso();
-      buscarSalaPolo();
+      buscarSalaPolo("");
       buscarUsuario();
       setSuccess(response.data.message);
       setTimeout(() => {

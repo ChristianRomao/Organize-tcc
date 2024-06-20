@@ -14,6 +14,24 @@ const { gravarLog } = require("../database/log");
 
 const numeroRegex = /^[0-9]+$/;
 
+const checkPermission = (requiredPermission) => {
+  return async (req, res, next) => {
+      try {
+          const decode = decodeJWT(req.headers.authorization);
+          const userPermissions = decode.ds_funcao;
+
+          if (!userPermissions.includes(requiredPermission)) {
+              return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
+          }
+
+          next();
+      } catch (error) {
+          console.error("Erro ao verificar permissões:", error);
+          res.status(500).json({ message: "Erro interno do servidor" });
+      }
+  };
+};
+
 router.get("/municipio", auth, async (req, res) => {
   try {
     const municipios = await listarMunicipios();
@@ -66,7 +84,7 @@ router.get("/municipio/:id", auth, async (req, res) => {
   await gravarLog(userLog,ip,acao);
 });
 
-router.post("/municipio", auth, async (req, res) => {
+router.post("/municipio", auth, checkPermission('admin'), async (req, res) => {
   try {
     if(req.body.nm_municipio === ''){
       return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
