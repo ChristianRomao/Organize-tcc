@@ -103,21 +103,22 @@ router.post("/registro", async (req,res) => {
             return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
         }
 
-        // if(cpfcnpj.length == 11){
-        //     const cpfValidado = cpf.validate(cpfcnpj);
+        if(cpfcnpj.length == 11){
+            const cpfValidado = cpf.validate(cpfcnpj);
 
-        //     if(!cpfValidado){
-        //         return res.status(404).json({error:"CPF inválido!"});
-        //     }
-        // }else if(cpfcnpj.length == 14){
-        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+            if(!cpfValidado){
+                return res.status(404).json({error:"CPF inválido!"});
+            }
+        }else if(cpfcnpj.length == 14){
+            const cnpjValidado = cnpj.validate(cpfcnpj);
 
-        //     if(!cnpjValidado){
-        //         return res.status(404).json({error:"CNPJ inválido!"});
-        //     }
-        // }else{
-        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-        // }
+            if(!cnpjValidado){
+                return res.status(404).json({error:"CNPJ inválido!"});
+            }
+        }else{
+            return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        }
+        
         if (!/^[a-zA-Z\s]+$/.test(req.body.nm_usuario)) {
             return res.status(400).json({ error: "Nome não pode conter números, acentos, 'ç' ou caracteres especiais!" });
         }
@@ -210,21 +211,21 @@ router.put("/usuario/:id", auth, checkPermission('admin'), async (req,res) => {
             return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
         }
 
-        // if(cpfcnpj.length == 11){
-        //     const cpfValidado = cpf.validate(cpfcnpj);
+        if(cpfcnpj.length == 11){
+            const cpfValidado = cpf.validate(cpfcnpj);
 
-        //     if(!cpfValidado){
-        //         return res.status(404).json({error:"CPF inválido!"});
-        //     }
-        // }else if(cpfcnpj.length == 14){
-        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+            if(!cpfValidado){
+                return res.status(404).json({error:"CPF inválido!"});
+            }
+        }else if(cpfcnpj.length == 14){
+            const cnpjValidado = cnpj.validate(cpfcnpj);
 
-        //     if(!cnpjValidado){
-        //         return res.status(404).json({error:"CNPJ inválido!"});
-        //     }
-        // }else{
-        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-        // }
+            if(!cnpjValidado){
+                return res.status(404).json({error:"CNPJ inválido!"});
+            }
+        }else{
+            return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        }
 
         
         const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();

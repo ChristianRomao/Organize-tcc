@@ -626,6 +626,7 @@ const consultaReserva = useCallback(async () =>{
             <li style={{listStyleType:"square"}}>Disciplina: {reserva.grade.disciplina.nm_disciplina}</li>
             <li style={{listStyleType:"square"}}>Nr. Carga Horária: {reserva.grade.nr_cargaHr} {reserva.grade.nr_cargaHr === 1 ? "hora" : "horas"}</li>
             <li style={{listStyleType:"square"}}>Qt. Alunos: {reserva.grade.qt_alunos} {reserva.grade.qt_alunos === 1 ? "aluno" : "alunos"}</li>
+            <li style={{listStyleType:"square"}}>Professor(a): {reserva.grade.nm_professor}</li>
         </ul>
       </li>
       <li style={{listStyleType:"circle"}}><h4>Usuário: {reserva.usuario.nm_usuario}</h4>

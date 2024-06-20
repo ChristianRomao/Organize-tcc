@@ -10,6 +10,20 @@ const listarGrades = () => {
         },
       },
     },
+    orderBy: [
+      {
+        disciplina: {
+          nm_disciplina: 'asc',
+        },
+      },
+      {
+        turma: {
+          curso: {
+            ds_curso: 'asc',
+          },
+        },
+      },
+    ],
   });
 };
 

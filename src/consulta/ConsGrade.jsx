@@ -49,7 +49,7 @@ const ConsGrade = () => {
                     <div className="consulta-grade">
                         <h4>Turma:</h4>
                         <p className="ajuste-textos" data-tooltip={`${grade.disciplina.nm_disciplina} - ${grade.turma.curso.ds_curso}`}>
-                            {grade.turma.curso.ds_curso} - {grade.disciplina.nm_disciplina}
+                        {grade.disciplina.nm_disciplina} - {grade.turma.curso.ds_curso}
                         </p>
                     </div>
                     <div className="consulta-grade">

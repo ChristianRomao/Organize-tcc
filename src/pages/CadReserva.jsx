@@ -791,7 +791,7 @@ const CadReserva = () => {
                         >
                           {gradeTurma.turma.ds_turma} -{" "}
                           {gradeTurma.turma.curso.ds_curso} -{" "}
-                          {gradeTurma.turma.nr_anoletivo}
+                          {gradeTurma.disciplina.nm_disciplina}
                         </option>
                       ))}
                     </select>

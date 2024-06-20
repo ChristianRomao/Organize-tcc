@@ -5,6 +5,9 @@ const listarPolos = () =>{
             include: {
             instituicao: true,
             municipio:true    
+        },
+        orderBy:{
+            nm_polo:'asc'
         }
     })
 }
