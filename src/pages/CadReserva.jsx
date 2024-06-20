@@ -44,6 +44,7 @@ const CadReserva = () => {
   const [selectHoraFim, setSelectHoraFim] = useState("");
   const [dataFixa, setDataFixa] = useState("");
   const [horaMinuto, setHoraMinuto] = useState([]);
+  const [hrMin, setHrMin] = useState("");
 
   const [showDetailSala, setShowDetailSala] = useState(false);
   const [showDetailCurso, setShowDetailCurso] = useState(false);
@@ -240,7 +241,12 @@ const CadReserva = () => {
 
   useEffect(() => {
     let selectData = new Date();
+    const hora = selectData.getHours();
+    const minuto = selectData.getMinutes();
+    const hrMin = `${hora <= 9 ? `0${hora}` : hora}:${minuto <= 9 ? `0${minuto}` : minuto}`;
+    setHrMin(hrMin);
     selectData = selectData.toISOString().split("T")[0];
+
     setDataFixa(selectData);
     setSelectDataInicio(selectData);
     setSelectDataFim(selectData);
@@ -565,7 +571,7 @@ const CadReserva = () => {
                         hh:mm
                       </option>
                       {horaMinuto.map((time, index) => (
-                        <option key={index} value={time}>
+                        <option key={index} value={time} disabled={hrMin > time && selectDataInicio === dataFixa}>
                           {time}
                         </option>
                       ))}
@@ -589,7 +595,7 @@ const CadReserva = () => {
                         <option
                           key={index}
                           value={time}
-                          disabled={selectHoraInicio > time}
+                          disabled={selectHoraInicio > time || (hrMin > time && selectDataFim === dataFixa)}
                         >
                           {time}
                         </option>
@@ -617,7 +623,7 @@ const CadReserva = () => {
                           : "titulo-selects-reserva"
                       }
                     >
-                      Nome da reserva:
+                      Nome da Reserva:
                     </label>
                     <input
                       type="text"
@@ -630,7 +636,7 @@ const CadReserva = () => {
                   </div>
                   <div className="select-individual">
                     <label className="titulo-selects-reserva">
-                      Escolha o Polo:
+                      Polo:
                     </label>
                     <select
                       className="selects-reserva"
@@ -657,7 +663,7 @@ const CadReserva = () => {
                           : "titulo-selects-reserva"
                       }
                     >
-                      Escolha a Sala:
+                      Sala:
                     </label>
                     <select
                       className="selects-reserva"
@@ -685,7 +691,7 @@ const CadReserva = () => {
                           : "titulo-selects-reserva"
                       }
                     >
-                      Responsavel pela Sala:
+                      Responsável:
                     </label>
                     <select
                       className="selects-reserva"
@@ -709,7 +715,7 @@ const CadReserva = () => {
                   </div>
                   <div className="select-individual">
                     <label className="titulo-selects-reserva">
-                      Selecione o Curso:
+                      Curso:
                     </label>
                     <select
                       className="selects-reserva"
@@ -730,7 +736,7 @@ const CadReserva = () => {
                   </div>
                   <div className="select-individual">
                     <label className="titulo-selects-reserva">
-                      Selecione o Ano:
+                      Ano Letivo:
                     </label>
                     <select
                       disabled={
@@ -765,7 +771,7 @@ const CadReserva = () => {
                           : "titulo-selects-reserva"
                       }
                     >
-                      Selecione a Grade/Turma:
+                      Grade/Turma:
                     </label>
                     <select
                       disabled={!!errorGrade}

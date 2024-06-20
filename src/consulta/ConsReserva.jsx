@@ -41,6 +41,7 @@ const ConsReserva = () => {
     const [alerta, setAlerta] = useState("");
     const [messageSuccess, setMessageSuccess] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [idInfos, setIdInfos] = useState("");
 
 const consultaReserva = useCallback(async () =>{
     try{
@@ -49,7 +50,6 @@ const consultaReserva = useCallback(async () =>{
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response.data);
         const data = response.data.reservas;
         setReservas(data);
         setDs_filtro("");
@@ -234,7 +234,6 @@ const consultaReserva = useCallback(async () =>{
     }
 
     const alterarReserva = async (id) =>{
-        console.log(id)
         if(!id){
             setMessageDelete("Necessário selecionar uma reserva!");
             setTimeout(() => {
@@ -396,12 +395,14 @@ const consultaReserva = useCallback(async () =>{
                 }, 5000);}
         }, [token]);
 
-    const handleOpenInfos = async () =>{
+    const handleOpenInfos = async (id) =>{
         setIsModalOpen(true);
+        setIdInfos(id);
     }
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
+        setIdInfos("");
     };
 
     return (
@@ -477,11 +478,11 @@ const consultaReserva = useCallback(async () =>{
                                     <th id="info-cabecalho"></th>
                                     <th className="colunas-cabecalho">Nome</th>
                                     <th className="colunas-cabecalho">Sala</th>
-                                    <th className="colunas-cabecalho">Usuário</th>
                                     <th className="colunas-cabecalho">Turma - Curso</th>
                                     <th className="colunas-cabecalho">Início</th>
                                     <th className="colunas-cabecalho">Fim</th>
                                     <th className="colunas-cabecalho">Hr Inicio - Hr Fim</th>
+                                    <th className="colunas-cabecalho">Usuário</th>
                                     <th className="colunas-cabecalho">Status</th>
                                     <th className="colunas-cabecalho">Observação</th>
                                 </tr>
@@ -489,16 +490,16 @@ const consultaReserva = useCallback(async () =>{
                             <tbody className="contudo-tabela">
                                 {reservas.map((reserva) => (
                                 <tr key={reserva.id_reserva}>
-                                    <td><button className="btn-info" onClick={()=>handleOpenInfos()}><FontAwesomeIcon icon={faInfo}/></button></td>
+                                    <td><button className="btn-info" onClick={()=>handleOpenInfos(reserva.id_grupo)}><FontAwesomeIcon icon={faInfo}/></button></td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.nm_reserva}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.sala.nm_sala}</td>
-                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"} data-tooltip={reserva.usuario.nm_usuario}>{reserva.usuario.nm_usuario}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}> 
                                         {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}
                                     </td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"} data-tooltip={reserva.usuario.nm_usuario}>{reserva.usuario.nm_usuario}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body-status"}>
                                         {editRowId === reserva.id_grupo? (
                                             <select 
@@ -593,8 +594,52 @@ const consultaReserva = useCallback(async () =>{
         <ModalComponent 
             isOpen={isModalOpen}
             onClose={handleCloseModal}
-            titleM={'Informações Gerais'}
+            titleM={'Informações Gerais - Reserva'}
         >
+{reservas
+  .filter(reserva => reserva.id_grupo === idInfos)
+  .map((reserva) => (
+    <ul key={reserva.id_reserva} className="infos-reserva">
+      <h1 style={{marginLeft:"10px"}}>{reserva.nm_reserva}</h1>
+      <li style={{listStyleType:"circle"}}><h4>Data Início: {new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</h4></li>
+      <li style={{listStyleType:"circle"}}><h4>Data Fim: {new Date(reserva.dt_fim).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</h4></li>
+      <li style={{listStyleType:"circle"}}><h4>Hora Início/Fim: {new Date(reserva.dt_inicio).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}    - {new Date(reserva.dt_fim).toLocaleTimeString('default', {timeStyle: 'short', timeZone: 'UTC'})}</h4></li>
+      <li style={{listStyleType:"circle"}}><h4>Status: {reserva.status.ds_status}</h4></li>
+      <li style={{listStyleType:"circle"}}><h4>Sala: {reserva.sala.nm_sala}</h4>
+        <ul>
+            <li style={{listStyleType:"square"}}>Bloco: {reserva.sala.bloco.nm_bloco}
+            <ul>
+                <li style={{listStyleType:"disc"}}>Polo: {reserva.sala.bloco.polo.nm_polo}
+                <ul>
+                <li style={{listStyleType:"square"}}>Instituição: {reserva.sala.bloco.polo.instituicao.nm_fantasia}</li>
+                <li style={{listStyleType:"square"}}>Endereço: {reserva.sala.bloco.polo.ds_endereco}</li>
+                <li style={{listStyleType:"square"}}>Munícipio: {reserva.sala.bloco.polo.municipio.nm_municipio} - {reserva.sala.bloco.polo.municipio.estado.cd_estado}</li>
+                </ul>
+                </li>
+            </ul>
+            </li>
+        </ul>
+      </li>
+      <li style={{listStyleType:"circle", marginTop:"-25px"}}><h4>Turma: {reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</h4>
+        <ul>
+            <li style={{listStyleType:"square"}}>Ano Letivo: {reserva.grade.turma.nr_anoletivo}</li>
+            <li style={{listStyleType:"square"}}>Disciplina: {reserva.grade.disciplina.nm_disciplina}</li>
+            <li style={{listStyleType:"square"}}>Nr. Carga Horária: {reserva.grade.nr_cargaHr} {reserva.grade.nr_cargaHr === 1 ? "hora" : "horas"}</li>
+            <li style={{listStyleType:"square"}}>Qt. Alunos: {reserva.grade.qt_alunos} {reserva.grade.qt_alunos === 1 ? "aluno" : "alunos"}</li>
+        </ul>
+      </li>
+      <li style={{listStyleType:"circle"}}><h4>Usuário: {reserva.usuario.nm_usuario}</h4>
+        <ul>
+            <li style={{listStyleType:"square"}}>Data Nascimento: {new Date(reserva.usuario.dt_nascimento).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</li>
+            <li style={{listStyleType:"square"}}>E-mail: {reserva.usuario.ds_email}</li>
+            <li style={{listStyleType:"square"}}>Função: {reserva.usuario.ds_funcao === 'admin' ? "Administrador" : "Usuário"}</li>
+        </ul>
+      </li>
+
+    </ul>
+  ))
+}
+
         </ModalComponent>
         </div>
     );
