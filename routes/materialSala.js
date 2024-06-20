@@ -17,6 +17,24 @@ const { gravarLog } = require("../database/log");
 
 const numeroRegex = /^[0-9]+$/;
 
+const checkPermission = (requiredPermission) => {
+    return async (req, res, next) => {
+        try {
+            const decode = decodeJWT(req.headers.authorization);
+            const userPermissions = decode.ds_funcao;
+
+            if (!userPermissions.includes(requiredPermission)) {
+                return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
+            }
+
+            next();
+        } catch (error) {
+            console.error("Erro ao verificar permissões:", error);
+            res.status(500).json({ message: "Erro interno do servidor" });
+        }
+    };
+};
+
 router.get("/materialSala", auth, async (req,res) => {
     const materialSalas = await listarMaterialSalas()
     res.json({
@@ -90,66 +108,8 @@ router.get("/materialSala/polo/:id", auth, async (req,res) => {
     res.json({materialSala : materialSala});
 });
 
-/*router.post("/materialSala", auth, async (req, res) => {
-    try {
-        if(req.body.qt_materialSala === ''){
-            return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
-        }
 
-        const sala = req.body.sala;
-        const salaExiste = await buscarSalaId(sala.id_sala);
-
-        if (!salaExiste) {
-            return res.status(404).json({ error: "Sala não encontrada!" });
-        }
-
-        const materiais = req.body.materiais;
-
-        const materialSalasSalvos = await Promise.all(
-            materiais.map(async (item) => {
-                const materialExiste = await buscarMaterialId(item.material.id_material);
-
-                if (!materialExiste) {
-                    return res.status(404).json({error:`Material com id ${item.material.id_material} não encontrado!`});
-                }
-
-                const materialEstoque = materialExiste.qt_material - item.qt_materialSala;
-            
-                if(materialEstoque < 0){
-                    return res.status(400).json({error:`Quantidade de material insuficiente ${materialExiste.qt_material}`});
-                }
-                const materialSala = {
-                    qt_materialSala: item.qt_materialSala,
-                    ds_materialSala: item.ds_materialSala, 
-                    sala_id: sala.id_sala,
-                    material_id: materialExiste.id_material
-                };
-
-                const material = {
-                    qt_material: materialEstoque
-                }
-                
-                await alterarMaterial(materialExiste.id_material,material);
-                return gravarMaterialSala(materialSala);
-            })
-        );
-
-        res.json({
-            materialSalas: materialSalasSalvos,
-            message: 'MaterialSala gravado com sucesso!',
-        });
-        const acao = ('Gravação realizada na tabela MaterialSala');
-        const decode = await decodeJWT(req.headers.authorization);
-        const userLog = decode.id_usuario;
-        const ip = req.ip;
-        await gravarLog(userLog,ip,acao);
-    } catch (error) {
-        console.error('Erro ao gravar MaterialSala:' + error);
-        res.status(500).json({ message: "Server Error" });
-    }
-});*/
-
-router.post("/materialSala", auth, async (req, res) => {
+router.post("/materialSala", auth, checkPermission('admin'), async (req, res) => {
     try {
         if(req.body.qt_materialSala === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
