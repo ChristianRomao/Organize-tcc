@@ -165,10 +165,13 @@ const RegisterPage = () => {
       try {
         const response = await axios.post(
           "http://localhost:8080/registro",
-          payload
+          payload,
+          {
+            headers:{
+                Authorization: `Bearer ${token}`,
+            },
+        }
         );
-        console.log(error);
-        console.log(response.data);
         setNm_usuario("");
         setCd_cpfcnpj("");
         setDt_nascimento("");
@@ -185,9 +188,7 @@ const RegisterPage = () => {
         }, 5000);
       } catch (erro) {
         console.log(erro.response.data);
-        if (!error) {
-          setError(erro.response.data.error);
-        }
+        setError(erro.response.data.error);
       }
     }
   };

@@ -77,7 +77,7 @@ router.get("/usuario/:id", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
-router.post("/registro", async (req,res) => {
+router.post("/registro", auth, checkPermission('admin'), async (req,res) => {
     try{
         if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === '' || req.body.ds_funcao === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
