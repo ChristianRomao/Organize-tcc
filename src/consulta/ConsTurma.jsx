@@ -51,7 +51,7 @@ const ConsTurma = () => {
                     <FontAwesomeIcon icon={faGraduationCap} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-turma">
                         <h4>Curso:</h4>
-                        <p>{turma.curso.ds_curso}</p>
+                        <p className="ajuste-textos">{turma.curso.ds_curso}</p>
                     </div>
                     <div className="consulta-turma">
                         <h4>Disciplina:</h4>

@@ -54,11 +54,11 @@ const ConsUsuario = () => {
                     <FontAwesomeIcon icon={faUser} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-usuario">
                         <h4>Usuário:</h4>
-                        <p className="ajuste-textos">{usuario.nm_usuario}</p>
+                        <p className="ajuste-textos" data-tooltip={usuario.nm_usuario}>{usuario.nm_usuario}</p>
                     </div>
                     <div className="consulta-usuario">
                         <h4>Email:</h4>
-                        <p className="ajuste-textos">{usuario.ds_email}</p>
+                        <p className="ajuste-textos" data-tooltip={usuario.ds_email}>{usuario.ds_email}</p>
                     </div>
                     <div className="consulta-usuario">
                         <h4>Função:</h4>

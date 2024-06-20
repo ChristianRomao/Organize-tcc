@@ -22,6 +22,7 @@
     margin-inline: 40px;
     padding: 14px;
     width: 172px;
+    position: relative;
 }
 .icon-conectado {
     color: white;

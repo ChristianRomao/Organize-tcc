@@ -136,19 +136,19 @@ const ConsSala = () => {
                     <FontAwesomeIcon icon={faDoorOpen} size="3x" style={{color: "#001636"}}/>
                     <div className="consulta-sala">
                         <h4>Bloco - Polo:</h4>
-                        <p>{sala.bloco.nm_bloco} - {sala.bloco.polo.nm_polo}</p>
+                        <p className="ajuste-textos" data-tooltip={`${sala.bloco.nm_bloco} - ${sala.bloco.polo.nm_polo}`}>
+                            {sala.bloco.nm_bloco} - {sala.bloco.polo.nm_polo}
+                        </p>
                     </div>
                     <div className="consulta-sala">
                         <h4>Sala:</h4>
                         <p>{sala.nm_sala}</p>
                     </div>
-                    <div className="consulta-sala">
+                    <div className="consulta-sala" style={{width: '200px'}}>
                         <h4>Capacidade Vigilância:</h4>
                         <p>{sala.qt_capacvigilancia} Pessoas</p>
                     </div>
-                    <div className="consulta-sala">
-                        <button className="button-materiais" onClick={()=>handleOpenMateriais(sala)}>Materiais</button>
-                    </div>
+                    <button className="button-materiais" onClick={()=>handleOpenMateriais(sala)}>Materiais</button>
                 </div>
             ))}
         </LayoutConsulta>

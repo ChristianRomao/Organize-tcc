@@ -491,9 +491,9 @@ const consultaReserva = useCallback(async () =>{
                                 {reservas.map((reserva) => (
                                 <tr key={reserva.id_reserva}>
                                     <td><button className="btn-info" onClick={()=>handleOpenInfos(reserva.id_grupo)}><FontAwesomeIcon icon={faInfo}/></button></td>
-                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.nm_reserva}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"} data-tooltip={reserva.nm_reserva}>{reserva.nm_reserva}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{reserva.sala.nm_sala}</td>
-                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
+                                    <td className={editRowId === reserva.id_grupo?"colunas-body-selection ajuste-textos":"colunas-body ajuste-textos"} data-tooltip={`${reserva.grade.turma.ds_turma} - ${reserva.grade.turma.curso.ds_curso}`}>{reserva.grade.turma.ds_turma} - {reserva.grade.turma.curso.ds_curso}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_inicio).toLocaleDateString('pt-BR', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}>{new Date(reserva.dt_fim).toLocaleDateString('default', { dateStyle: 'short', timeZone: 'UTC'}).replace(",","")}</td>
                                     <td className={editRowId === reserva.id_grupo?"colunas-body-selection":"colunas-body"}> 
