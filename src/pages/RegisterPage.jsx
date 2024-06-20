@@ -133,7 +133,7 @@ const RegisterPage = () => {
     }
 
     if (ds_senha !== ds_senhaConfirm) {
-      setError("As senhas não conferem");
+      setError("As senhas não conferem!");
       possuiErro = true;
     }
 

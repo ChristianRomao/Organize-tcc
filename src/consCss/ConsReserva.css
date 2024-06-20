@@ -233,6 +233,7 @@
     padding: 10px;
     font-size: small;
     border-radius: 10px 10px 10px 10px;
+    border-style: hidden;
 }
 
 .dropdown-selection{
@@ -240,6 +241,7 @@
     padding: 10px 0px;
     font-size: small;
     border-radius: 10px 10px 10px 10px;
+    border-style: hidden;
 }
 
 .button-coluna-body{
