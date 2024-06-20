@@ -55,7 +55,6 @@ const LoginPage = () => {
                 const loginData = {ds_email, ds_senha }
                 const response = await axios.post('http://localhost:8080/login', loginData);
                 login(response.data.token);
-                console.log('Usuário autenticado:', response.data.token);
                 
                 navigate('/home')
             }
