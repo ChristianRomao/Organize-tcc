@@ -134,10 +134,10 @@ const handleConfirmAlert = (confirm) => {
       setTimeout(() =>{
         setSuccess('');
       },5000)
-      console.log(response.data);
-      console.log(qt_material)
     } catch (error) {
       console.log(error.response.data);
+      setError(error.response.data.error);
+
     }
   };
 
