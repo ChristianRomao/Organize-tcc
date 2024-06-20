@@ -176,7 +176,7 @@ const handleConfirmAlert = (confirm) => {
                   <form className="ajustes-materiais">
                     <div>
                     <label className={error && !ds_material ?"titulo-inputs-materiais-error":"titulo-inputs-materiais"}>
-                        Descrição do material
+                        Descrição do Material
                       </label>
                       <input
                         placeholder="Descrição do material"

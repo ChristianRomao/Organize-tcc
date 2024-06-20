@@ -500,33 +500,6 @@ router.put("/reserva/:id_grupo", auth , checkPermission('admin'), async (req,res
         res.status(500).json({ message: "Server Error" });
     }
     })
-    
-/*router.delete("/reserva/:id", auth , checkPermission('admin'), async (req,res) => {
-    try{
-        const id = Number(req.params.id);
-        if(id < 0) return res.status(404).json({ error: "Id para consulta inválido!" });
-        if (!numeroRegex.test(id)) {
-            return res.status(400).json({ error: 'Id deve conter apenas números.' });
-        }
-        const reservaExiste = await buscarReservaId(id);
-        
-        if(!reservaExiste){
-            return res.status(404).json({error:"Reserva não encontrada!"});
-        }
-        
-        await deletarReserva(id);
-        const acao = ('Deletada reserva com o id: ' + id);
-        const decode = decodeJWT(req.headers.authorization);
-        const userLog = decode.id_usuario;
-        const ip = req.ip;
-        await gravarLog(userLog,ip,acao);
-        return res.status(200).json({ message: "Reserva deletada com sucesso!" });
-    }catch (error) {
-        console.error("Erro ao deletar sala:" + error);
-        res.status(500).json({ message: "Server Error" });
-    }
-})*/
-
 
 router.delete("/reserva/:idGrupo", auth , checkPermission('admin'), async (req, res) => {
   try {

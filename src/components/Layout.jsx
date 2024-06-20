@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const Layout = ({children, icon, title, next, noicon}) => {
     
     const navigate = useNavigate()
-    const [hidden, setHidden] = useState(false);
+    const [goToHome, setGoToHome] = useState(false);
 
     const handleNext = () => {
         if(next !== ""){
@@ -23,7 +23,7 @@ const Layout = ({children, icon, title, next, noicon}) => {
                 findSourceInChildren(children.props.children);
             } else if (children && children._source) {
                 if (children._source.fileName.includes("ConsReserva") || children._source.fileName.includes("CadGrade")) {
-                    setHidden(true);
+                    setGoToHome(true);
                 }
             }
         };
@@ -40,7 +40,10 @@ const Layout = ({children, icon, title, next, noicon}) => {
                         <button className='volta' onClick={()=>navigate(-1)}>
                             <p style={{color: "#d6e7ff", margin: "0em 1em"}}>Voltar</p>
                         </button>
-                        {hidden ? <></> : (
+                        {goToHome ? (
+                        <button className="proxima" onClick={()=>navigate("/home")}>
+                            <p style={{color: "#d6e7ff", margin: "0em 1em"}}>Home</p>
+                        </button>) : (
                         <button className="proxima" onClick={handleNext}>
                             <p style={{color: "#d6e7ff", margin: "0em 1em"}}>Próximo</p>
                         </button>)}
