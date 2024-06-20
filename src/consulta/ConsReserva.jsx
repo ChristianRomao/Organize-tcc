@@ -609,11 +609,11 @@ const consultaReserva = useCallback(async () =>{
         <ul>
             <li style={{listStyleType:"square"}}>Bloco: {reserva.sala.bloco.nm_bloco}
             <ul>
-                <li style={{listStyleType:"disc"}}>Polo: {reserva.sala.bloco.polo.nm_polo}
+                <li style={{listStyleType:"disc"}}>Polo: {reserva.sala.bloco.polo.nm_polo}</li>
+                <li style={{listStyleType:"disc"}}>Endereço: {reserva.sala.bloco.polo.ds_endereco}</li>
+                <li style={{listStyleType:"disc"}}>Munícipio: {reserva.sala.bloco.polo.municipio.nm_municipio} - {reserva.sala.bloco.polo.municipio.estado.cd_estado}
                 <ul>
                 <li style={{listStyleType:"square"}}>Instituição: {reserva.sala.bloco.polo.instituicao.nm_fantasia}</li>
-                <li style={{listStyleType:"square"}}>Endereço: {reserva.sala.bloco.polo.ds_endereco}</li>
-                <li style={{listStyleType:"square"}}>Munícipio: {reserva.sala.bloco.polo.municipio.nm_municipio} - {reserva.sala.bloco.polo.municipio.estado.cd_estado}</li>
                 </ul>
                 </li>
             </ul>
