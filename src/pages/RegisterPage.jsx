@@ -172,8 +172,6 @@ const RegisterPage = () => {
             },
         }
         );
-        console.log(error);
-        console.log(response.data);
         setNm_usuario("");
         setCd_cpfcnpj("");
         setDt_nascimento("");
