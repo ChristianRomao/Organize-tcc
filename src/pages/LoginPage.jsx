@@ -63,11 +63,6 @@ const LoginPage = () => {
             setErro(error.response.data);
         }
     }
-
-    const handleRegistro = async () =>{
-        navigate('/registro')
-        
-    }
     
     const mostraSenha = () => {
         setSenhaVisivel(!senhaVisivel)
@@ -108,7 +103,6 @@ const LoginPage = () => {
                     </div>
                     <div className='container-btn'>
                         <button className='loginBT' type='button' onClick={handleLogin}>Entrar</button>
-                        <button className='registerBT' type='button' onClick={handleRegistro}>Registrar</button>
                     </div>
                 </div>
                 <div className="container-right ">

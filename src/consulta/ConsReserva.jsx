@@ -7,11 +7,15 @@ import { useCallback, useEffect, useState } from "react";
 import { faCheck, faX, faPen, faTrash, faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalComponent from "../components/ModalComponent";
+import { jwtDecode } from "jwt-decode";
+
 
 const ConsReserva = () => {
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const [isAdmin, setIsAdmin] = useState(false);
+
 
     const [reservas, setReservas] = useState([]);
 
@@ -84,10 +88,17 @@ const consultaReserva = useCallback(async () =>{
         if (!isAuthenticated()) {
         navigate("/login");
         } else {
-        consultaReserva();
-        consultaStatus();
+            const decode = jwtDecode(token);
+
+            if(decode.ds_funcao === 'admin'){
+              setIsAdmin(true);
+            }else{
+              setIsAdmin(false);
+            }
+            consultaReserva();
+            consultaStatus();
         }
-    }, [isAuthenticated, navigate, consultaReserva,consultaStatus]);
+    }, [isAuthenticated, navigate, consultaReserva,consultaStatus, token]);
 
     const handleSetTipoFiltro = (event) =>{
         const placeholderFixo = "Digite "
@@ -526,14 +537,13 @@ const consultaReserva = useCallback(async () =>{
                                     <td className="colunas-body-button">
                                         {editRowId === reserva.id_grupo? (
                                             <div className="buttons-actions">
-                                                {/* <button className="btn-salvar" onClick={() => handleSaveEdit(reserva.id_grupo)}>Salvar</button> */}
-                                                <button className="btn-cancelar-edicao" onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
-                                                <button className="btn-salvar" onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
+                                                <button className="btn-cancelar-edicao" hidden={!isAdmin} onClick={handleCancelEdit}><FontAwesomeIcon icon={faX}/></button>
+                                                <button className="btn-salvar" hidden={!isAdmin} onClick={()=>alterarReserva(reserva.id_grupo)}><FontAwesomeIcon icon={faCheck}/></button>
                                             </div>
                                         ) : (
                                             <div className="buttons-actions">
-                                                <button className="btn-editar" onClick={() => handleChangeEdit(reserva)}><FontAwesomeIcon icon={faPen}/></button>
-                                                <button className="btn-remover" onClick={() => handleDelete(reserva)}><FontAwesomeIcon icon={faTrash}/></button>
+                                                <button className="btn-editar" hidden={!isAdmin} onClick={() => handleChangeEdit(reserva)}><FontAwesomeIcon icon={faPen}/></button>
+                                                <button className="btn-remover" hidden={!isAdmin} onClick={() => handleDelete(reserva)}><FontAwesomeIcon icon={faTrash}/></button>
                                             </div>
 
                                         )}
@@ -546,7 +556,6 @@ const consultaReserva = useCallback(async () =>{
                     
                 </div>
                 {alerta ? <text className="message-alert-cons-reserva">{alerta}</text> : <></>}
-                {/* <text className="message-alert-cons-reserva">testeeeee</text> */}     
             </div>
             {showConfirmAlert &&(
                 <div className="delete-overlay">
@@ -586,7 +595,6 @@ const consultaReserva = useCallback(async () =>{
             onClose={handleCloseModal}
             titleM={'Informações Gerais'}
         >
-
         </ModalComponent>
         </div>
     );

@@ -12,7 +12,7 @@
 
 .spin {
     color: #C6D7EE;
-    animation: spin 1.5s infinite linear;
+    animation: spin 1s infinite linear;
     font-size: 60px; 
 }
 
