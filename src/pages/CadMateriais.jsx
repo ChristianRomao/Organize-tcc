@@ -129,6 +129,7 @@ const handleConfirmAlert = (confirm) => {
       setDs_material("");
       setQt_material("");
       setShowAlert(false);
+      buscarMateriais("")
       setSuccess(response.data.message)
       setTimeout(() =>{
         setSuccess('');

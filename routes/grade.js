@@ -159,7 +159,7 @@ router.get("/consulta-grade/curso/:cursoId?/ano/:anoLetivo?", auth, async (req,r
     }
 });
 
-router.post("/grade", auth, checkPermission('admin'), async (req,res) => {
+router.post("/grade", auth, checkPermission('admin'),async (req,res) => {
     try{
         if(req.body.nm_professor === '' || req.body.nr_cargahr === '' ||req.body.qt_alunos === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });

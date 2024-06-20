@@ -83,21 +83,21 @@ router.post("/instituicao", auth, checkPermission('admin'), async (req, res) => 
           return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
         }
 
-        // if(cpfcnpj.length == 11){
-        //     const cpfValidado = cpf.validate(cpfcnpj);
+        if(cpfcnpj.length == 11){
+            const cpfValidado = cpf.validate(cpfcnpj);
 
-        //     if(!cpfValidado){
-        //         return res.status(404).json({error:"CPF inválido!"});
-        //     }
-        // }else if(cpfcnpj.length == 14){
-        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+            if(!cpfValidado){
+                return res.status(404).json({error:"CPF inválido!"});
+            }
+        }else if(cpfcnpj.length == 14){
+            const cnpjValidado = cnpj.validate(cpfcnpj);
 
-        //     if(!cnpjValidado){
-        //         return res.status(404).json({error:"CNPJ inválido!"});
-        //     }
-        // }else{
-        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-        // }
+            if(!cnpjValidado){
+                return res.status(404).json({error:"CNPJ inválido!"});
+            }
+        }else{
+            return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        }
 
         const instituicao = {
           cd_cpfcnpj: cpfcnpj,
@@ -144,21 +144,21 @@ router.put("/instituicao/:id", auth, async (req, res) => {
       return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
     }
 
-    // if(cpfcnpj.length == 11){
-    //     const cpfValidado = cpf.validate(cpfcnpj);
+    if(cpfcnpj.length == 11){
+        const cpfValidado = cpf.validate(cpfcnpj);
 
-    //     if(!cpfValidado){
-    //         return res.status(404).json({error:"CPF inválido!"});
-    //     }
-    // }else if(cpfcnpj.length == 14){
-    //     const cnpjValidado = cnpj.validate(cpfcnpj);
+        if(!cpfValidado){
+            return res.status(404).json({error:"CPF inválido!"});
+        }
+    }else if(cpfcnpj.length == 14){
+        const cnpjValidado = cnpj.validate(cpfcnpj);
 
-    //     if(!cnpjValidado){
-    //         return res.status(404).json({error:"CNPJ inválido!"});
-    //     }
-    // }else{
-    //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-    // }
+        if(!cnpjValidado){
+            return res.status(404).json({error:"CNPJ inválido!"});
+        }
+    }else{
+        return res.status(404).json({error:"CPF/CNPJ inválido!"});
+    }
 
     const instituicao = {
       nm_razaosoc: req.body.nm_razaosoc,

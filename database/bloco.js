@@ -4,7 +4,17 @@ const listarBlocos = () => {
   return prisma.bloco.findMany({
         include: {
             polo: true,    
-        }
+        },
+        orderBy: [
+          {
+            polo: {
+              nm_polo: 'asc',
+            },
+          },
+          {
+            nm_bloco: 'asc',
+          },
+        ],
   });
 };
 

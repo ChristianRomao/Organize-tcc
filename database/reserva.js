@@ -160,7 +160,9 @@ const buscarReservaNome = async (nome) => {
     return acc;
   }, {});
 
-  return Object.values(groupedReservas);
+  const sortedReservas = Object.values(groupedReservas).sort((a, b) => new Date(a.dt_inicio) - new Date(b.dt_inicio));
+
+  return sortedReservas;
 
 };
 
@@ -234,7 +236,9 @@ const buscarReservaSala = async (nome) => {
     return acc;
   }, {});
 
-  return Object.values(groupedReservas);
+  const sortedReservas = Object.values(groupedReservas).sort((a, b) => new Date(a.dt_inicio) - new Date(b.dt_inicio));
+
+  return sortedReservas;
 
 };
 
@@ -308,7 +312,9 @@ const buscarReservaUsuario = async (nome) => {
     return acc;
   }, {});
 
-  return Object.values(groupedReservas);
+  const sortedReservas = Object.values(groupedReservas).sort((a, b) => new Date(a.dt_inicio) - new Date(b.dt_inicio));
+
+  return sortedReservas;
 
 };
 
@@ -386,7 +392,9 @@ const buscarReservaCurso = async (nome) => {
     return acc;
   }, {});
 
-  return Object.values(groupedReservas);
+  const sortedReservas = Object.values(groupedReservas).sort((a, b) => new Date(a.dt_inicio) - new Date(b.dt_inicio));
+
+  return sortedReservas;
 
 };
 
@@ -456,7 +464,9 @@ const buscarReservaStatus = async (status) => {
     return acc;
   }, {});
 
-  return Object.values(groupedReservas);
+  const sortedReservas = Object.values(groupedReservas).sort((a, b) => new Date(a.dt_inicio) - new Date(b.dt_inicio));
+
+  return sortedReservas;
 
 };
 
