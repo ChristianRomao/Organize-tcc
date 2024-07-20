@@ -60,8 +60,8 @@ const HomePage = () => {
     };
 
     return (
-        <div>
-            <HeaderComponents />
+        <div style={{backgroundColor: "#C6D7EE"}}>
+            <HeaderComponents/>
             <body className='body-home'>
                 <div className='grid-principal'>
                     <div className='item-da-grid'>

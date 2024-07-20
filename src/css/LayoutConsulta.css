@@ -1,9 +1,9 @@
 .home-consulta {
     width: 100%;
     height: 100%;
-    height: 93.2vh;
-    position: fixed;
-    background-color: #00183a;
+    height: 100vh;
+    padding-top: 110px;
+    position: relative;
 }
 
 .body-layout-consulta {
@@ -33,7 +33,8 @@
     color: #d6e7ff;
     font-size: xx-large;
     position: relative;
-    top: -66px;
+    z-index: 1000;
+    bottom: 90px;
     text-align: center;
     font-weight: bold;
     animation: slide-in 1s ease forwards;

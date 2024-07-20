@@ -1,10 +1,8 @@
-
 .body-home {
     width: 100%;
-    height: 93.2vh;
-    background-color: #C6D7EE;
-    position: fixed;
-    z-index: -1;
+    height: 100vh;
+    padding-top: 80px;
+    position: relative;
 }
 
 .grid-principal {
@@ -45,6 +43,7 @@
     margin-top: 30px;
     max-height: 500px;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-bottom: -300px
 }
 
@@ -71,7 +70,6 @@
 .scrollable::-webkit-scrollbar-thumb:hover {
     background: #0000009f;
 }
-/* Incluindo scroll na tela acima */
 
 .btn {
     display: grid;
@@ -94,3 +92,33 @@
     transition: 0.2s;
 }
 
+@media (min-width: 769px) and (max-width: 1024px){
+    .body-home {
+        width: 100%;
+        height: 198vh;
+        position: relative;
+        padding-top: 80px;
+        background-color: #C6D7EE;
+    }
+    .grid-principal {
+        display: contents;
+    }
+    .item-da-grid {
+        padding: 280px 100px;
+        margin: 40px 30px;
+    }
+    .btn-gerais {
+        margin-top: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+        border-radius: 20px;
+    }
+    .scrollable{
+        padding-right: 70px;
+        margin-right: 200px;
+    }
+    .titulos-home {
+        font-size: larger;
+        margin-top: 16px;
+    }
+}

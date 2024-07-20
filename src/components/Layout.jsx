@@ -15,7 +15,7 @@ const Layout = ({children, icon, title, next, noicon}) => {
     }
     
     return (
-        <div>
+        <div style={{backgroundColor: "#C6D7EE"}}>
             <HeaderComponents/>
             <body className='home'>
                 <div className='body-layout'>
