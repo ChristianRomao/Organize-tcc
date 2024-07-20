@@ -1,7 +1,11 @@
 const prisma = require ("./prisma");
 
 const listarUsuarios = () =>{
-    return prisma.usuario.findMany()
+    return prisma.usuario.findMany({
+        orderBy:{
+            nm_usuario:'asc'
+        }
+    })
 }
 
 const buscarUsuarioId = (id) =>{

@@ -18,9 +18,23 @@ const listarSalas = () =>{
               },
             },
           },
-          orderBy:{
-            nm_sala: "asc"
-          }
+          orderBy: [
+            {
+              bloco: {
+                polo: {
+                  nm_polo: 'asc',
+                },
+              },
+            },
+            {
+              bloco: {
+                nm_bloco: 'asc',
+              },
+            },
+            {
+              nm_sala: 'asc',
+            },
+          ],
     })
 }
 

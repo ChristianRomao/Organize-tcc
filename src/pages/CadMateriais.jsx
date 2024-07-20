@@ -129,14 +129,15 @@ const handleConfirmAlert = (confirm) => {
       setDs_material("");
       setQt_material("");
       setShowAlert(false);
+      buscarMateriais("")
       setSuccess(response.data.message)
       setTimeout(() =>{
         setSuccess('');
       },5000)
-      console.log(response.data);
-      console.log(qt_material)
     } catch (error) {
       console.log(error.response.data);
+      setError(error.response.data.error);
+
     }
   };
 
@@ -176,7 +177,7 @@ const handleConfirmAlert = (confirm) => {
                   <form className="ajustes-materiais">
                     <div>
                     <label className={error && !ds_material ?"titulo-inputs-materiais-error":"titulo-inputs-materiais"}>
-                        Descrição do material
+                        Descrição do Material
                       </label>
                       <input
                         placeholder="Descrição do material"

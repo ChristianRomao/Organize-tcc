@@ -7,11 +7,16 @@ import { useAuth } from '../AuthProvider';
 import CadMaterialSala from './CadMaterialSala';
 import LoadingIcon from '../components/LoadingIcon';
 import '../css/HomePage.css';
+import { jwtDecode } from "jwt-decode";
+
 
 
 const HomePage = () => {
+    const token = localStorage.getItem("token");
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const { isAuthenticated } = useAuth();
     const navigate = useNavigate();
@@ -27,14 +32,22 @@ const HomePage = () => {
     useEffect(() => {
         if (!isAuthenticated()) {
             navigate('/login');
+        }else{
+            const decode = jwtDecode(token);
+
+            if(decode.ds_funcao === 'admin'){
+              setIsAdmin(true);
+            }else{
+              setIsAdmin(false);
+            }
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, token]);
 
     const handleNavigation = async (route) => {
         setIsLoading(true);
         try {
             
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 500));
             navigate(route);
         } catch (error) {
             console.error('Erro ao navegar:', error);
@@ -64,6 +77,7 @@ const HomePage = () => {
             <HeaderComponents/>
             <body className='body-home'>
                 <div className='grid-principal'>
+                {isAdmin ?(
                     <div className='item-da-grid'>
                         <div className='interior'>
                             <FontAwesomeIcon icon={faFloppyDisk} style={{ color: "#ffffff" }} size='3x' />
@@ -82,7 +96,10 @@ const HomePage = () => {
                                 <button className='btn' type="button" onClick={() => handleCadastro('grade')}>Grade</button>
                             </div>
                         </div>
-                    </div>
+                    </div>)
+                    :
+                    (<></>)
+                    }
                     <div className='item-da-grid'>
                         <div className='interior'>
                             <FontAwesomeIcon icon={faMagnifyingGlass} size='3x' />

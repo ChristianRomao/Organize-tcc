@@ -225,7 +225,7 @@ const CadGrade = () => {
           />
         </div>
         <div>
-          <label className={error && !qt_alunos ? "titulo-inputs-grade-error" : "titulo-inputs-grade"}>Quantidade de alunos</label>
+          <label className={error && !qt_alunos ? "titulo-inputs-grade-error" : "titulo-inputs-grade"}>Quantidade de Alunos</label>
           <input
             className="inputs-grade"
             type="text"

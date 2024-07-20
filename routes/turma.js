@@ -16,6 +16,24 @@ const { gravarLog } = require("../database/log");
 
 const numeroRegex = /^[0-9]+$/;
 
+const checkPermission = (requiredPermission) => {
+    return async (req, res, next) => {
+        try {
+            const decode = decodeJWT(req.headers.authorization);
+            const userPermissions = decode.ds_funcao;
+
+            if (!userPermissions.includes(requiredPermission)) {
+                return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
+            }
+
+            next();
+        } catch (error) {
+            console.error("Erro ao verificar permissões:", error);
+            res.status(500).json({ message: "Erro interno do servidor" });
+        }
+    };
+};
+
 router.get("/turma", auth, async (req,res) => {
     const turmas = await listarTurmas()
     res.json({
@@ -100,7 +118,7 @@ router.get("/consulta-turma-curso/:id", auth, async (req,res) => {
     res.json({turmas});
 });
 
-router.post("/turma", auth, async (req,res) => {
+router.post("/turma", auth, checkPermission('admin'), async (req,res) => {
     try{
         if(req.body.ds_turma === '' || req.body.nr_anoletivo === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });

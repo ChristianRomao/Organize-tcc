@@ -5,7 +5,7 @@
     justify-content: center;
     height: 10vh;
     margin-top: 2em;
-    margin-inline: 6em;
+    margin-inline: 4em;
     border-radius: 20PX;
     background-color: #7eb4ff;
     box-shadow: 0px 0px 20px #000000;
@@ -21,6 +21,8 @@
     background-color: #09264e;
     margin-inline: 50px;
     padding: 14px;
+    width: 172px;
+    position: relative;
 }
 
 .button-materiais{
@@ -28,9 +30,14 @@
     color: #FFFFFF;
     font-size: 17px;
     padding-block: 6px;
+    border-radius: 12px;
+    padding: 14px;
+    transition: 0.2s;
+    margin-left: 40px;
 }
 .button-materiais:hover{
     cursor: pointer;
+    background-color: #0b3672;
 }
 
 .body-modal-all{

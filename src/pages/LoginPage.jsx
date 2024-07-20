@@ -55,18 +55,12 @@ const LoginPage = () => {
                 const loginData = {ds_email, ds_senha }
                 const response = await axios.post('http://localhost:8080/login', loginData);
                 login(response.data.token);
-                console.log('Usuário autenticado:', response.data.token);
                 
                 navigate('/home')
             }
         }catch(error){
             setErro(error.response.data);
         }
-    }
-
-    const handleRegistro = async () =>{
-        navigate('/registro')
-        
     }
     
     const mostraSenha = () => {
@@ -108,7 +102,6 @@ const LoginPage = () => {
                     </div>
                     <div className='container-btn'>
                         <button className='loginBT' type='button' onClick={handleLogin}>Entrar</button>
-                        <button className='registerBT' type='button' onClick={handleRegistro}>Registrar</button>
                     </div>
                 </div>
                 <div className="container-right ">

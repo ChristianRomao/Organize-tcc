@@ -23,7 +23,7 @@ const checkPermission = (requiredPermission) => {
     return async (req, res, next) => {
         try {
             const decode = decodeJWT(req.headers.authorization);
-            const userPermissions = decode.ds_funcao; // Supondo que as permissões do usuário estão no token JWT
+            const userPermissions = decode.ds_funcao;
 
             if (!userPermissions.includes(requiredPermission)) {
                 return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
@@ -77,7 +77,7 @@ router.get("/usuario/:id", auth, async (req,res) => {
     await gravarLog(userLog,ip,acao);
 });
 
-router.post("/registro", async (req,res) => {
+router.post("/registro", auth, checkPermission('admin'), async (req,res) => {
     try{
         if(req.body.cd_cpfcnpj === '' || req.body.nm_usuario === '' || req.body.dt_nascimento === '' || req.body.ds_email === '' || req.body.ds_senha === '' || req.body.ds_funcao === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });
@@ -103,21 +103,22 @@ router.post("/registro", async (req,res) => {
             return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
         }
 
-        // if(cpfcnpj.length == 11){
-        //     const cpfValidado = cpf.validate(cpfcnpj);
+        if(cpfcnpj.length == 11){
+            const cpfValidado = cpf.validate(cpfcnpj);
 
-        //     if(!cpfValidado){
-        //         return res.status(404).json({error:"CPF inválido!"});
-        //     }
-        // }else if(cpfcnpj.length == 14){
-        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+            if(!cpfValidado){
+                return res.status(404).json({error:"CPF inválido!"});
+            }
+        }else if(cpfcnpj.length == 14){
+            const cnpjValidado = cnpj.validate(cpfcnpj);
 
-        //     if(!cnpjValidado){
-        //         return res.status(404).json({error:"CNPJ inválido!"});
-        //     }
-        // }else{
-        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-        // }
+            if(!cnpjValidado){
+                return res.status(404).json({error:"CNPJ inválido!"});
+            }
+        }else{
+            return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        }
+        
         if (!/^[a-zA-Z\s]+$/.test(req.body.nm_usuario)) {
             return res.status(400).json({ error: "Nome não pode conter números, acentos, 'ç' ou caracteres especiais!" });
         }
@@ -210,21 +211,21 @@ router.put("/usuario/:id", auth, checkPermission('admin'), async (req,res) => {
             return res.status(400).json({ error: "CPF/CNPJ deve ser um número" });
         }
 
-        // if(cpfcnpj.length == 11){
-        //     const cpfValidado = cpf.validate(cpfcnpj);
+        if(cpfcnpj.length == 11){
+            const cpfValidado = cpf.validate(cpfcnpj);
 
-        //     if(!cpfValidado){
-        //         return res.status(404).json({error:"CPF inválido!"});
-        //     }
-        // }else if(cpfcnpj.length == 14){
-        //     const cnpjValidado = cnpj.validate(cpfcnpj);
+            if(!cpfValidado){
+                return res.status(404).json({error:"CPF inválido!"});
+            }
+        }else if(cpfcnpj.length == 14){
+            const cnpjValidado = cnpj.validate(cpfcnpj);
 
-        //     if(!cnpjValidado){
-        //         return res.status(404).json({error:"CNPJ inválido!"});
-        //     }
-        // }else{
-        //     return res.status(404).json({error:"CPF/CNPJ inválido!"});
-        // }
+            if(!cnpjValidado){
+                return res.status(404).json({error:"CNPJ inválido!"});
+            }
+        }else{
+            return res.status(404).json({error:"CPF/CNPJ inválido!"});
+        }
 
         
         const dt_nascimentoForm = new Date(req.body.dt_nascimento).toISOString();

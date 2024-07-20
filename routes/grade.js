@@ -19,6 +19,24 @@ const { gravarLog } = require("../database/log");
 
 const numeroRegex = /^[0-9]+$/;
 
+const checkPermission = (requiredPermission) => {
+    return async (req, res, next) => {
+        try {
+            const decode = decodeJWT(req.headers.authorization);
+            const userPermissions = decode.ds_funcao;
+
+            if (!userPermissions.includes(requiredPermission)) {
+                return res.status(403).json({ error: "Acesso negado. Permissões insuficientes." });
+            }
+
+            next();
+        } catch (error) {
+            console.error("Erro ao verificar permissões:", error);
+            res.status(500).json({ message: "Erro interno do servidor" });
+        }
+    };
+};
+
 router.get("/grade", auth, async (req,res) => {
     const grades = await listarGrades()
     res.json({
@@ -141,7 +159,7 @@ router.get("/consulta-grade/curso/:cursoId?/ano/:anoLetivo?", auth, async (req,r
     }
 });
 
-router.post("/grade", auth, async (req,res) => {
+router.post("/grade", auth, checkPermission('admin'),async (req,res) => {
     try{
         if(req.body.nm_professor === '' || req.body.nr_cargahr === '' ||req.body.qt_alunos === ''){
             return res.status(400).json({ error: "Campos obrigatórios devem ser preenchidos!" });

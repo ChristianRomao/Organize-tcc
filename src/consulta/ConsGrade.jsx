@@ -49,28 +49,28 @@ const ConsGrade = () => {
                     <div className="consulta-grade">
                         <h4>Turma:</h4>
                         <p className="ajuste-textos" data-tooltip={`${grade.disciplina.nm_disciplina} - ${grade.turma.curso.ds_curso}`}>
-                            {grade.turma.curso.ds_curso} - {grade.disciplina.nm_disciplina}
+                        {grade.disciplina.nm_disciplina} - {grade.turma.curso.ds_curso}
                         </p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Ano Letivo:</h4>
-                        <p className="ajuste-textos">{grade.turma.nr_anoletivo}</p>
+                        <p>{grade.turma.nr_anoletivo}</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Disciplina:</h4>
-                        <p className="ajuste-textos">{grade.disciplina.nm_disciplina}</p>
+                        <p className="ajuste-textos" data-tooltip={grade.disciplina.nm_disciplina}>{grade.disciplina.nm_disciplina}</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Professor:</h4>
-                        <p className="ajuste-textos">{grade.nm_professor}</p>
+                        <p className="ajuste-textos" data-tooltip={grade.nm_professor}>{grade.nm_professor}</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Carga Horária:</h4>
-                        <p className="ajuste-textos">{grade.nr_cargaHr} hr</p>
+                        <p>{grade.nr_cargaHr} hr</p>
                     </div>
                     <div className="consulta-grade">
                         <h4>Qt. Alunos:</h4>
-                        <p className="ajuste-textos">{grade.qt_alunos} alunos</p>
+                        <p>{grade.qt_alunos} alunos</p>
                     </div>
                 </div>
             ))}
