@@ -10,7 +10,7 @@ const LayoutConsulta = ({children, titleCons, tipoOptions, onSearch}) => {
     const navigate = useNavigate();
     
     return (
-        <div>
+        <div style={{backgroundColor: "#00183a"}}>
             <HeaderComponents/>
             <body className='home-consulta'>
                 <div className='body-layout-consulta'>
